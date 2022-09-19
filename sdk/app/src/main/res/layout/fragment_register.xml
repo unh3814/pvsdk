@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:lineSpacingExtra="8sp"
+        android:text="THÔNG TIN CƠ BẢN"
+        android:textColor="#0072BC"
+        android:textSize="13sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center_vertical"
+        android:lineSpacingExtra="8sp"
+        android:paddingVertical="8dp"
+        android:text="@string/txt_full_name"
+        android:textColor="#1B1D29"
+        android:textSize="13sp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/bg_edit"
+        android:hint="Nhập họ tên"
+        android:inputType="text"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="10dp"
+        android:textColor="@android:color/black"
+        android:textSize="13sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:lineSpacingExtra="8sp"
+        android:paddingVertical="8dp"
+        android:text="@string/txt_user_identity"
+        android:textColor="#1B1D29"
+        android:textSize="13sp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/bg_edit"
+        android:hint="Nhập số CMND/CCCD/Hộ chiếu"
+        android:inputType="text"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="10dp"
+        android:textColor="@android:color/black"
+        android:textSize="13sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:lineSpacingExtra="8sp"
+        android:paddingVertical="8dp"
+        android:text="@string/txt_title_phone_number"
+        android:textColor="#1B1D29"
+        android:textSize="13sp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/bg_edit"
+        android:hint="Nhập số điện thoại"
+        android:inputType="text"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="10dp"
+        android:textColor="@android:color/black"
+        android:textSize="13sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:gravity="center_vertical"
+        android:lineSpacingExtra="8sp"
+        android:text="@string/txt_title_register_digi_bank"
+        android:textColor="#0072BC"
+        android:textSize="13sp" />
+
+    <CheckBox
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:lineSpacingExtra="8sp"
+        android:paddingVertical="8dp"
+        android:text="@string/txt_online_banking"
+        android:textColor="#1B1D29"
+        android:textSize="13sp" />
+
+    <CheckBox
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:gravity="center_vertical"
+        android:lineSpacingExtra="8sp"
+        android:paddingVertical="8dp"
+        android:text="@string/txt_sms_banking"
+        android:textColor="#1B1D29"
+        android:textSize="13sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:lineSpacingExtra="8sp"
+        android:paddingVertical="8dp"
+        android:text="@string/txt_user_introduce"
+        android:textColor="#1B1D29"
+        android:textSize="13sp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/bg_edit"
+        android:hint="Nhập mã người giới thiệu"
+        android:inputType="text"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="10dp"
+        android:textColor="@android:color/black"
+        android:textSize="13sp" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <CheckBox
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:lineSpacingExtra="8sp"
+            android:paddingVertical="8dp"
+            android:text="@string/txt_register_rule_1"
+            android:textColor="#1B1D29"
+            android:textSize="13sp" />
+
+        <CheckBox
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:lineSpacingExtra="8sp"
+            android:paddingVertical="8dp"
+            android:text="@string/txt_register_rule_2"
+            android:textColor="#1B1D29"
+            android:textSize="13sp" />
+    </RadioGroup>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bg_primary"
+        android:text="@string/confirm" />
+</LinearLayout>

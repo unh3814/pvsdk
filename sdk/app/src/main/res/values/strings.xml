@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="confirm">Xác nhận</string>
+    <string name="cancel_order">Huỷ đơn hàng</string>
+    <string name="number_order">Mã đơn hàng</string>
+    <string name="number_trading">Mã giao dịch</string>
+    <string name="number_payment">Số tiền cần thanh toán</string>
+    <string name="number_paid">Số tiền thanh toán</string>
+    <string name="content_order">Nội dung</string>
+    <string name="content_order_desc">TT DH %s tai %s</string>
+    <string name="account">Tài khoản</string>
+    <string name="information_payment">Thông tin thanh toán</string>
+    <string name="confirm_information_payment">Xác nhận thanh toán</string>
+    <string name="primary_account">Tài khoản nguồn</string>
+    <string name="current_balance">Số dư: %sđ</string>
+    <string name="sended_otp_to_number_phone">Mã OTP đã được gửi tới số điện thoại <font color="blue">%s</font>.\nQuý khách vui lòng nhập mã OTP để tiếp tục.</string>
+    <string name="resend_otp">Gửi lại mã %s s</string>
+    <string name="date_trading">Ngày giao dịch</string>
+    <string name="confirm_otp">Xác thực OTP</string>
+    <string name="payment_success">Bạn sẽ được chuyển về %s để tiếp tục đơn hàng sau %s giây.</string>
+    <string name="alert_select_method_ocr">Nếu quý khách đã là khách hàng của PVcomBank, vui lòng sử dụng đúng giấy tờ tùy thân đã đăng ký với ngân hàng.</string>
+    <string name="txt_continue">Tiếp tục</string>
+    <string name="title_guide_capture_picture">Hướng dẫn chụp ảnh</string>
+    <string name="accept_picture">Ảnh hợp lện</string>
+    <string name="denial_picture">Ảnh không hợp lệ</string>
+    <string name="picture_blur">Không chụp mờ</string>
+    <string name="picture_crop">Không mất góc</string>
+    <string name="picture_dazzling">Không loá sáng</string>
+    <string name="txt_picture_owner">Giấy tờ chính chủ và còn hạn sử dụng.</string>
+    <string name="txt_picture_real">Là ảnh gốc, không scan và photocopy.</string>
+    <string name="txt_picture_valid">Ảnh chụp rõ ràng, đủ góc cạnh, không bị loá mờ hay thiếu sáng.</string>
+    <string name="i_understand">Tôi đã hiểu</string>
+
+    <string name="txt_pvcombank_security_information">Mọi thông tin của bạn sẽ được bảo mật an toàn với PVcomBank</string>
+    <string name="title_guide_face_capture">Hướng dẫn quay video chân dung</string>
+    <string name="txt_guide_face_rule_1">Đảm bảo khuôn mặt ở trong khung hình.</string>
+    <string name="txt_guide_face_rule_2">Thực hiện di chuyển khuôn mặt theo hướng dẫn</string>
+    <string name="txt_guide_face_rule_3">Không đeo kính, đội mũ, đeo khẩu trang hoặc trùm tóc khi chụp ảnh</string>
+    <string name="txt_scan_card_front">Căn mặt trước vào khung</string>
+    <string name="txt_scan_card_behind">Căn mặt sau vào khung</string>
+
+    <string name="txt_full_name">Họ và tên</string>
+    <string name="txt_date_of_birth">Ngày sinh</string>
+    <string name="txt_gender">Giới tính</string>
+    <string name="txt_user_identity">Số CMND/CCCD/Hộ chiếu</string>
+    <string name="txt_date_issuing_identity">Ngày cấp</string>
+    <string name="txt_date_exp">Có giá trị đến</string>
+    <string name="txt_locale_issuing">Nơi cấp</string>
+    <string name="txt_domicile_original">Nguyên quán</string>
+    <string name="txt_domicile">Thường trú</string>
+    <string name="card_capture_alert_1">Mọi thông tin làm giả giấy tờ là vi phạm pháp luật. Khách hàng chịu hoàn toàn trách nhiệm về thông tin đã cung cấp.</string>
+    <string name="txt_title_phone_number">Số điện thoại</string>
+    <string name="txt_title_common_information">THÔNG TIN CƠ BẢN</string>
+    <string name="txt_title_register_digi_bank">ĐĂNG KÝ DỊCH VỤ NGÂN HÀNG ĐIỆN TỬ</string>
+    <string name="txt_online_banking">PV-Mobile Banking/PV-Online Banking</string>
+    <string name="txt_sms_banking">PV-SMS Banking</string>
+    <string name="txt_user_introduce">Người giới thiệu</string>
+    <string name="txt_register_rule_1">Tôi cam đoan là chủ sở hữu hưởng lợi của các tài khoản mở tại Ngân hàng, các dịch vụ và các giao dịch liên quan đến các tài khoản này.</string>
+    <string name="txt_register_rule_2">Tôi đã đọc, hiểu và đồng ý với <a href=""><font color="blue">Các điều khoản &amp; điều kiện</font></a> mở tài khoản thanh toán.</string>
+    <string name="error_default">Có lỗi xảy ra khi thực hiện giao dịch, bạn vui lòng thử lại hoặc liên hệ <font color="#3A9EFC">1900 5555 92</font> để được hỗ trợ</string>
+    <string name="error_system">Lỗi hệ thống, thử lại sau.</string>
+    <string name="txt_email_address">Địa chỉ email</string>
+    <string name="txt_create_account">Đăng ký</string>
+</resources>

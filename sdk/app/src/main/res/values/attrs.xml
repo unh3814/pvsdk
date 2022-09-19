@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TextViewPVCB">
+        <attr name="textTitle" format="string" />
+        <attr name="titleEnabled" format="boolean" />
+        <attr name="textHint" format="string" />
+        <attr name="hintEnabled" format="boolean" />
+        <attr name="textError" format="string" />
+        <attr name="errorEnabled" format="boolean" />
+    </declare-styleable>
+</resources>

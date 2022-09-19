@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="color_warning">#FFCE7D00</color>
+    <color name="color_warning_button">#F8C500</color>
+    <color name="color_warning_background">#FFFEF4E7</color>
+    <color name="color_background_loading">#66000000</color>
+    <color name="color_checked">#1EBB4D</color>
+    <color name="color_primary">#FFC709</color>
+    <color name="color_inline_message_warning">#D9821A</color>
+</resources>
