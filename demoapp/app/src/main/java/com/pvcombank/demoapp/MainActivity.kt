@@ -22,35 +22,14 @@ class MainActivity : AppCompatActivity() {
 		textThanhToan = findViewById(R.id.tv_thanh_toan)
 		edtCurrency = findViewById(R.id.edt_currency)
 		textThanhToan?.text = "Mã đơn hàng: #005002\nNội dung: Thanh toan vien phi tai BV"
-//		btnThanhToan?.setOnClickListener {
-//			if (edtCurrency?.text?.isNotEmpty() == true){
-//				PVCBAuth().apply {
-//					hideKeyboard()
-//					setClient(
-//						clientId = "vietsens-sdk",
-//						clientSecret = "97392180-9aeb-4fe4-9c24-0676d35b4505",
-//						currency = edtCurrency?.text.toString(),
-//						idOrder = "005002",
-//						appUnitId = "GEBIuX+mVEJzPZG/QuVkVQ=="
-//					)
-//					setListener(object : PVCBAuthListener{
-//						override fun onError(message: String) {
-//							Log.d("ERROR", message)
-//						}
-//
-//						override fun onSuccess(message: String) {
-//							Log.d("SUCCESS", message)
-//						}
-//					})
-//					build(this@MainActivity)
-//					show()
-//				}
-//			}
-//		}
-		startPayment()
+		btnThanhToan?.setOnClickListener {
+			if (edtCurrency?.text?.isNotEmpty() == true) {
+				startPayment()
+			}
+		}
 	}
 	
-	fun startPayment(){
+	fun startPayment() {
 		PVCBAuth().apply {
 			hideKeyboard()
 			setClient(
@@ -74,7 +53,7 @@ class MainActivity : AppCompatActivity() {
 		}
 	}
 	
-	fun hideKeyboard(){
+	fun hideKeyboard() {
 		this.currentFocus?.let {
 			(getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)?.apply {
 				hideSoftInputFromWindow(it.windowToken, 0)

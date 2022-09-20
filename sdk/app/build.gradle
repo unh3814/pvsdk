@@ -6,13 +6,14 @@ plugins {
 }
 
 android {
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         minSdk 23
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -34,11 +35,14 @@ android {
     buildFeatures {
         viewBinding true
     }
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
 }
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    testImplementation 'junit:junit:4.12'
+    implementation "androidx.multidex:multidex:2.0.1"
     //OKHTTP
     implementation(platform("com.squareup.okhttp3:okhttp-bom:4.9.0"))
     implementation("com.squareup.okhttp3:okhttp")
@@ -77,4 +81,5 @@ dependencies {
 //    implementation("com.trustvision:tv_sdk:2.1.0.4@aar"){
 //        transitive = true
 //    }
+    testImplementation 'junit:junit:4.12'
 }

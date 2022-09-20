@@ -70,7 +70,6 @@ class AuthWebLoginFragment : PVFragment<FragmentWebLoginBinding>() {
 				viewBinding.layoutLoaddingWeb.visibility = View.GONE
 			}
 		}
-		
 	}
 	
 	override fun onCreateView(
@@ -96,8 +95,8 @@ class AuthWebLoginFragment : PVFragment<FragmentWebLoginBinding>() {
 			settings.useWideViewPort = true
 //			settings.cacheMode = WebSettings.LOAD_NO_CACHE
 //			settings.saveFormData = false
-//			CookieManager.getInstance().removeAllCookies(null)
-//			CookieManager.getInstance().flush()
+			CookieManager.getInstance().removeAllCookies(null)
+			CookieManager.getInstance().flush()
 			webViewClient = webClient
 			webChromeClient = chromeClient
 			loadUrl(Constants.url)
@@ -106,7 +105,7 @@ class AuthWebLoginFragment : PVFragment<FragmentWebLoginBinding>() {
 	
 	private fun handlerUrl(url: String?) {
 		val uri = Uri.parse(url)
-		toCreateUser(uri)
+//		toCreateUser(uri)
 		toLogin(url)
 	}
 	

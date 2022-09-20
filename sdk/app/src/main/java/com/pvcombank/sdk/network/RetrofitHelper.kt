@@ -31,7 +31,7 @@ class RetrofitHelper {
 					.addHeader("Authorization", Constants.TOKEN)
 					.addHeader(
 						"x-idempotency-key",
-						UUID.randomUUID().toString().toLowerCase(Locale.ROOT)
+						UUID.randomUUID().toString().lowercase(Locale.ROOT)
 					)
 					.addHeader("Content-Type", "application/json")
 					.addHeader("app_unit_id", MasterModel.getInstance().appUnitID ?: "")

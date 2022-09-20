@@ -9,11 +9,10 @@
 
     <TextView
         android:id="@+id/title"
+        style="@style/PVTextView.Title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:textColor="#1B1D29"
-        android:textSize="13sp"
         tools:text="Tiêu đề" />
 
     <EditText
@@ -29,10 +28,15 @@
         tools:hint="Nội dung" />
 
     <TextView
+        android:id="@+id/note"
+        style="@style/PVTextHint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
         android:id="@+id/error"
+        style="@style/PVTextError"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/holo_red_light"
-        android:textSize="12sp"
         tools:text="Lỗi" />
 </LinearLayout>

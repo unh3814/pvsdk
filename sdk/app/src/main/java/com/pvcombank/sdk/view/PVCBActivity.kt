@@ -22,7 +22,6 @@ import com.pvcombank.sdk.util.Utils.openFragment
 import com.pvcombank.sdk.view.login.AuthWebLoginFragment
 
 class PVCBActivity : PVActivity<ActivityPvcbBinding>() {
-	private var trustVisionConfiguration = "";
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		viewBinding = ActivityPvcbBinding.inflate(layoutInflater)
@@ -83,7 +82,7 @@ class PVCBActivity : PVActivity<ActivityPvcbBinding>() {
 //					}
 //			}
 		}
-		supportFragmentManager.addFragmentOnAttachListener { fragmentManager, fragment ->
+		supportFragmentManager.addFragmentOnAttachListener { _, fragment ->
 			when (fragment) {
 				is AuthWebLoginFragment -> {
 					viewBinding.topBar.root.visibility = View.GONE
