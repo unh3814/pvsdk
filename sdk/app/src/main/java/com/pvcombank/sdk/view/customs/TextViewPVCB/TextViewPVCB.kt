@@ -27,7 +27,7 @@ class TextViewPVCB(context: Context, attributeSet: AttributeSet) : LinearLayoutC
 	private var isHintEnable = false
 	private var sError: String = ""
 	private var isErrorEnable = false
-	
+	private var sNote: String = ""
 	//endregion variable
 	
 	init {
@@ -37,9 +37,11 @@ class TextViewPVCB(context: Context, attributeSet: AttributeSet) : LinearLayoutC
 					sTitle = getString(R.styleable.TextViewPVCB_textTitle) ?: ""
 					sHint = getString(R.styleable.TextViewPVCB_textHint) ?: ""
 					sError = getString(R.styleable.TextViewPVCB_textError) ?: ""
+					sNote = getString(R.styleable.TextViewPVCB_note) ?: ""
 					isTitleEnable = getBoolean(R.styleable.TextViewPVCB_titleEnabled, false)
 					isHintEnable = getBoolean(R.styleable.TextViewPVCB_hintEnabled, false)
 					isErrorEnable = getBoolean(R.styleable.TextViewPVCB_errorEnabled, false)
+					setNote()
 					setTitle()
 					setHint()
 					setError()
@@ -56,7 +58,7 @@ class TextViewPVCB(context: Context, attributeSet: AttributeSet) : LinearLayoutC
 	fun setTitle(value: String? = null) {
 		binding.apply {
 			sTitle = (value ?: sTitle)
-			if (sTitle?.isNotEmpty() == true){
+			if (sTitle.isNotEmpty()) {
 				title.visibility = View.VISIBLE
 				title.text = sTitle
 			} else {
@@ -72,6 +74,20 @@ class TextViewPVCB(context: Context, attributeSet: AttributeSet) : LinearLayoutC
 		}
 	}
 	
+	fun setNote(value: String? = null) {
+		binding.apply {
+			sNote = (value ?: sNote)
+			if (isErrorEnable) {
+				note.visibility = View.GONE
+				return
+			}
+			if ((sError.isEmpty() && sNote.isNotEmpty()) || !isErrorEnable) {
+				note.visibility = View.VISIBLE
+			}
+			note.text = sNote
+		}
+	}
+	
 	fun setError(value: String? = null) {
 		binding.apply {
 			sError = (value ?: sError)
@@ -79,7 +95,7 @@ class TextViewPVCB(context: Context, attributeSet: AttributeSet) : LinearLayoutC
 				error.visibility = View.INVISIBLE
 				return
 			}
-			if (sError.isNotEmpty()){
+			if (sError.isNotEmpty()) {
 				error.visibility = View.VISIBLE
 				error.text = sError
 				editor.setBackgroundResource(R.drawable.bg_error)
@@ -91,13 +107,13 @@ class TextViewPVCB(context: Context, attributeSet: AttributeSet) : LinearLayoutC
 	
 	fun getText(): String = binding.editor.text.toString()
 	
-	fun addTextChangeListener(textWatcher: TextWatcher){
+	fun addTextChangeListener(textWatcher: TextWatcher) {
 		return binding.editor.addTextChangedListener(textWatcher)
 	}
 	
-	fun addTextChangeListener(afterTextChanged: (text: Editable?) -> Unit){
-		binding.editor.addTextChangedListener{
-		afterTextChanged.invoke(it)
+	fun addTextChangeListener(afterTextChanged: (text: Editable?) -> Unit) {
+		binding.editor.addTextChangedListener {
+			afterTextChanged.invoke(it)
 		}
 	}
 }

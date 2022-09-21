@@ -88,6 +88,9 @@ android {
     buildFeatures {
         viewBinding true
     }
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
 }
 
 dependencies {

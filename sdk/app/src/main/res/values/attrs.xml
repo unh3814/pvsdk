@@ -7,5 +7,6 @@
         <attr name="hintEnabled" format="boolean" />
         <attr name="textError" format="string" />
         <attr name="errorEnabled" format="boolean" />
+        <attr name="note" format="string" />
     </declare-styleable>
 </resources>

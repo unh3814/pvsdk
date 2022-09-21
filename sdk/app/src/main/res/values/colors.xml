@@ -7,4 +7,13 @@
     <color name="color_checked">#1EBB4D</color>
     <color name="color_primary">#FFC709</color>
     <color name="color_inline_message_warning">#D9821A</color>
+
+    <color name="color_white">#F5F5F5</color>
+    <color name="color_red">#FE4037</color>
+    <color name="color_grey">#A7ABC3</color>
+    <color name="color_grey_light">#E4E5F0</color>
+    <color name="color_grey_light_1">#DCDEE9</color>
+    <color name="color_black">#1B1D29</color>
+    <color name="color_green">#1EBB4D</color>
+    <color name="color_blue">#0072BC</color>
 </resources>

@@ -34,13 +34,27 @@
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="190dp"
+        android:layout_height="120dp"
         android:layout_marginTop="16dp"
-        android:src="@drawable/picture_valid"
+        android:background="@drawable/bg_success"
+        android:padding="1dp"
+        android:src="@drawable/identity_1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <ImageView
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_marginEnd="-10dp"
+        android:layout_marginBottom="-10dp"
+        android:background="@drawable/bg_circle_white"
+        android:padding="5dp"
+        android:src="@drawable/ic_round_check_circle_outline_24"
+        android:tint="@color/color_green"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
+        app:layout_constraintEnd_toEndOf="@+id/imageView3" />
 
     <TextView
         android:id="@+id/textView4"
@@ -57,132 +71,157 @@
 
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/textView4"
-        tools:layout_editor_absoluteX="16dp">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:src="@drawable/picture_blur" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:gravity="center"
-                android:text="@string/picture_blur"
-                android:textColor="@android:color/black"
-                android:textSize="12sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:src="@drawable/picture_crop" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:gravity="center"
-                android:text="@string/picture_crop"
-                android:textColor="@android:color/black"
-                android:textSize="12sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:src="@drawable/picture_dazzling" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:gravity="center"
-                android:text="@string/picture_dazzling"
-                android:textColor="@android:color/black"
-                android:textSize="12sp" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+        app:layout_constraintTop_toBottomOf="@+id/textView4">
 
-        <TextView
-            android:layout_width="match_parent"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_round_check_circle_24"
-            android:drawablePadding="8dp"
-            android:drawableTint="@color/color_checked"
-            android:gravity="center_vertical"
-            android:padding="4dp"
-            android:text="@string/txt_picture_owner"
-            android:textColor="@android:color/black" />
+            android:layout_weight="1"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="275dp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_round_check_circle_24"
-            android:drawablePadding="8dp"
-            android:drawableTint="@color/color_checked"
-            android:gravity="center_vertical"
-            android:padding="4dp"
-            android:text="@string/txt_picture_real"
-            android:textColor="@android:color/black" />
+            <ImageView
+                android:id="@+id/img_v1"
+                android:layout_width="93dp"
+                android:layout_height="54dp"
+                android:background="@drawable/bg_error"
+                android:padding="1dp"
+                android:src="@drawable/identity_blur"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:layout_width="match_parent"
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginEnd="-5dp"
+                android:layout_marginBottom="-5dp"
+                android:background="@drawable/bg_circle_white"
+                android:padding="5dp"
+                android:src="@drawable/ic_outline_cancel_24"
+                android:tint="@color/color_red"
+                app:layout_constraintBottom_toBottomOf="@+id/img_v1"
+                app:layout_constraintEnd_toEndOf="@+id/img_v1" />
+
+            <TextView
+                style="@style/PVTextView.SubTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Không bị mờ"
+                app:layout_constraintEnd_toEndOf="@+id/img_v1"
+                app:layout_constraintStart_toStartOf="@+id/img_v1"
+                app:layout_constraintTop_toBottomOf="@+id/img_v1" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_round_check_circle_24"
-            android:drawablePadding="8dp"
-            android:drawableTint="@color/color_checked"
-            android:gravity="center_vertical"
-            android:padding="4dp"
-            android:text="@string/txt_picture_valid"
-            android:textColor="@android:color/black" />
+            android:layout_weight="1"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="275dp">
+
+            <ImageView
+                android:id="@+id/img_v2"
+                android:layout_width="93dp"
+                android:layout_height="54dp"
+                android:background="@drawable/bg_error"
+                android:padding="1dp"
+                android:src="@drawable/identity_crop"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginEnd="-5dp"
+                android:layout_marginBottom="-5dp"
+                android:background="@drawable/bg_circle_white"
+                android:padding="5dp"
+                android:src="@drawable/ic_outline_cancel_24"
+                android:tint="@color/color_red"
+                app:layout_constraintBottom_toBottomOf="@+id/img_v2"
+                app:layout_constraintEnd_toEndOf="@+id/img_v2" />
+
+            <TextView
+                style="@style/PVTextView.SubTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Không mất góc"
+                app:layout_constraintEnd_toEndOf="@+id/img_v2"
+                app:layout_constraintStart_toStartOf="@+id/img_v2"
+                app:layout_constraintTop_toBottomOf="@+id/img_v2" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="275dp">
+
+            <ImageView
+                android:id="@+id/img_v3"
+                android:layout_width="93dp"
+                android:layout_height="54dp"
+                android:background="@drawable/bg_error"
+                android:padding="1dp"
+                android:src="@drawable/identity_blink"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginEnd="-5dp"
+                android:layout_marginBottom="-5dp"
+                android:background="@drawable/bg_circle_white"
+                android:padding="5dp"
+                android:src="@drawable/ic_outline_cancel_24"
+                android:tint="@color/color_red"
+                app:layout_constraintBottom_toBottomOf="@+id/img_v3"
+                app:layout_constraintEnd_toEndOf="@+id/img_v3" />
+
+            <TextView
+                style="@style/PVTextView.SubTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Không bị loá"
+                app:layout_constraintEnd_toEndOf="@+id/img_v3"
+                app:layout_constraintStart_toStartOf="@+id/img_v3"
+                app:layout_constraintTop_toBottomOf="@+id/img_v3" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </LinearLayout>
 
+    <TextView
+        style="@style/PVTextView.Note"
+        android:drawablePadding="12dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:drawableStart="@drawable/ic_note"
+        android:text="Khách hàng từ đủ 18 tuổi trở lên, sử dụng GTTT bản GỐC chính chủ Khách hàng chịu hoàn toàn trách nhiệm trước pháp luật về thông tin đã cung cấp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+
     <Button
+        style="@style/PVButton"
         android:id="@+id/btn_confirm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_primary"
         android:text="@string/i_understand"
-        android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

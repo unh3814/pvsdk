@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="PVTextView" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/color_black</item>
+    </style>
+
+    <style name="PVTextView.Title" parent="PVTextView">
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <style name="PVTextView.SubTitle" parent="PVTextView">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="PVTextView.Note" parent="PVTextView">
+        <item name="android:textColor">@color/color_blue</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="PVTextHint" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/color_grey</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <style name="PVTextError" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/color_red</item>
+    </style>
+
+    <style name="PVButton" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/bg_button</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+</resources>
