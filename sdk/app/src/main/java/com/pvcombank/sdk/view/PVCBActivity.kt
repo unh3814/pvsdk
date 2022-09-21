@@ -20,6 +20,7 @@ import com.pvcombank.sdk.base.model.TopBarListener
 import com.pvcombank.sdk.databinding.ActivityPvcbBinding
 import com.pvcombank.sdk.util.Utils.openFragment
 import com.pvcombank.sdk.view.login.AuthWebLoginFragment
+import com.trustingsocial.tvcoresdk.external.*
 import com.trustingsocial.tvsdk.TrustVisionSDK
 
 class PVCBActivity : PVActivity<ActivityPvcbBinding>() {
@@ -30,59 +31,13 @@ class PVCBActivity : PVActivity<ActivityPvcbBinding>() {
 		initLoading()
 		initAlertInline()
 		initTopBar()
-		//init TrustVisionSDK
-		Handler(Looper.getMainLooper()).post {
-			val configuration = "{\"data\":{\"card_types\":[{\"code\":\"vn.national_id\",\"name\":\"CMND cũ / CMND mới / CCCD / Hộ chiếu\",\"orientation\":\"horizontal\",\"has_back_side\":true,\"front_qr\":{\"exist\":false},\"back_qr\":{\"exist\":false}}],\"country\":\"vn\",\"settings\":{\"enable_compare_faces\":true,\"enable_detect_id_card_tampering\":true,\"enable_face_retrieval\":true,\"enable_index_faces\":true,\"enable_read_id_card_info\":true,\"enable_verify_face_liveness\":true,\"enable_verify_id_card_sanity\":true,\"enable_verify_portrait_sanity\":true,\"liveness_modes\":[\"active\",\"passive\"],\"scan_qr\":\"none\",\"sdk_settings\":{\"active_liveness_settings\":{\"face_tracking_setting\":{\"android_terminate_threshold\":0.002847,\"android_warning_threshold\":0.001474,\"enable\":true,\"ios_terminate_threshold\":0.003393,\"ios_warning_threshold\":0.002176,\"limit_for\":\"all_flow\",\"max_interval_ms\":2000,\"max_warning_time\":5,\"web_terminate_threshold\":0.0030152991993743408,\"web_warning_threshold\":0.0017317430600108828},\"flow_interval_time_ms\":3000,\"limit_time_liveness_check\":{\"enable\":true,\"limit_time_second\":45},\"record_video\":{\"enable\":false},\"save_encoded_frames\":{\"enable\":true,\"frames_interval_ms\":180},\"show_gesture_arrow\":true,\"terminate_if_no_face\":{\"enable\":true,\"max_invalid_frame\":5,\"max_time_ms\":1000}},\"id_detection_settings\":{\"auto_capture\":{\"enable\":false,\"show_capture_button\":true},\"blur_check\":{\"enable\":true,\"threshold\":0.29},\"disable_capture_button_if_alert\":true,\"glare_check\":{\"enable\":true,\"threshold\":0.001},\"id_detection\":{\"enable\":true},\"save_frame_settings\":{\"enable\":false,\"frames_interval_ms\":190,\"quality_android\":80,\"quality_ios\":70,\"quality_web\":80},\"scan_qr_settings\":{\"enable\":false,\"limit_time_second\":45}}},\"selfie_camera_options\":[\"front\"],\"selfie_enable_detect_multiple_face\":true,\"support_transaction\":false,\"web_app_crop_face\":\"auto\"}}}"
-			TrustVisionSDK.init(
-				configuration,
-				"vi",
-				null
-			)
-		}
-//		if (Build.VERSION_CODES.R < Build.VERSION.SDK_INT) {
-//			initOpsManager()
-//		}
 		viewBinding.apply {
-			openFragment(
-				AuthWebLoginFragment::class.java,
-				Bundle(),
-				false
-			)
-//			Handler(Looper.getMainLooper()).post {
-//				TVIDConfiguration.Builder()
-//					.setCardSide(TVSDKConfiguration.TVCardSide.FRONT)
-//					.setReadBothSide(false)
-//					.setReadBothSide(false)
-//					.setEnableSound(false)
-//					.setEnablePhotoGalleryPicker(false)
-//					.setEnableTiltChecking(false)
-//					.setSkipConfirmScreen(false)
-//					.build()
-//					.apply {
-//						TrustVisionSDK.startIDCapturing(
-//							this@PVCBActivity,
-//							this,
-//							object : TVCapturingCallBack(){
-//								override fun onError(p0: TVDetectionError?) {
-//									println(p0)
-//								}
-//
-//								override fun onSuccess(p0: TVDetectionResult?) {
-//									println(p0)
-//								}
-//
-//								override fun onCanceled() {
-//									println("CANCEL")
-//								}
-//
-//								override fun onNewFrameBatch(p0: FrameBatch) {
-//									super.onNewFrameBatch(p0)
-//									println(p0)
-//								}
-//							})
-//
-//					}
-//			}
+//			openFragment(
+//				AuthWebLoginFragment::class.java,
+//				Bundle(),
+//				false
+//			)
+			initTrustVision()
 		}
 		supportFragmentManager.addFragmentOnAttachListener { _, fragment ->
 			when (fragment) {
@@ -197,5 +152,143 @@ class PVCBActivity : PVActivity<ActivityPvcbBinding>() {
 		val hostId = viewBinding.hostsFragment.id
 		val currentFragment = supportFragmentManager.findFragmentById(hostId) as? PVFragment<*>
 		return currentFragment?.onBack() ?: false
+	}
+	
+	fun initTrustVision() {
+		val configuration = "{\n" +
+				"  \"data\": {\n" +
+				"    \"card_types\": [\n" +
+				"      {\n" +
+				"        \"code\": \"vn.national_id\",\n" +
+				"        \"name\": \"CMND cũ / CMND mới / CCCD / Hộ chiếu\",\n" +
+				"        \"orientation\": \"horizontal\",\n" +
+				"        \"has_back_side\": true,\n" +
+				"        \"front_qr\": {\n" +
+				"          \"exist\": false\n" +
+				"        },\n" +
+				"        \"back_qr\": {\n" +
+				"          \"exist\": false\n" +
+				"        }\n" +
+				"      }\n" +
+				"    ],\n" +
+				"    \"country\": \"vn\",\n" +
+				"    \"settings\": {\n" +
+				"      \"enable_compare_faces\": true,\n" +
+				"      \"enable_detect_id_card_tampering\": true,\n" +
+				"      \"enable_face_retrieval\": true,\n" +
+				"      \"enable_index_faces\": true,\n" +
+				"      \"enable_read_id_card_info\": true,\n" +
+				"      \"enable_verify_face_liveness\": true,\n" +
+				"      \"enable_verify_id_card_sanity\": true,\n" +
+				"      \"enable_verify_portrait_sanity\": true,\n" +
+				"      \"liveness_modes\": [\n" +
+				"        \"active\",\n" +
+				"        \"passive\"\n" +
+				"      ],\n" +
+				"      \"scan_qr\": \"none\",\n" +
+				"      \"sdk_settings\": {\n" +
+				"        \"active_liveness_settings\": {\n" +
+				"          \"face_tracking_setting\": {\n" +
+				"            \"android_terminate_threshold\": 0.002847,\n" +
+				"            \"android_warning_threshold\": 0.001474,\n" +
+				"            \"enable\": true,\n" +
+				"            \"ios_terminate_threshold\": 0.003393,\n" +
+				"            \"ios_warning_threshold\": 0.002176,\n" +
+				"            \"limit_for\": \"all_flow\",\n" +
+				"            \"max_interval_ms\": 2000,\n" +
+				"            \"max_warning_time\": 5,\n" +
+				"            \"web_terminate_threshold\": 0.0030152991993743408,\n" +
+				"            \"web_warning_threshold\": 0.0017317430600108828\n" +
+				"          },\n" +
+				"          \"flow_interval_time_ms\": 3000,\n" +
+				"          \"limit_time_liveness_check\": {\n" +
+				"            \"enable\": true,\n" +
+				"            \"limit_time_second\": 45\n" +
+				"          },\n" +
+				"          \"record_video\": {\n" +
+				"            \"enable\": false\n" +
+				"          },\n" +
+				"          \"save_encoded_frames\": {\n" +
+				"            \"enable\": true,\n" +
+				"            \"frames_interval_ms\": 180\n" +
+				"          },\n" +
+				"          \"show_gesture_arrow\": true,\n" +
+				"          \"terminate_if_no_face\": {\n" +
+				"            \"enable\": true,\n" +
+				"            \"max_invalid_frame\": 5,\n" +
+				"            \"max_time_ms\": 1000\n" +
+				"          }\n" +
+				"        },\n" +
+				"        \"id_detection_settings\": {\n" +
+				"          \"auto_capture\": {\n" +
+				"            \"enable\": false,\n" +
+				"            \"show_capture_button\": true\n" +
+				"          },\n" +
+				"          \"blur_check\": {\n" +
+				"            \"enable\": true,\n" +
+				"            \"threshold\": 0.29\n" +
+				"          },\n" +
+				"          \"disable_capture_button_if_alert\": true,\n" +
+				"          \"glare_check\": {\n" +
+				"            \"enable\": true,\n" +
+				"            \"threshold\": 0.001\n" +
+				"          },\n" +
+				"          \"id_detection\": {\n" +
+				"            \"enable\": true\n" +
+				"          },\n" +
+				"          \"save_frame_settings\": {\n" +
+				"            \"enable\": false,\n" +
+				"            \"frames_interval_ms\": 190,\n" +
+				"            \"quality_android\": 80,\n" +
+				"            \"quality_ios\": 70,\n" +
+				"            \"quality_web\": 80\n" +
+				"          },\n" +
+				"          \"scan_qr_settings\": {\n" +
+				"            \"enable\": false,\n" +
+				"            \"limit_time_second\": 45\n" +
+				"          }\n" +
+				"        }\n" +
+				"      },\n" +
+				"      \"selfie_camera_options\": [\n" +
+				"        \"front\"\n" +
+				"      ],\n" +
+				"      \"selfie_enable_detect_multiple_face\": true,\n" +
+				"      \"support_transaction\": false,\n" +
+				"      \"web_app_crop_face\": \"auto\"\n" +
+				"    }\n" +
+				"  }\n" +
+				"}"
+		TrustVisionSDK.init(
+			configuration,
+			"vi",
+			null
+		)
+		val configurationCardID = TVIDConfiguration.Builder()
+			.setCardType(TrustVisionSDK.getCardTypes().first())
+			.setCardSide(TVSDKConfiguration.TVCardSide.FRONT)
+			.setReadBothSide(true)
+			.setEnableSound(false)
+			.setEnablePhotoGalleryPicker(false)
+			.setEnableTiltChecking(false)
+			.setSkipConfirmScreen(false)
+		val mConfiguration = configurationCardID.build()
+		TrustVisionSDK.startIDCapturing(this, mConfiguration, object : TVCapturingCallBack() {
+			override fun onNewFrameBatch(p0: FrameBatch) {
+				println("New frame ${p0}")
+			}
+			
+			override fun onError(p0: TVDetectionError?) {
+				println("Error ${p0}")
+			}
+			
+			override fun onSuccess(p0: TVDetectionResult?) {
+				println("Success ${p0}")
+			}
+			
+			override fun onCanceled() {
+				println("Cancel")
+			}
+			
+		})
 	}
 }

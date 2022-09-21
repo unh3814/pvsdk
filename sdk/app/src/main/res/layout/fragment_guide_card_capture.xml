@@ -205,20 +205,38 @@
 
     </LinearLayout>
 
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_note"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView7" />
+
     <TextView
+        android:layout_marginStart="10dp"
+        android:id="@+id/textView7"
         style="@style/PVTextView.Note"
-        android:drawablePadding="12dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:drawableStart="@drawable/ic_note"
-        android:text="Khách hàng từ đủ 18 tuổi trở lên, sử dụng GTTT bản GỐC chính chủ Khách hàng chịu hoàn toàn trách nhiệm trước pháp luật về thông tin đã cung cấp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:drawablePadding="12dp"
+        android:text="Khách hàng từ đủ 18 tuổi trở lên, sử dụng GTTT bản GỐC chính chủ "
+        app:layout_constraintStart_toEndOf="@+id/imageView4"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
+    <TextView
+        style="@style/PVTextError"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Khách hàng chịu hoàn toàn trách nhiệm trước pháp luật về thông tin đã cung cấp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textView7"
+        app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
     <Button
-        style="@style/PVButton"
         android:id="@+id/btn_confirm"
+        style="@style/PVButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/i_understand"

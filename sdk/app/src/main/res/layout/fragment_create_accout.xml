@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:padding="16dp">
 
-    <com.pvcombank.sdk.view.customs.TextViewPVCB.TextViewPVCB
+    <com.pvcombank.sdk.view.customs.EditViewPVCB.EditViewPVCB
         android:id="@+id/phone_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,7 +16,7 @@
         app:textHint="Nhập nội dung số điện thoại"
         app:textTitle="Số điện thoại" />
 
-    <com.pvcombank.sdk.view.customs.TextViewPVCB.TextViewPVCB
+    <com.pvcombank.sdk.view.customs.EditViewPVCB.EditViewPVCB
         android:id="@+id/email_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

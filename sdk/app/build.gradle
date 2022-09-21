@@ -29,8 +29,8 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
-    aaptOptions {
-        noCompress "tflite"
+    lintOptions {
+        abortOnError false
     }
     buildFeatures {
         viewBinding true
