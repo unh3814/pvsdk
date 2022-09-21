@@ -20,6 +20,7 @@ import com.pvcombank.sdk.base.model.TopBarListener
 import com.pvcombank.sdk.databinding.ActivityPvcbBinding
 import com.pvcombank.sdk.util.Utils.openFragment
 import com.pvcombank.sdk.view.login.AuthWebLoginFragment
+import com.trustingsocial.tvsdk.TrustVisionSDK
 
 class PVCBActivity : PVActivity<ActivityPvcbBinding>() {
 	private var trustVisionConfiguration = "";
