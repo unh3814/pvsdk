@@ -78,8 +78,8 @@ dependencies {
     //FACE_DETECTION
     implementation 'com.google.mlkit:face-detection:16.1.5'
     //TRUST VISION
-//    implementation("com.trustvision:tv_sdk:2.1.0.4@aar"){
-//        transitive = true
-//    }
+    implementation("com.trustvision:tv_sdk:2.1.0.4@aar"){
+        transitive = true
+    }
     testImplementation 'junit:junit:4.12'
 }

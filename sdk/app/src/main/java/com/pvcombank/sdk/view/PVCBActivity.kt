@@ -20,6 +20,7 @@ import com.pvcombank.sdk.base.model.TopBarListener
 import com.pvcombank.sdk.databinding.ActivityPvcbBinding
 import com.pvcombank.sdk.util.Utils.openFragment
 import com.pvcombank.sdk.view.login.AuthWebLoginFragment
+import com.trustingsocial.tvsdk.TrustVisionSDK
 
 class PVCBActivity : PVActivity<ActivityPvcbBinding>() {
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,13 +31,14 @@ class PVCBActivity : PVActivity<ActivityPvcbBinding>() {
 		initAlertInline()
 		initTopBar()
 		//init TrustVisionSDK
-//		Handler(Looper.getMainLooper()).post {
-//			TrustVisionSDK.init(
-//				trustVisionConfiguration,
-//				"vi",
-//				null
-//			)
-//		}
+		Handler(Looper.getMainLooper()).post {
+			val configuration = "{\"data\":{\"card_types\":[{\"code\":\"vn.national_id\",\"name\":\"CMND cũ / CMND mới / CCCD / Hộ chiếu\",\"orientation\":\"horizontal\",\"has_back_side\":true,\"front_qr\":{\"exist\":false},\"back_qr\":{\"exist\":false}}],\"country\":\"vn\",\"settings\":{\"enable_compare_faces\":true,\"enable_detect_id_card_tampering\":true,\"enable_face_retrieval\":true,\"enable_index_faces\":true,\"enable_read_id_card_info\":true,\"enable_verify_face_liveness\":true,\"enable_verify_id_card_sanity\":true,\"enable_verify_portrait_sanity\":true,\"liveness_modes\":[\"active\",\"passive\"],\"scan_qr\":\"none\",\"sdk_settings\":{\"active_liveness_settings\":{\"face_tracking_setting\":{\"android_terminate_threshold\":0.002847,\"android_warning_threshold\":0.001474,\"enable\":true,\"ios_terminate_threshold\":0.003393,\"ios_warning_threshold\":0.002176,\"limit_for\":\"all_flow\",\"max_interval_ms\":2000,\"max_warning_time\":5,\"web_terminate_threshold\":0.0030152991993743408,\"web_warning_threshold\":0.0017317430600108828},\"flow_interval_time_ms\":3000,\"limit_time_liveness_check\":{\"enable\":true,\"limit_time_second\":45},\"record_video\":{\"enable\":false},\"save_encoded_frames\":{\"enable\":true,\"frames_interval_ms\":180},\"show_gesture_arrow\":true,\"terminate_if_no_face\":{\"enable\":true,\"max_invalid_frame\":5,\"max_time_ms\":1000}},\"id_detection_settings\":{\"auto_capture\":{\"enable\":false,\"show_capture_button\":true},\"blur_check\":{\"enable\":true,\"threshold\":0.29},\"disable_capture_button_if_alert\":true,\"glare_check\":{\"enable\":true,\"threshold\":0.001},\"id_detection\":{\"enable\":true},\"save_frame_settings\":{\"enable\":false,\"frames_interval_ms\":190,\"quality_android\":80,\"quality_ios\":70,\"quality_web\":80},\"scan_qr_settings\":{\"enable\":false,\"limit_time_second\":45}}},\"selfie_camera_options\":[\"front\"],\"selfie_enable_detect_multiple_face\":true,\"support_transaction\":false,\"web_app_crop_face\":\"auto\"}}}"
+			TrustVisionSDK.init(
+				configuration,
+				"vi",
+				null
+			)
+		}
 //		if (Build.VERSION_CODES.R < Build.VERSION.SDK_INT) {
 //			initOpsManager()
 //		}
