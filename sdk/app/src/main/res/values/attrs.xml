@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="TextViewPVCB">
+        <attr name="titleText" format="string" />
+        <attr name="contentText" format="string" />
+        <attr name="isHeader" format="boolean" />
+        <attr name="showExpend" format="boolean" />
+        <attr name="viewExpend" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="EditViewPVCB">
         <attr name="textTitle" format="string" />
         <attr name="titleEnabled" format="boolean" />
         <attr name="textHint" format="string" />
@@ -9,4 +17,5 @@
         <attr name="errorEnabled" format="boolean" />
         <attr name="note" format="string" />
     </declare-styleable>
+
 </resources>

@@ -45,4 +45,74 @@ object Constants {
 	const val rpl_1 = "+"
 	const val rpl_2 = "%2b"
 	
+	//TRUST_VISION
+	const val TS_CONFIGURATION = "{" +
+			"settings: {" +
+			"  sdk_settings: {" +
+			"    active_liveness_settings: {" +
+			"      face_tracking_setting: {" +
+			"        android_terminate_threshold: 0.002847," +
+			"        android_warning_threshold: 0.001474," +
+			"        enable: false," +
+			"        ios_terminate_threshold: 0.003393," +
+			"        ios_warning_threshold: 0.002176," +
+			"        limit_for: all_flow," +
+			"        max_interval_ms: 2000," +
+			"        max_warning_time: 5" +
+			"      }," +
+			"      flow_interval_time_ms: 2000," +
+			"      limit_time_liveness_check: {" +
+			"        enable: true," +
+			"        limit_time_second: 20" +
+			"      }," +
+			"      record_video: {" +
+			"        enable: true" +
+			"      }," +
+			"      save_encoded_frames: {" +
+			"        enable: true," +
+			"        frames_interval_ms: 180" +
+			"       }," +
+			"      terminate_if_no_face: {" +
+			"        enable: false," +
+			"        max_invalid_frame: 5," +
+			"        max_time_ms: 3000" +
+			"      }" +
+			"    }," +
+			"    id_detection_settings: {" +
+			"      auto_capture: { " +
+			"        enable: false," +
+			"        show_capture_button: true" +
+			"      }," +
+			"      blur_check: {" +
+			"        enable: false," +
+			"        threshold: 0.29" +
+			"      }," +
+			"      disable_capture_button_if_alert: false," +
+			"      glare_check: {" +
+			"        enable: true," +
+			"        threshold: 0.001" +
+			"      }," +
+			"      id_detection: {" +
+			"        enable: true" +
+			"      }," +
+			"      limit_time_settings: {" +
+			"        enable: false," +
+			"        limit_time_second: 10" +
+			"      }," +
+			"      save_frame_settings: {" +
+			"        enable: true," +
+			"        frames_interval_ms: 190," +
+			"        quality_android: 80," +
+			"        quality_ios: 70" +
+			"      }" +
+			"    }," +
+			"    liveness_settings: {" +
+			"      vertical_check: {" +
+			"        enable: true," +
+			"        threshold: 40" +
+			"      }" +
+			"    }" +
+			"  }" +
+			"}" +
+			"}"
 }

@@ -5,6 +5,13 @@
         <item name="android:textColor">@color/color_black</item>
     </style>
 
+    <style name="PVTextView.Header" parent="PVTextView">
+        <item name="android:textColor">@color/color_blue</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:drawableTint">@color/color_blue</item>
+    </style>
+
     <style name="PVTextView.Title" parent="PVTextView">
         <item name="android:textSize">13sp</item>
     </style>

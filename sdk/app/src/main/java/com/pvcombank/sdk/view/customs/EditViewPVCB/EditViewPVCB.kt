@@ -9,14 +9,14 @@ import android.view.View
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.widget.addTextChangedListener
 import com.pvcombank.sdk.R
-import com.pvcombank.sdk.databinding.TextviewPvcombankBinding
+import com.pvcombank.sdk.databinding.EditviewPvcombankBinding
 
 class EditViewPVCB(context: Context, attributeSet: AttributeSet) : LinearLayoutCompat(
 	context,
 	attributeSet
 ) {
 	//region variable
-	private val binding: TextviewPvcombankBinding = TextviewPvcombankBinding.inflate(
+	private val binding: EditviewPvcombankBinding = EditviewPvcombankBinding.inflate(
 		LayoutInflater.from(context),
 		this@EditViewPVCB,
 		true
@@ -31,16 +31,16 @@ class EditViewPVCB(context: Context, attributeSet: AttributeSet) : LinearLayoutC
 	//endregion variable
 	
 	init {
-		context.theme.obtainStyledAttributes(attributeSet, R.styleable.TextViewPVCB, 0, 0).apply {
+		context.theme.obtainStyledAttributes(attributeSet, R.styleable.EditViewPVCB, 0, 0).apply {
 			try {
 				binding.apply {
-					sTitle = getString(R.styleable.TextViewPVCB_textTitle) ?: ""
-					sHint = getString(R.styleable.TextViewPVCB_textHint) ?: ""
-					sError = getString(R.styleable.TextViewPVCB_textError) ?: ""
-					sNote = getString(R.styleable.TextViewPVCB_note) ?: ""
-					isTitleEnable = getBoolean(R.styleable.TextViewPVCB_titleEnabled, false)
-					isHintEnable = getBoolean(R.styleable.TextViewPVCB_hintEnabled, false)
-					isErrorEnable = getBoolean(R.styleable.TextViewPVCB_errorEnabled, false)
+					sTitle = getString(R.styleable.EditViewPVCB_textTitle) ?: ""
+					sHint = getString(R.styleable.EditViewPVCB_textHint) ?: ""
+					sError = getString(R.styleable.EditViewPVCB_textError) ?: ""
+					sNote = getString(R.styleable.EditViewPVCB_note) ?: ""
+					isTitleEnable = getBoolean(R.styleable.EditViewPVCB_titleEnabled, false)
+					isHintEnable = getBoolean(R.styleable.EditViewPVCB_hintEnabled, false)
+					isErrorEnable = getBoolean(R.styleable.EditViewPVCB_errorEnabled, false)
 					setNote()
 					setTitle()
 					setHint()

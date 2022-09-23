@@ -18,6 +18,8 @@ import com.pvcombank.sdk.repository.AuthRepository
 import com.pvcombank.sdk.view.otp.select_card.PaymentInformationFragment
 import com.pvcombank.sdk.view.popup.AlertPopup
 import com.pvcombank.sdk.view.register.after_create.AfterCreateFragment
+import com.trustingsocial.tvcoresdk.external.*
+import com.trustingsocial.tvsdk.TrustVisionSDK
 import java.util.*
 
 class AuthWebLoginFragment : PVFragment<FragmentWebLoginBinding>() {
@@ -41,7 +43,7 @@ class AuthWebLoginFragment : PVFragment<FragmentWebLoginBinding>() {
 		) {
 			hideLoading()
 			viewBinding.layoutLoaddingWeb.visibility = View.VISIBLE
-			if (error?.errorCode == -2){
+			if (error?.errorCode == -2) {
 				AlertPopup.show(
 					fragmentManager = childFragmentManager,
 					title = "Thông báo",
@@ -63,10 +65,10 @@ class AuthWebLoginFragment : PVFragment<FragmentWebLoginBinding>() {
 	private val chromeClient = object : WebChromeClient() {
 		override fun onProgressChanged(view: WebView?, newProgress: Int) {
 			super.onProgressChanged(view, newProgress)
-			if (view?.url?.startsWith(Constants.REDIRECT_URL) == true && view?.url != Constants.url){
+			if (view?.url?.startsWith(Constants.REDIRECT_URL) == true && view?.url != Constants.url) {
 				viewBinding.layoutLoaddingWeb.visibility = View.VISIBLE
 			}
-			if(view?.url == Constants.url){
+			if (view?.url == Constants.url) {
 				viewBinding.layoutLoaddingWeb.visibility = View.GONE
 			}
 		}
@@ -105,7 +107,7 @@ class AuthWebLoginFragment : PVFragment<FragmentWebLoginBinding>() {
 	
 	private fun handlerUrl(url: String?) {
 		val uri = Uri.parse(url)
-//		toCreateUser(uri)
+		toCreateUser(uri)
 		toLogin(url)
 	}
 	

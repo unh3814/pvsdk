@@ -17,6 +17,13 @@
         android:supportsRtl="true"
         tools:targetApi="32" >
         <activity android:name=".view.PVCBActivity"
-            android:windowSoftInputMode="adjustPan|stateVisible"/>
+            android:windowSoftInputMode="adjustPan|stateVisible"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 </manifest>

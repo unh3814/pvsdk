@@ -1,95 +1,171 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp">
 
-    <TextView
+    <com.pvcombank.sdk.view.customs.TextViewPVCB.TextViewPVCB
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:lineSpacingExtra="8sp"
-        android:text="THÔNG TIN CƠ BẢN"
-        android:textColor="#0072BC"
-        android:textSize="13sp" />
+        app:isHeader="true"
+        app:showExpend="true"
+        app:titleText="Thông tin cơ bản" />
 
-    <TextView
+    <com.pvcombank.sdk.view.customs.TextViewPVCB.TextViewPVCB
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:gravity="center_vertical"
-        android:lineSpacingExtra="8sp"
-        android:paddingVertical="8dp"
-        android:text="@string/txt_full_name"
-        android:textColor="#1B1D29"
-        android:textSize="13sp" />
+        android:layout_marginBottom="4dp"
+        app:titleText="Họ và tên" />
 
-    <EditText
+    <com.pvcombank.sdk.view.customs.TextViewPVCB.TextViewPVCB
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/bg_edit"
-        android:hint="Nhập họ tên"
-        android:inputType="text"
-        android:paddingHorizontal="12dp"
-        android:paddingVertical="10dp"
-        android:textColor="@android:color/black"
-        android:textSize="13sp" />
+        android:layout_marginBottom="4dp"
+        app:titleText="Giới tính" />
 
-    <TextView
+    <com.pvcombank.sdk.view.customs.TextViewPVCB.TextViewPVCB
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:lineSpacingExtra="8sp"
-        android:paddingVertical="8dp"
-        android:text="@string/txt_user_identity"
-        android:textColor="#1B1D29"
-        android:textSize="13sp" />
+        android:layout_marginBottom="4dp"
+        app:titleText="Ngày sinh" />
 
-    <EditText
+    <com.pvcombank.sdk.view.customs.TextViewPVCB.TextViewPVCB
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/bg_edit"
-        android:hint="Nhập số CMND/CCCD/Hộ chiếu"
-        android:inputType="text"
-        android:paddingHorizontal="12dp"
-        android:paddingVertical="10dp"
-        android:textColor="@android:color/black"
-        android:textSize="13sp" />
+        android:layout_marginBottom="4dp"
+        app:titleText="Quốc tịch" />
 
-    <TextView
+    <com.pvcombank.sdk.view.customs.TextViewPVCB.TextViewPVCB
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:lineSpacingExtra="8sp"
-        android:paddingVertical="8dp"
-        android:text="@string/txt_title_phone_number"
-        android:textColor="#1B1D29"
-        android:textSize="13sp" />
+        android:layout_marginBottom="4dp"
+        app:titleText="Số CCCD/CMND/Hộ chiếu" />
 
-    <EditText
+    <com.pvcombank.sdk.view.customs.TextViewPVCB.TextViewPVCB
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/bg_edit"
-        android:hint="Nhập số điện thoại"
-        android:inputType="text"
-        android:paddingHorizontal="12dp"
-        android:paddingVertical="10dp"
-        android:textColor="@android:color/black"
-        android:textSize="13sp" />
+        android:layout_marginBottom="4dp"
+        app:titleText="Nơi cấp" />
 
-    <TextView
+    <com.pvcombank.sdk.view.customs.TextViewPVCB.TextViewPVCB
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:gravity="center_vertical"
-        android:lineSpacingExtra="8sp"
-        android:text="@string/txt_title_register_digi_bank"
-        android:textColor="#0072BC"
-        android:textSize="13sp" />
+        android:layout_marginBottom="4dp"
+        app:titleText="Ngày cấp" />
+
+    <com.pvcombank.sdk.view.customs.TextViewPVCB.TextViewPVCB
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        app:titleText="Ngày đến hạn" />
+
+    <com.pvcombank.sdk.view.customs.TextViewPVCB.TextViewPVCB
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        app:titleText="Số điện thoại" />
+
+    <com.pvcombank.sdk.view.customs.TextViewPVCB.TextViewPVCB
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        app:titleText="Địa chỉ liên hệ" />
+
+    <com.pvcombank.sdk.view.customs.TextViewPVCB.TextViewPVCB
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        app:titleText="Địa chỉ thường trú" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <TextView
+            style="@style/PVTextHint"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="8"
+            android:text="Cư trú" />
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Có" />
+
+            <RadioButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Không" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <TextView
+            style="@style/PVTextHint"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="8"
+            android:text="Là công dân Hoa kỳ(FACA)" />
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Có" />
+
+            <RadioButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Không" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <com.pvcombank.sdk.view.customs.TextViewPVCB.TextViewPVCB
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        app:titleText="Nghề nghiệp" />
+
+    <com.pvcombank.sdk.view.customs.TextViewPVCB.TextViewPVCB
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        app:titleText="Mã số thuế (Không bắt buộc)" />
+
+    <com.pvcombank.sdk.view.customs.TextViewPVCB.TextViewPVCB
+        android:layout_width="match_parent"
+        app:isHeader="true"
+        android:layout_marginTop="12dp"
+        app:titleText="Đăng ký dịch vụ ngân hàng điện tử"
+        app:showExpend="true"
+        android:layout_height="wrap_content"/>
 
     <CheckBox
         android:layout_width="match_parent"

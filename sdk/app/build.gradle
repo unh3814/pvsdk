@@ -1,25 +1,72 @@
 plugins {
     id 'com.android.library'
+//    id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
+    id 'maven-publish'
 }
 
 android {
     compileSdk 33
 
     defaultConfig {
+//        applicationId "com.pvcombank.sdk"
         minSdk 23
         targetSdk 33
         versionCode 1
         versionName "1.0"
-        multiDexEnabled true
     }
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    flavorDimensions ''
+    productFlavors {
+        def SERVER_URL = "SERVER_URL"
+        def STRING = "String"
+        sdk {
+            dimension ''
+            buildConfigField(STRING, SERVER_URL, '"https://connect.apps.ocp4-dev03.pvcomtestocp.com/"')
+            aarMetadata {
+                minSdk = 23
+            }
+        }
+        sdk_test {
+            dimension ''
+            buildConfigField(STRING, SERVER_URL, '"https://connect.apps.ocp4-dev03.pvcomtestocp.com/"')
+            aarMetadata {
+                minSdk = 23
+            }
+        }
+    }
+    publishing {
+        publications {
+            release(MavenPublication) {
+                groupId = 'com.pvcombank.sdk'
+                artifactId = 'pvsdk'
+                version = '0.1'
+                pom.withXml {
+                    def dependenciesNode = asNode().appendNode('dependencies')
+                    configurations.implementation.allDependencies.each { dependency ->
+                        if (dependency.name != 'unspecified') {
+                            def dependencyNode = dependenciesNode.appendNode('dependency')
+                            dependencyNode.appendNode('groupId', dependency.group)
+                            dependencyNode.appendNode('artifactId', dependency.name)
+                            dependencyNode.appendNode('version', dependency.version)
+                        }
+                    }
+                }
+            }
+        }
+        repositories {
+            maven {
+                name = 'myrepo'
+                url = "${project.buildDir}/repo"
+            }
         }
     }
     compileOptions {
@@ -32,6 +79,9 @@ android {
     lintOptions {
         abortOnError false
     }
+    aaptOptions {
+        noCompress "tflite"
+    }
     buildFeatures {
         viewBinding true
     }
@@ -42,7 +92,6 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation "androidx.multidex:multidex:2.0.1"
     //OKHTTP
     implementation(platform("com.squareup.okhttp3:okhttp-bom:4.9.0"))
     implementation("com.squareup.okhttp3:okhttp")
@@ -82,4 +131,7 @@ dependencies {
         transitive = true
     }
     testImplementation 'junit:junit:4.12'
+}
+repositories {
+    mavenCentral()
 }

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/color_white"
     android:layout_height="wrap_content">
 
     <LinearLayout
@@ -10,241 +12,160 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <TextView
+        <com.pvcombank.sdk.view.customs.TextViewPVCB.TextViewPVCB
+            android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:lineSpacingExtra="8sp"
-            android:paddingVertical="8dp"
-            android:text="@string/txt_full_name"
-            android:textColor="#1B1D29"
-            android:textSize="13sp" />
+            android:layout_marginBottom="14dp"
+            app:titleText="Họ và tên"
+            tools:contentText="Nguyễn Văn A" />
 
-        <EditText
-            android:id="@+id/txt_full_name"
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="14dp"
+            android:background="@color/color_grey_light_1" />
+
+        <com.pvcombank.sdk.view.customs.TextViewPVCB.TextViewPVCB
+            android:id="@+id/date_of_birth"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/bg_edit"
-            android:hint="Nhập nơi thường trú"
-            android:paddingHorizontal="12dp"
-            android:paddingVertical="10dp"
-            android:textColor="@android:color/black"
-            android:textSize="13sp" />
+            android:layout_marginBottom="14dp"
+            app:titleText="Ngày sinh"
+            tools:contentText="9/12/2022" />
 
-        <TextView
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:lineSpacingExtra="8sp"
-            android:paddingVertical="8dp"
-            android:text="@string/txt_date_of_birth"
-            android:textColor="#1B1D29"
-            android:textSize="13sp" />
+            android:layout_height="1dp"
+            android:layout_marginBottom="14dp"
+            android:background="@color/color_grey_light_1" />
 
-        <EditText
-            android:id="@+id/txt_date_of_birth"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/bg_edit"
-            android:hint="Nhập nơi thường trú"
-            android:inputType="text"
-            android:paddingHorizontal="12dp"
-            android:paddingVertical="10dp"
-            android:textColor="@android:color/black"
-            android:textSize="13sp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:lineSpacingExtra="8sp"
-            android:paddingVertical="8dp"
-            android:text="@string/txt_gender"
-            android:textColor="#1B1D29"
-            android:textSize="13sp" />
-
-        <RadioGroup
-            android:id="@+id/rg_select_gender"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/rb_boy"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Nam"
-                android:textSize="13sp" />
-
-            <RadioButton
-                android:id="@+id/rb_girl"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Nữ"
-                android:textSize="13sp" />
-        </RadioGroup>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:lineSpacingExtra="8sp"
-            android:paddingVertical="8dp"
-            android:text="@string/txt_user_identity"
-            android:textColor="#1B1D29"
-            android:textSize="13sp" />
-
-        <EditText
-            android:id="@+id/txt_identity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/bg_edit"
-            android:hint="Nhập nơi thường trú"
-            android:inputType="number"
-            android:paddingHorizontal="12dp"
-            android:paddingVertical="10dp"
-            android:textColor="@android:color/black"
-            android:textSize="13sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="10">
 
-            <LinearLayout
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="8dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:layout_weight="7"
+                android:text="Giới tính"
+                android:textColor="@color/color_grey" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:lineSpacingExtra="8sp"
-                    android:paddingVertical="8dp"
-                    android:text="@string/txt_date_issuing_identity"
-                    android:textColor="#1B1D29"
-                    android:textSize="13sp" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    android:background="@drawable/bg_edit"
-                    android:hint="Nhập nơi thường trú"
-                    android:inputType="date"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="10dp"
-                    android:textColor="@android:color/black"
-                    android:textSize="13sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
+            <RadioGroup
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:layout_weight="3"
+                android:gravity="end|center_vertical"
+                android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="match_parent"
+                <RadioButton
+                    android:buttonTint="@color/color_blue"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:lineSpacingExtra="8sp"
-                    android:paddingVertical="8dp"
-                    android:text="@string/txt_date_exp"
-                    android:textColor="#1B1D29"
-                    android:textSize="13sp" />
+                    android:layout_weight="1"
+                    android:text="Nam" />
 
-                <EditText
-                    android:layout_width="match_parent"
+                <RadioButton
+                    android:buttonTint="@color/color_blue"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    android:background="@drawable/bg_edit"
-                    android:hint="Nhập nơi thường trú"
-                    android:inputType="date"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="10dp"
-                    android:textColor="@android:color/black"
-                    android:textSize="13sp" />
-            </LinearLayout>
-
+                    android:layout_weight="1"
+                    android:text="Nữ" />
+            </RadioGroup>
         </LinearLayout>
 
-        <TextView
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:lineSpacingExtra="8sp"
-            android:paddingVertical="8dp"
-            android:text="@string/txt_locale_issuing"
-            android:textColor="#1B1D29"
-            android:textSize="13sp" />
+            android:layout_height="1dp"
+            android:layout_marginBottom="14dp"
+            android:background="@color/color_grey_light_1" />
 
-        <EditText
+        <com.pvcombank.sdk.view.customs.TextViewPVCB.TextViewPVCB
+            android:id="@+id/identity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/bg_edit"
-            android:hint="Nhập nơi thường trú"
-            android:inputType="text"
-            android:paddingHorizontal="12dp"
-            android:paddingVertical="10dp"
-            android:textColor="@android:color/black"
-            android:textSize="13sp" />
+            android:layout_marginBottom="14dp"
+            app:titleText="Số CCCD/CMND/Hộ chiếu"
+            tools:contentText="9/12/2022" />
 
-        <TextView
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:lineSpacingExtra="8sp"
-            android:paddingVertical="8dp"
-            android:text="@string/txt_domicile_original"
-            android:textColor="#1B1D29"
-            android:textSize="13sp" />
+            android:layout_height="1dp"
+            android:layout_marginBottom="14dp"
+            android:background="@color/color_grey_light_1" />
 
-        <EditText
+        <com.pvcombank.sdk.view.customs.TextViewPVCB.TextViewPVCB
+            android:id="@+id/date_of_range"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/bg_edit"
-            android:hint="Nhập nơi thường trú"
-            android:inputType="text"
-            android:paddingHorizontal="12dp"
-            android:paddingVertical="10dp"
-            android:textColor="@android:color/black"
-            android:textSize="13sp" />
+            android:layout_marginBottom="14dp"
+            app:titleText="Ngày cấp"
+            tools:contentText="9/12/2022" />
 
-        <TextView
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:lineSpacingExtra="8sp"
-            android:paddingVertical="8dp"
-            android:text="@string/txt_domicile"
-            android:textColor="#1B1D29"
-            android:textSize="13sp" />
+            android:layout_height="1dp"
+            android:layout_marginBottom="14dp"
+            android:background="@color/color_grey_light_1" />
 
-        <EditText
+        <com.pvcombank.sdk.view.customs.TextViewPVCB.TextViewPVCB
+            android:id="@+id/date_duo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/bg_edit"
-            android:hint="Nhập nơi thường trú"
-            android:inputType="text"
-            android:paddingHorizontal="12dp"
-            android:paddingVertical="10dp"
-            android:textColor="@android:color/black"
-            android:textSize="13sp" />
+            android:layout_marginBottom="14dp"
+            app:titleText="Giá trị đến"
+            tools:contentText="9/12/2022" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="14dp"
+            android:background="@color/color_grey_light_1" />
+
+        <com.pvcombank.sdk.view.customs.TextViewPVCB.TextViewPVCB
+            android:id="@+id/issued_by"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="14dp"
+            app:titleText="Nơi cấp"
+            tools:contentText="9/12/2022" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="14dp"
+            android:background="@color/color_grey_light_1" />
+
+        <com.pvcombank.sdk.view.customs.TextViewPVCB.TextViewPVCB
+            android:id="@+id/village"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="14dp"
+            app:titleText="Nguyên Quán"
+            tools:contentText="9/12/2022" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="14dp"
+            android:background="@color/color_grey_light_1" />
+
+        <com.pvcombank.sdk.view.customs.TextViewPVCB.TextViewPVCB
+            android:id="@+id/live_in"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="14dp"
+            app:titleText="Nơi thường trú"
+            tools:contentText="9/12/2022" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="14dp"
+            android:background="@color/color_grey_light_1" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -257,10 +178,10 @@
             android:textColor="@color/color_inline_message_warning" />
 
         <Button
+            style="@style/PVButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:background="@drawable/bg_primary"
             android:text="@string/confirm" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
