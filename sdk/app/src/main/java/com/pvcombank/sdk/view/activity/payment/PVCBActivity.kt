@@ -1,22 +1,15 @@
-package com.pvcombank.sdk.view
+package com.pvcombank.sdk.view.activity.payment
 
-import android.app.AppOpsManager
-import android.app.AsyncNotedAppOp
-import android.app.SyncNotedAppOp
 import android.graphics.drawable.Drawable
-import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.util.Log
 import android.view.View
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import com.pvcombank.sdk.R
 import com.pvcombank.sdk.base.PVActivity
 import com.pvcombank.sdk.base.PVFragment
 import com.pvcombank.sdk.base.model.AlertInline
-import com.pvcombank.sdk.base.model.Loading
 import com.pvcombank.sdk.base.model.TopBar
 import com.pvcombank.sdk.base.model.TopBarListener
 import com.pvcombank.sdk.databinding.ActivityPvcbBinding
@@ -31,8 +24,8 @@ class PVCBActivity : PVActivity<ActivityPvcbBinding>() {
 		super.onCreate(savedInstanceState)
 		viewBinding = ActivityPvcbBinding.inflate(layoutInflater)
 		setContentView(viewBinding.root)
-		initTrustVision()
-		initLoading()
+		fragmentHostID = viewBinding.hostsFragment.id
+		initLoading(viewBinding.loading)
 		initAlertInline()
 		initTopBar()
 		
@@ -42,7 +35,6 @@ class PVCBActivity : PVActivity<ActivityPvcbBinding>() {
 				Bundle(),
 				false
 			)
-//			startCaptureCard()
 		}
 		supportFragmentManager.addFragmentOnAttachListener { _, fragment ->
 			when (fragment) {
@@ -82,18 +74,6 @@ class PVCBActivity : PVActivity<ActivityPvcbBinding>() {
 		}
 	}
 	
-	private fun initLoading() {
-		loading = object : Loading {
-			override fun show() {
-				viewBinding.loading.visibility = View.VISIBLE
-			}
-			
-			override fun hide() {
-				viewBinding.loading.visibility = View.GONE
-			}
-		}
-	}
-	
 	private fun initAlertInline() {
 		alertInline = object : AlertInline {
 			override fun show(icon: Drawable?, message: String) {
@@ -120,79 +100,10 @@ class PVCBActivity : PVActivity<ActivityPvcbBinding>() {
 			}
 		}
 	}
-
-	@RequiresApi(Build.VERSION_CODES.R)
-	private fun initOpsManager(){
-		val appOpsCallback =
-		object : AppOpsManager.OnOpNotedCallback() {
-			override fun onNoted(op: SyncNotedAppOp) {
-				logPrivateDataAccess(
-					op.op, Throwable().stackTrace.toString()
-				)
-			}
-
-			override fun onSelfNoted(op: SyncNotedAppOp) {
-				logPrivateDataAccess(
-					op.op, Throwable().stackTrace.toString()
-				)
-			}
-
-			override fun onAsyncNoted(asyncOp: AsyncNotedAppOp) {
-				logPrivateDataAccess(
-					asyncOp.op, Throwable().stackTrace.toString()
-				)
-			}
-
-			private fun logPrivateDataAccess(opCode: String, trace: String) {
-				Log.i(
-					"LOG_PRIVATE", "Private data accessed. " +
-							"Operation: $opCode\nStack Trace:\n$trace"
-				)
-			}
-		}
-		val appOpsManager = getSystemService(AppOpsManager::class.java) as AppOpsManager
-		appOpsManager.setOnOpNotedCallback(mainExecutor, appOpsCallback)
-	}
 	
 	override fun onBack(): Boolean {
 		val hostId = viewBinding.hostsFragment.id
 		val currentFragment = supportFragmentManager.findFragmentById(hostId) as? PVFragment<*>
 		return currentFragment?.onBack() ?: false
 	}
-	
-	private fun initTrustVision() {
-		TrustVisionSDK.init(Constants.TS_CONFIGURATION, "vi", null)
-	}
-	
-	private val nationalIdCard = TVCardType(
-		"vn.national_id",
-		"CMND cũ / CMND mới / CCCD",
-		true,
-		TVCardType.TVCardOrientation.HORIZONTAL
-	)
-	
-	private fun startCaptureCard() {
-		val builder = TVIDConfiguration.Builder()
-			.setCardType(nationalIdCard)
-			.setEnableSound(true)
-			.setReadBothSide(false)
-			.setEnablePhotoGalleryPicker(false)
-			.setEnableTiltChecking(false)
-			.setSkipConfirmScreen(true)
-			.setCardSide(TVSDKConfiguration.TVCardSide.FRONT)
-		TrustVisionSDK.startIDCapturing(this, builder.build(), object : TVCapturingCallBack() {
-			override fun onError(error: TVDetectionError) {
-			
-			}
-			
-			override fun onSuccess(tvDetectionResult: TVDetectionResult) {
-			
-			}
-			
-			override fun onCanceled() {
-			
-			}
-		})
-	}
-	
 }

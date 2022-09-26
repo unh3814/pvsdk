@@ -40,4 +40,17 @@
         <item name="android:background">@drawable/bg_button</item>
         <item name="android:textSize">15sp</item>
     </style>
+
+    <style name="PVCheckBox" parent="Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="android:textColor">@color/color_black</item>
+        <item name="android:buttonTint">@color/color_blue</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:lineSpacingExtra">8dp</item>
+    </style>
+
+    <style name="PVRadioButton" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:textColor">@color/color_black</item>
+        <item name="android:buttonTint">@color/color_blue</item>
+        <item name="android:textSize">13sp</item>
+    </style>
 </resources>

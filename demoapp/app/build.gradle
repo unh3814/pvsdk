@@ -51,4 +51,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava3:2.9.0'
     implementation 'com.google.android.material:material:1.6.1'
+    implementation('com.trustvision:tv_sdk:2.1.0.4@aar') {
+        transitive = true
+    }
 }

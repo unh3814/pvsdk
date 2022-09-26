@@ -33,7 +33,8 @@ class MasterModel {
 	var isCreateAccount = false
 	var cacheCreateAccountMail = ""
 	var cacheCreateAccountPhone = ""
-	
+	var captureCardIDState = ""
+	var captureFaceState = ""
 	companion object {
 		@JvmStatic
 		private var INSTANCE: MasterModel? = null

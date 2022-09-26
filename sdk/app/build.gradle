@@ -27,9 +27,11 @@ android {
     flavorDimensions ''
     productFlavors {
         def SERVER_URL = "SERVER_URL"
+        def ONBOARDING_URL = "ONBOARDING_URL"
         def STRING = "String"
         sdk {
             dimension ''
+            buildConfigField(STRING, ONBOARDING_URL, '"https://onboarding-udnb-staging.pvcombank.com.vn/api/"')
             buildConfigField(STRING, SERVER_URL, '"https://connect.apps.ocp4-dev03.pvcomtestocp.com/"')
             aarMetadata {
                 minSdk = 23
@@ -37,6 +39,7 @@ android {
         }
         sdk_test {
             dimension ''
+            buildConfigField(STRING, ONBOARDING_URL, '"https://onboarding-udnb-staging.pvcombank.com.vn/api/"')
             buildConfigField(STRING, SERVER_URL, '"https://connect.apps.ocp4-dev03.pvcomtestocp.com/"')
             aarMetadata {
                 minSdk = 23
@@ -127,7 +130,7 @@ dependencies {
     //FACE_DETECTION
     implementation 'com.google.mlkit:face-detection:16.1.5'
     //TRUST VISION
-    implementation("com.trustvision:tv_sdk:2.1.0.4@aar"){
+    implementation("com.trustvision:tv_sdk:2.1.0.4@aar") {
         transitive = true
     }
     testImplementation 'junit:junit:4.12'

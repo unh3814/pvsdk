@@ -26,7 +26,7 @@ class AfterCreateFragment : PVFragment<FragmentCreateAccoutBinding>() {
 	
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
-		topBar.setTitle("Đăng ký PVComBank Connect")
+		topBar.setTitle("Điền thông tin cơ bản")
 		repository = AuthRepository()
 		MasterModel.getInstance().isCreateAccount = true
 		viewBinding.apply {

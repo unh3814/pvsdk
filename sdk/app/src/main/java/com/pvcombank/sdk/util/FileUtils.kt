@@ -2,9 +2,11 @@ package com.pvcombank.sdk.util
 
 import android.content.Context
 import android.graphics.Bitmap
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import java.util.Date
 
 object FileUtils {
 	const val cardFileName = "card_image.jpg"
@@ -28,27 +30,16 @@ object FileUtils {
 		}
 	}
 	
-	fun getCardFile(context: Context): File {
-		return File(context.cacheDir, cardFileName)
-	}
-	
-	fun getFaceFile(context: Context): File {
-		return File(context.cacheDir, faceFileName)
-	}
-	
-	fun getFaceFileCloseEyes(context: Context): File {
-		return File(context.cacheDir, faceFileNameCloseEyes)
-	}
-	
-	fun getFaceFileRight(context: Context): File {
-		return File(context.cacheDir, faceFileNameRight)
-	}
-	
-	fun getFaceFileLeft(context: Context): File {
-		return File(context.cacheDir, faceFileNameLeft)
-	}
-	
-	fun getCardBackFile(context: Context): File {
-		return File(context.cacheDir, cardBackFileName)
+	fun Bitmap.toFile(context: Context): File {
+		val cacheFile = File(context.cacheDir, "cachePVCB${Date().time}")
+		cacheFile.createNewFile()
+		val bos = ByteArrayOutputStream()
+		this.compress(Bitmap.CompressFormat.JPEG, 100, bos)
+		val bitmapData = bos.toByteArray()
+		val fos = FileOutputStream(cacheFile)
+		fos.write(bitmapData)
+		fos.flush()
+		fos.close()
+		return cacheFile
 	}
 }

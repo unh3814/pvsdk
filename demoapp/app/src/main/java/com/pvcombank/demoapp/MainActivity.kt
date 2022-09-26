@@ -27,6 +27,12 @@ class MainActivity : AppCompatActivity() {
 				startPayment()
 			}
 		}
+		findViewById<Button>(R.id.btn_register).setOnClickListener {
+			PVCBAuth().apply {
+				build(this@MainActivity)
+				startRegister()
+			}
+		}
 	}
 	
 	fun startPayment() {

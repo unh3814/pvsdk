@@ -1,11 +1,15 @@
 package com.pvcombank.sdk.base
 
 import android.content.Context
+import android.graphics.drawable.Drawable
+import android.os.CountDownTimer
 import android.os.Looper
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.viewbinding.ViewBinding
+import com.pvcombank.sdk.R
 import com.pvcombank.sdk.base.model.AlertInline
 import com.pvcombank.sdk.base.model.Loading
 import com.pvcombank.sdk.base.model.TopBar
@@ -15,6 +19,7 @@ abstract class PVActivity<VB : ViewBinding> : FragmentActivity() {
 	lateinit var loading: Loading
 	lateinit var alertInline: AlertInline
 	lateinit var topBar: TopBar
+	open var fragmentHostID: Int = 0
 	
 	val handler = android.os.Handler(Looper.getMainLooper())
 	
@@ -43,6 +48,18 @@ abstract class PVActivity<VB : ViewBinding> : FragmentActivity() {
 		if (view.requestFocus()) {
 			val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 			imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
+		}
+	}
+	
+	fun initLoading(view: View) {
+		loading = object : Loading {
+			override fun show() {
+				view.visibility = View.VISIBLE
+			}
+			
+			override fun hide() {
+				view.visibility = View.GONE
+			}
 		}
 	}
 }

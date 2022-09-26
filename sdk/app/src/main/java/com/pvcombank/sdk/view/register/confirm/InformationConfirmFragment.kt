@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.pvcombank.sdk.base.PVFragment
 import com.pvcombank.sdk.databinding.FragmentCardCaptureResultBinding
+import com.pvcombank.sdk.view.register.information.InformationRegisterFragment
 
 class InformationConfirmFragment : PVFragment<FragmentCardCaptureResultBinding>() {
 	override fun onCreateView(
@@ -20,7 +21,14 @@ class InformationConfirmFragment : PVFragment<FragmentCardCaptureResultBinding>(
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		viewBinding.apply {
-		
+			topBar.setTitle("Xác nhận thông tin")
+			btnConfirm.setOnClickListener {
+				openFragment(
+					InformationRegisterFragment::class.java,
+					Bundle(),
+					true
+				)
+			}
 		}
 	}
 	

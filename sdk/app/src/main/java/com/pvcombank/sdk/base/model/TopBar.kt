@@ -2,6 +2,7 @@ package com.pvcombank.sdk.base.model
 
 import android.graphics.drawable.Drawable
 import android.view.View
+import com.pvcombank.sdk.R
 import com.pvcombank.sdk.databinding.TopBarBinding
 
 interface TopBarInterface {
@@ -21,6 +22,10 @@ interface TopBarListener {
 
 class TopBar : TopBarInterface {
 	private lateinit var viewBinding: TopBarBinding
+	
+	fun setColor(color: Int){
+		viewBinding.llRootView.setBackgroundResource(color)
+	}
 	
 	fun setContentView(viewBinding: TopBarBinding){
 		this.viewBinding = viewBinding

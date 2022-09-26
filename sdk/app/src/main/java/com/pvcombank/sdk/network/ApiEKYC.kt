@@ -1,21 +1,28 @@
 package com.pvcombank.sdk.network
 
-import com.pvcombank.sdk.model.CardInfor
+import com.pvcombank.sdk.model.response.ResponseOCR
 import io.reactivex.rxjava3.core.Observable
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.Multipart
-import retrofit2.http.Part
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
+import retrofit2.http.POST
 
 interface ApiEKYC {
+	@FormUrlEncoded
+	@POST("verify-card")
+	fun verifyCard(
+		@Field("file") file: MultipartBody.Part,
+		@Field("label") label: String
+	): Observable<ResponseOCR>
 	
-	@Multipart
-	@GET("/v3.2/ocr/recognition")
-	fun ocrCard(
-		@Header("key") apiKey : String,
-		@Part image: MultipartBody.Part,
-		@Part("request_id") requestId: RequestBody
-	) : Observable<CardInfor>
+	@FormUrlEncoded
+	@POST("verify")
+	fun verifyCard(
+		@Field("files") files: List<MultipartBody.Part>,
+		@Field("label") label: String
+	): Observable<ResponseOCR>
+	
+	@FormUrlEncoded
+	@POST("verify-selfie")
+	fun verifySelfie(): Observable<ResponseOCR>
 }

@@ -38,6 +38,8 @@ import com.pvcombank.sdk.repository.AuthRepository
 import com.pvcombank.sdk.util.security.SecurityHelper
 import com.pvcombank.sdk.view.otp.select_card.PaymentInformationFragment
 import com.pvcombank.sdk.view.popup.AlertPopup
+import com.pvcombank.sdk.view.popup.GuideCardCaptureDialog
+import com.pvcombank.sdk.view.register.guide.card.GuideCardIdFragment
 
 class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 	private var repository: AuthRepository? = null
@@ -222,7 +224,11 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 						when(it.ekyc.ekycStatus){
 							//Nhiều case quá chịu
 							else -> {
-								//Đăng ký ekyc
+								openFragment(
+									GuideCardIdFragment::class.java,
+									Bundle(),
+									true
+								)
 							}
 						}
 					} else {

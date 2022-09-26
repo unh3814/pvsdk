@@ -16,14 +16,10 @@
     <application
         android:supportsRtl="true"
         tools:targetApi="32" >
-        <activity android:name=".view.PVCBActivity"
-            android:windowSoftInputMode="adjustPan|stateVisible"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <activity android:name=".view.activity.payment.PVCBActivity"
+            android:windowSoftInputMode="adjustPan|stateVisible">
         </activity>
+        <activity android:name=".view.activity.register.RegisterActivity"
+            android:windowSoftInputMode="adjustPan|stateVisible"/>
     </application>
 </manifest>

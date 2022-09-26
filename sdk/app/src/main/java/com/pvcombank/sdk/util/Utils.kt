@@ -6,6 +6,8 @@ import androidx.fragment.app.FragmentActivity
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.pvcombank.sdk.R
+import com.pvcombank.sdk.base.PVActivity
+import com.pvcombank.sdk.base.PVFragment
 import java.text.NumberFormat
 import java.util.*
 
@@ -20,8 +22,9 @@ object Utils {
 		arg: Bundle,
 		addBackStack: Boolean
 	) {
+		val hostFragmentID = (this as PVActivity<*>).fragmentHostID
 		supportFragmentManager.beginTransaction()
-			.replace(R.id.hosts_fragment, clazz, arg)
+			.replace(hostFragmentID, clazz, arg)
 			.addToBackStack(clazz.simpleName)
 			.setReorderingAllowed(addBackStack)
 			.commit()

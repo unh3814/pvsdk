@@ -16,6 +16,8 @@
         tools:text="Tiêu đề" />
 
     <EditText
+        android:textColor="@color/color_black"
+        android:textColorHint="@color/color_grey"
         android:id="@+id/editor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
