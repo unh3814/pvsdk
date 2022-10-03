@@ -20,6 +20,6 @@
             android:windowSoftInputMode="adjustPan|stateVisible">
         </activity>
         <activity android:name=".view.activity.register.RegisterActivity"
-            android:windowSoftInputMode="adjustPan|stateVisible"/>
+            android:windowSoftInputMode="adjustResize|stateAlwaysVisible"/>
     </application>
 </manifest>

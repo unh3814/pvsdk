@@ -2,14 +2,14 @@ package com.pvcombank.sdk.repository
 
 import android.util.Log
 import com.pvcombank.sdk.BuildConfig
+import com.pvcombank.sdk.model.request.RequestVerifySelfies
+import com.pvcombank.sdk.model.response.ResponseOCR
 import com.pvcombank.sdk.network.ApiEKYC
 import com.pvcombank.sdk.network.RetrofitHelper
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.schedulers.Schedulers
 import okhttp3.MultipartBody
-import java.util.*
-import kotlin.collections.HashMap
+import okhttp3.RequestBody
 
 class OnBoardingRepository {
 	private val apiServices: ApiEKYC = RetrofitHelper.instance()
@@ -17,15 +17,11 @@ class OnBoardingRepository {
 		.create(ApiEKYC::class.java)
 	
 	fun verifyCard(
-		multipart: MultipartBody.Part,
-		type: String,
+		requestBody: RequestBody,
 		callBack: (HashMap<String, Any>) -> Unit
 	) {
 		val result = hashMapOf<String, Any>()
-		apiServices.verifyCard(
-			file = multipart,
-			label = type
-		).observeOn(AndroidSchedulers.mainThread())
+		apiServices.verifyCard(requestBody).observeOn(AndroidSchedulers.mainThread())
 			.subscribeOn(Schedulers.io())
 			.subscribe(
 				{
@@ -41,31 +37,31 @@ class OnBoardingRepository {
 			)
 	}
 	
-	fun verifyBoldCard(
-		multiparts: List<MultipartBody.Part>,
+	fun verifySelfies(
+		requestVerifySelfies: RequestVerifySelfies,
 		callBack: (HashMap<String, Any>) -> Unit
 	) {
 		val result = hashMapOf<String, Any>()
-		apiServices.verifyCard(
-			files = multiparts,
-			label = ""
-		).observeOn(AndroidSchedulers.mainThread())
+		apiServices.verifySelfie(requestVerifySelfies)
+			.observeOn(AndroidSchedulers.mainThread())
 			.subscribeOn(Schedulers.io())
 			.subscribe(
 				{
-					Log.d("Verify", "Success")
-					result["success"] = it
-					callBack.invoke(result)
+					if (it.error?.isNotEmpty() == true) {
+						result["fail"] = it.error ?: ""
+					} else {
+						result["success"] = it
+					}
+					callBack.invoke(
+						result
+					)
 				},
 				{
-					Log.d("Verify", "Fail")
-					result["error"] = it.message.toString()
-					callBack.invoke(result)
+					result["fail"] = it.message.toString()
+					callBack.invoke(
+						result
+					)
 				}
 			)
-	}
-	
-	fun verifySelfies(gesture: List<Base64>, frontal: List<Base64>, videos: List<Any>) {
-	
 	}
 }

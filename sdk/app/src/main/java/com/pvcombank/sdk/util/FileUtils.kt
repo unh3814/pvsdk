@@ -31,7 +31,7 @@ object FileUtils {
 	}
 	
 	fun Bitmap.toFile(context: Context): File {
-		val cacheFile = File(context.cacheDir, "cachePVCB${Date().time}")
+		val cacheFile = File(context.cacheDir, "cachePVCB${Date().time}.jpg")
 		cacheFile.createNewFile()
 		val bos = ByteArrayOutputStream()
 		this.compress(Bitmap.CompressFormat.JPEG, 100, bos)

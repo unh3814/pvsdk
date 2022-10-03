@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_margin="8dp"
+    android:background="@color/color_white"
     app:cardCornerRadius="8dp"
     android:layout_height="wrap_content">
 
@@ -32,7 +33,7 @@
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="12dp"
             android:gravity="center_horizontal"
-            android:textColor="@android:color/black"
+            android:textColor="@color/color_black"
             android:textSize="15sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -48,6 +49,7 @@
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="24dp"
             android:textSize="13sp"
+            android:textColor="@color/color_grey"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_title"
@@ -71,10 +73,12 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
+                android:textColor="@color/color_black"
                 android:background="@drawable/bg_border"
                 android:text="Phụ" />
 
             <TextView
+                android:textColor="@color/color_white"
                 android:id="@+id/btn_primary"
                 style="@style/Widget.AppCompat.Button"
                 android:layout_width="0dp"

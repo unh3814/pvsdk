@@ -86,7 +86,7 @@ class PaymentInformationFragment : PVFragment<FragmentPaymentInformationBinding>
 			}
 			MasterModel.getInstance().apply {
 				tvNumberOrder.text = idOrder
-				tvCurrentBalance.text = "${orderCurrency?.formatStringCurrency()}đ"
+				tvCurrentBalance.text = "${orderCurrency?.formatStringCurrency() ?: ""}đ"
 				tvContentOrder.text = getString(R.string.content_order_desc, idOrder, clientId)
 				orderDesc = tvContentOrder.text.toString()
 			}

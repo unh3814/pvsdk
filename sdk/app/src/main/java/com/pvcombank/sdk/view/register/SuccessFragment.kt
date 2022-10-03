@@ -22,10 +22,7 @@ class SuccessFragment : PVFragment<FragmentRegisterSuccessBinding>() {
 		super.onViewCreated(view, savedInstanceState)
 		viewBinding.apply {
 			btnConfirm.setOnClickListener {
-				MasterModel.getInstance().apply {
-					captureCardIDState = ""
-					captureFaceState = ""
-				}
+				MasterModel.getInstance().cleanOCR()
 				requireActivity().finish()
 			}
 		}

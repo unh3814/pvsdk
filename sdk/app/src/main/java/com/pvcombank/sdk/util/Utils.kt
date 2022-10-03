@@ -8,7 +8,9 @@ import com.google.gson.reflect.TypeToken
 import com.pvcombank.sdk.R
 import com.pvcombank.sdk.base.PVActivity
 import com.pvcombank.sdk.base.PVFragment
+import com.pvcombank.sdk.model.Constants
 import java.text.NumberFormat
+import java.text.SimpleDateFormat
 import java.util.*
 
 object Utils {
@@ -33,10 +35,17 @@ object Utils {
 	inline fun <reified T> String.toObjectData(): T? {
 		val type = object : TypeToken<T>() {}.type
 		var result: T? = null
-		try{
+		try {
 			result = Gson().fromJson<T>(this, type)
-		} catch (e: Exception){
+		} catch (e: Exception) {
 		}
-		 return result
+		return result
+	}
+	
+	fun String.toPVDate(): String {
+		val f1 = SimpleDateFormat("dd/MM/yyyy")
+		val f2 = SimpleDateFormat("yyyy-MM-dd")
+		return f1.format(f2.parse(this))
+		
 	}
 }

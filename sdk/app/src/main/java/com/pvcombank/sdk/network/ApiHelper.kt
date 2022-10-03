@@ -19,7 +19,7 @@ interface ApiHelper {
 		@Field("grant_type") grantType: String? = Constants.GRANT_TYPE_CODE,
 		@Field("client_secret") clientSecret: String,
 		@Field("code") code: String,
-		@Field("redirect_uri") redirectUri: String? = Constants.REDIRECT_URL
+		@Field("redirect_uri") redirectUri: String? = Constants.REDIRECT_SANBOX_URL
 	): Observable<GetAccessTokenModel>
 	
 	@FormUrlEncoded

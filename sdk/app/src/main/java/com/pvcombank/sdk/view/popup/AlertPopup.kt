@@ -38,6 +38,7 @@ class AlertPopup : DialogFragment() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		viewBinding.apply {
+			root.setBackgroundResource(R.color.color_white)
 			val titleSecond = arguments?.getString(TITLE_SECOND)
 			val titlePrimary = arguments?.getString(TITLE_PRIMARY)
 			val icon = arguments?.getInt(ICON)

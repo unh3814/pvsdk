@@ -1,6 +1,7 @@
 package com.pvcombank.sdk.model.request
 
 import com.google.gson.annotations.SerializedName
+import com.trustingsocial.tvcoresdk.external.TVFrameClass
 
 data class RequestVerifySelfies(
     @SerializedName("frontal")
@@ -8,7 +9,7 @@ data class RequestVerifySelfies(
     @SerializedName("gesture")
     var gesture: List<Gesture>,
     @SerializedName("videos")
-    var videos: List<Video>
+    var videos: List<TVFrameClass>
 )
 
 data class Gesture(
@@ -16,25 +17,4 @@ data class Gesture(
     var base64: String,
     @SerializedName("gesture")
     var gesture: String
-)
-
-data class Video(
-    @SerializedName("base64")
-    var base64: String,
-    @SerializedName("bbox")
-    var bbox: List<Double>,
-    @SerializedName("index")
-    var index: Int,
-    @SerializedName("label")
-    var label: String,
-    @SerializedName("landmarks")
-    var landmarks: List<List<Double>>,
-    @SerializedName("original_bbox")
-    var originalBbox: List<Double>,
-    @SerializedName("original_landmarks")
-    var originalLandmarks: List<List<Double>>,
-    @SerializedName("score")
-    var score: Double,
-    @SerializedName("time")
-    var time: Long
 )

@@ -37,6 +37,14 @@ android {
                 minSdk = 23
             }
         }
+        onboading{
+            dimension ''
+            buildConfigField(STRING, ONBOARDING_URL, '"https://onboarding-udnb-staging.pvcombank.com.vn/api/"')
+            buildConfigField(STRING, SERVER_URL, '"https://sandbox-connect.pvcombank.com.vn/"')
+            aarMetadata {
+                minSdk = 23
+            }
+        }
         sdk_test {
             dimension ''
             buildConfigField(STRING, ONBOARDING_URL, '"https://onboarding-udnb-staging.pvcombank.com.vn/api/"')
@@ -51,7 +59,7 @@ android {
             release(MavenPublication) {
                 groupId = 'com.pvcombank.sdk'
                 artifactId = 'pvsdk'
-                version = '0.1'
+                version = '0.1.0'
                 pom.withXml {
                     def dependenciesNode = asNode().appendNode('dependencies')
                     configurations.implementation.allDependencies.each { dependency ->
@@ -118,8 +126,6 @@ dependencies {
     //RX
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
     implementation 'io.reactivex.rxjava3:rxjava:3.0.0'
-    //CAMERA VIEW
-    api 'com.otaliastudios:cameraview:2.7.2'
     //SECURITY
     implementation("androidx.security:security-crypto:1.0.0")
     //DATASTORE
@@ -127,8 +133,6 @@ dependencies {
     implementation("androidx.datastore:datastore-preferences-rxjava3:1.0.0")
     //CIRCLE_IMAGE_VIEW
     implementation 'de.hdodenhof:circleimageview:3.1.0'
-    //FACE_DETECTION
-    implementation 'com.google.mlkit:face-detection:16.1.5'
     //TRUST VISION
     implementation("com.trustvision:tv_sdk:2.1.0.4@aar") {
         transitive = true

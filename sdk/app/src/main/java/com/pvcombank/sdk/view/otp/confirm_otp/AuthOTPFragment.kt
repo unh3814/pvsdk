@@ -36,10 +36,13 @@ import com.pvcombank.sdk.model.response.ResponseVerifyOTP
 import com.pvcombank.sdk.model.response.ResponseVerifyOnboardOTP
 import com.pvcombank.sdk.repository.AuthRepository
 import com.pvcombank.sdk.util.security.SecurityHelper
+import com.pvcombank.sdk.view.login.AuthWebLoginFragment
 import com.pvcombank.sdk.view.otp.select_card.PaymentInformationFragment
 import com.pvcombank.sdk.view.popup.AlertPopup
 import com.pvcombank.sdk.view.popup.GuideCardCaptureDialog
+import com.pvcombank.sdk.view.register.confirm.InformationConfirmFragment
 import com.pvcombank.sdk.view.register.guide.card.GuideCardIdFragment
+import com.pvcombank.sdk.view.register.guide.face.GuideFaceIdFragment
 
 class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 	private var repository: AuthRepository? = null
@@ -58,7 +61,7 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 		viewBinding.apply {
 			topBar.setTitle(getString(R.string.confirm_otp))
 			topBar.show()
-			topBar.addButtonMore(title = "Huỷ", listener = object : TopBarListener.MoreListener{
+			topBar.addButtonMore(title = "Huỷ", listener = object : TopBarListener.MoreListener {
 				override fun onMoreClick() {
 					AlertPopup.show(
 						fragmentManager = childFragmentManager,
@@ -111,7 +114,7 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 			}
 			val text = getString(
 				R.string.sended_otp_to_number_phone,
-				arguments?.getParcelable<ResponsePurchase>("data")?.phoneNumber
+				arguments?.getParcelable<ResponsePurchase>("data")?.phoneNumber ?: MasterModel.getInstance().cacheCreateAccountPhone
 			)
 			val spanText = SpannableString(text)
 			spanText.setSpan(
@@ -153,18 +156,18 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 		viewBinding.tvGetOtp.setTextColor(Color.parseColor("#82869E"))
 		val card = requireArguments().getParcelable<CardModel>("card")
 		showLoading()
-		if (MasterModel.getInstance().isCreateAccount){
+		if (MasterModel.getInstance().isCreateAccount) {
 			val mail = MasterModel.getInstance().cacheCreateAccountMail
 			val phone = MasterModel.getInstance().cacheCreateAccountPhone
 			
-			repository?.sendOTP(phone, mail){
-				if (it !is String){
+			repository?.sendOTP(phone, mail) {
+				if (it !is String) {
 				
 				}
 				hideLoading()
 				startCountDownTimer()
 			}
-		} else{
+		} else {
 			repository?.purchase(card?.cardToken ?: "") {
 				when (it) {
 					is ResponsePurchase -> {
@@ -217,26 +220,89 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 		val stringEncrypt = SecurityHelper.instance()
 			.cryptoBuild(type = SecurityHelper.AES)
 			?.encrypt(Gson().toJson(request))
-		if (MasterModel.getInstance().isCreateAccount){
-			repository?.verifyOnboardOTP(RequestModel(data = stringEncrypt)){
-				if (it is ResponseVerifyOnboardOTP){
-					if (it.pvconnect.detected()){
-						when(it.ekyc.ekycStatus){
-							//Nhiều case quá chịu
-							else -> {
-								openFragment(
-									GuideCardIdFragment::class.java,
-									Bundle(),
-									true
-								)
-							}
+		if (MasterModel.getInstance().isCreateAccount) {
+			repository?.verifyOnboardOTP(RequestModel(data = stringEncrypt)) {
+				hideLoading()
+				if (it is ResponseVerifyOnboardOTP) {
+					//Kiểm tra PVConnect sau
+					MasterModel.getInstance().ocrFromOTP = it.ekyc
+					MasterModel.getInstance().getDataOCR().mobilePhone = MasterModel.getInstance().cacheCreateAccountPhone
+					when (it.ekyc.step) {
+						0, 5, 6 -> {
+							AlertPopup.show(
+								fragmentManager = childFragmentManager,
+								title = "Đăng nhập",
+								message = "",
+								primaryTitle = "Đồng ý",
+								primaryButtonListener = object : AlertPopup.PrimaryButtonListener{
+									override fun onClickListener(v: View) {
+										openFragment(
+											AuthWebLoginFragment::class.java,
+											Bundle(),
+											false
+										)
+									}
+								}
+							)
 						}
-					} else {
-						//Đăng ký pvconnect
+						1 -> {
+							openFragment(
+								GuideCardIdFragment::class.java,
+								Bundle(),
+								true
+							)
+						}
+						2 -> {
+							openFragment(
+								GuideFaceIdFragment::class.java,
+								Bundle(),
+								true
+							)
+						}
+						3, 4 -> {
+							openFragment(
+								InformationConfirmFragment::class.java,
+								Bundle(),
+								true
+							)
+						}
+						7 -> {
+							AlertPopup.show(
+								fragmentManager = childFragmentManager,
+								title = "Từ chối",
+								message = "",
+								primaryTitle = "Đồng ý",
+								primaryButtonListener = object : AlertPopup.PrimaryButtonListener{
+									override fun onClickListener(v: View) {
+									
+									}
+								}
+							)
+						}
+					}
+				} else {
+					(it as? RequestModel)?.let { errorModel ->
+						errorModel.code?.let {
+							when (errorModel.code) {
+								"117" -> {
+									viewBinding.errorMessage.text = errorModel.message
+								}
+								else -> {
+									showAlertErrorPayment(errorModel.message)
+								}
+							}
+						} ?: kotlin.run {
+							showAlertErrorPayment(getString(R.string.error_system))
+						}
+						MasterModel.getInstance().errorString.onNext(
+							errorModel.message ?: getString(R.string.error_system)
+						)
+					} ?: run {
+						showAlertErrorPayment(getString(R.string.error_system))
 					}
 				}
 			}
-		}else{
+		} else {
 			repository?.verifyOTP(RequestModel(data = stringEncrypt)) {
 				when (it) {
 					is ResponseVerifyOTP -> {
@@ -270,7 +336,9 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 							} ?: kotlin.run {
 								showAlertErrorPayment(getString(R.string.error_system))
 							}
-							MasterModel.getInstance().errorString.onNext(errorModel.message ?: getString(R.string.error_system))
+							MasterModel.getInstance().errorString.onNext(
+								errorModel.message ?: getString(R.string.error_system)
+							)
 						} ?: run {
 							showAlertErrorPayment(getString(R.string.error_system))
 						}
@@ -367,7 +435,7 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 	private fun startCountDownTimer() {
 		val time = object : CountDownTimer(120000, 1000) {
 			override fun onTick(millisUntilFinished: Long) {
-				if (context != null){
+				if (context != null) {
 					viewBinding.apply {
 						tvGetOtp.isEnabled = false
 						tvGetOtp.setTextColor(Color.parseColor("#82869E"))

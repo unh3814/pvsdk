@@ -16,13 +16,14 @@ import com.pvcombank.sdk.util.NetworkUtil.getErrorBody
 import com.pvcombank.sdk.util.Utils.toObjectData
 import com.pvcombank.sdk.util.security.SecurityHelper
 import com.google.gson.Gson
+import com.pvcombank.sdk.BuildConfig
 import com.pvcombank.sdk.model.*
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 class AuthRepository() {
 	private val apiHelper: ApiHelper = RetrofitHelper.instance()
-		.createServices(Constants.BASE_URL)
+		.createServices(BuildConfig.SERVER_URL)
 		.create(ApiHelper::class.java)
 	
 	private val apiOther: ApiOther = RetrofitHelper.instance()
@@ -206,6 +207,9 @@ class AuthRepository() {
 						val decryptText = securityHelper?.decrypt(it.data ?: "")
 						decryptText?.toObjectData<ResponseData<ResponseVerifyOnboardOTP>>()?.let {
 							if (it.code == Constants.CODE_SUCCESS && it.data != null) {
+								it.data?.token?.let{
+									Constants.TOKEN = "Bearer $it"
+								}
 								callBack.invoke(it.data!!)
 							} else {
 								callBack.invoke("Đã có lỗi, vui lòng thử lại")

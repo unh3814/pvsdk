@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,25 +16,19 @@ import com.pvcombank.sdk.databinding.FragmentWebLoginBinding
 import com.pvcombank.sdk.model.Constants
 import com.pvcombank.sdk.model.MasterModel
 import com.pvcombank.sdk.repository.AuthRepository
-import com.pvcombank.sdk.view.otp.select_card.PaymentInformationFragment
 import com.pvcombank.sdk.view.popup.AlertPopup
 import com.pvcombank.sdk.view.register.after_create.AfterCreateFragment
-import com.trustingsocial.tvcoresdk.external.*
-import com.trustingsocial.tvsdk.TrustVisionSDK
+import com.pvcombank.sdk.view.register.guide.card.GuideCardIdFragment
 import java.util.*
 
 class AuthWebLoginFragment : PVFragment<FragmentWebLoginBinding>() {
-	private val masterData = MasterModel.getInstance()
-	private var isLogin = false
 	private val webClient = object : WebViewClient() {
 		override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-			showLoading()
 			handlerUrl(url)
 		}
 		
 		override fun onPageFinished(view: WebView?, url: String?) {
 			super.onPageFinished(view, url)
-			hideLoading()
 		}
 		
 		override fun onReceivedError(
@@ -42,7 +37,7 @@ class AuthWebLoginFragment : PVFragment<FragmentWebLoginBinding>() {
 			error: WebResourceError?
 		) {
 			hideLoading()
-			viewBinding.layoutLoaddingWeb.visibility = View.VISIBLE
+//			viewBinding.layoutLoaddingWeb.visibility = View.VISIBLE
 			if (error?.errorCode == -2) {
 				AlertPopup.show(
 					fragmentManager = childFragmentManager,
@@ -60,17 +55,25 @@ class AuthWebLoginFragment : PVFragment<FragmentWebLoginBinding>() {
 		
 		override fun onLoadResource(view: WebView?, url: String?) {
 			super.onLoadResource(view, url)
+			if (url?.startsWith(Constants.REDIRECT_SANBOX_URL) == true){
+				Log.d("success", "Login success")
+			}
 		}
 	}
 	private val chromeClient = object : WebChromeClient() {
 		override fun onProgressChanged(view: WebView?, newProgress: Int) {
 			super.onProgressChanged(view, newProgress)
-			if (view?.url?.startsWith(Constants.REDIRECT_URL) == true && view?.url != Constants.url) {
-				viewBinding.layoutLoaddingWeb.visibility = View.VISIBLE
+			if (newProgress < 100 && view?.url?.startsWith(Constants.REDIRECT_SANBOX_URL) == false){
+				showLoading()
+			} else {
+				hideLoading()
 			}
-			if (view?.url == Constants.url) {
-				viewBinding.layoutLoaddingWeb.visibility = View.GONE
-			}
+//			if (view?.url?.startsWith(Constants.REDIRECT_SANBOX_URL) == true && view?.url != Constants.url) {
+//				viewBinding.layoutLoaddingWeb.visibility = View.VISIBLE
+//			}
+//			if (view?.url == Constants.url) {
+//				viewBinding.layoutLoaddingWeb.visibility = View.GONE
+//			}
 		}
 	}
 	
@@ -87,8 +90,8 @@ class AuthWebLoginFragment : PVFragment<FragmentWebLoginBinding>() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		hideInlineMessage()
-		showLoading()
 		topBar.hide()
+		MasterModel.getInstance().cleanOCR()
 		viewBinding.webViewer.apply {
 			clearCache(true)
 			settings.javaScriptEnabled = true
@@ -101,7 +104,7 @@ class AuthWebLoginFragment : PVFragment<FragmentWebLoginBinding>() {
 			CookieManager.getInstance().flush()
 			webViewClient = webClient
 			webChromeClient = chromeClient
-			loadUrl(Constants.url)
+			loadUrl(Constants.url_sanbox)
 		}
 	}
 	
@@ -122,7 +125,8 @@ class AuthWebLoginFragment : PVFragment<FragmentWebLoginBinding>() {
 	}
 	
 	private fun toLogin(url: String?) {
-		if (url?.startsWith(Constants.REDIRECT_URL) == true) {
+		if (url?.startsWith(Constants.REDIRECT_SANBOX_URL) == true) {
+			showLoading()
 			Uri.parse(url)?.apply {
 				this.getQueryParameter("code")?.let {
 					val code = it
@@ -131,12 +135,13 @@ class AuthWebLoginFragment : PVFragment<FragmentWebLoginBinding>() {
 						Handler(Looper.getMainLooper()).post {
 							getTokenByCode(
 								code = code,
-								clientId = masterData.clientId ?: "",
-								clientSecret = masterData.clientSecret ?: ""
+								clientId = Constants.CLIENT_ID,
+								clientSecret = Constants.CLIENT_SECRET
 							) {
+								hideLoading()
 								Constants.TOKEN = "${it?.tokenType ?: ""} ${it?.accessToken ?: ""}"
 								openFragment(
-									PaymentInformationFragment::class.java,
+									GuideCardIdFragment::class.java,
 									Bundle(),
 									true
 								)

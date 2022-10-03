@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:background="@drawable/bg_border"
+        android:background="@drawable/bg_edit"
         android:paddingHorizontal="8dp"
         android:paddingVertical="12dp"
         android:singleLine="true"
@@ -30,6 +30,7 @@
         tools:hint="Nội dung" />
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/note"
         style="@style/PVTextHint"
         android:layout_width="match_parent"

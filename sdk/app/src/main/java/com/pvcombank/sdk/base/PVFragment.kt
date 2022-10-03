@@ -15,7 +15,12 @@ abstract class PVFragment<VB : ViewBinding> : Fragment() {
 	abstract fun onBack(): Boolean
 	val handler = Handler(Looper.getMainLooper())
 	val topBar get() = (requireActivity() as PVActivity<*>).topBar
-	
+	override fun onStart() {
+		super.onStart()
+		viewBinding.root.setOnClickListener {
+			hideKeyboard()
+		}
+	}
 	override fun onStop() {
 		super.onStop()
 		handler.removeCallbacksAndMessages(null)
@@ -28,6 +33,7 @@ abstract class PVFragment<VB : ViewBinding> : Fragment() {
 	) = requireActivity().openFragment(clazz, arg, addBackStack)
 	
 	fun showLoading() {
+		hideKeyboard()
 		when (val activity = requireActivity()) {
 			is PVActivity<*> -> activity.loading.show()
 		}

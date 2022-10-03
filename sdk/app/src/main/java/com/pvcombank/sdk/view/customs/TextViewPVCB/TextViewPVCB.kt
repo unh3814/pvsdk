@@ -23,7 +23,7 @@ class TextViewPVCB(
 	private var textTitle = ""
 	private var isHeader = false
 	private var isShowExpend = false
-	private var isExpended = false
+	private var isExpended = true
 	private var viewExpend: View? = null
 	init {
 		context.theme.obtainStyledAttributes(
@@ -82,8 +82,10 @@ class TextViewPVCB(
 				isExpended = !isExpended
 				if(isExpended){
 					viewBinding.expend.setImageResource(R.drawable.ic_round_keyboard_arrow_down_24)
+					viewExpend?.visibility = View.VISIBLE
 				} else {
 					viewBinding.expend.setImageResource(R.drawable.ic_round_keyboard_arrow_up_24)
+					viewExpend?.visibility = View.GONE
 				}
 				callBack.invoke(isExpended)
 			}

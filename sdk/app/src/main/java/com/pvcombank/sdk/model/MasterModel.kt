@@ -3,6 +3,9 @@ package com.pvcombank.sdk.model
 import com.pvcombank.sdk.util.security.SecurityHelper
 import com.google.gson.Gson
 import com.pvcombank.sdk.BuildConfig
+import com.pvcombank.sdk.model.response.ResponseOCR
+import com.trustingsocial.tvcoresdk.external.FrameBatch
+import com.trustingsocial.tvsdk.TrustVisionSDK
 import io.reactivex.rxjava3.subjects.PublishSubject
 import java.util.*
 
@@ -33,8 +36,11 @@ class MasterModel {
 	var isCreateAccount = false
 	var cacheCreateAccountMail = ""
 	var cacheCreateAccountPhone = ""
-	var captureCardIDState = ""
-	var captureFaceState = ""
+	val frameBatch = mutableListOf<FrameBatch>()
+	val dataOCR = hashMapOf<String, Any>()
+	var selectBranch: BranchModel? = null
+	var ocrFromOTP: ResponseOCR = ResponseOCR()
+	
 	companion object {
 		@JvmStatic
 		private var INSTANCE: MasterModel? = null
@@ -46,4 +52,43 @@ class MasterModel {
 		}
 	}
 	
+	fun updateDataOCR(){
+		val front = dataOCR["front_card"] as? ResponseOCR
+		val back = dataOCR["back_card"] as? ResponseOCR
+		ocrFromOTP.apply {
+			cardImageId = front?.cardImageId ?: back?.cardImageId
+			cardLabel = front?.cardLabel ?: back?.cardLabel
+			cardType = front?.cardType ?: back?.cardType
+			cifNumber = front?.cifNumber ?: back?.cifNumber
+			dob = front?.dob ?: back?.dob
+			email = front?.email ?: back?.email
+			error = front?.error ?: back?.error
+			expDate = front?.expDate ?: back?.expDate
+			gender = front?.gender ?: back?.gender
+			getCifNumber = front?.getCifNumber ?: back?.getCifNumber
+			idNumber = front?.idNumber ?: back?.idNumber
+			issueDate = back?.issueDate ?: front?.issueDate
+			issuePlace = back?.issuePlace ?: front?.issuePlace
+			mobilePhone = front?.mobilePhone ?: back?.mobilePhone
+			name = front?.name ?: back?.name
+			nationality = front?.nationality ?: back?.nationality
+			nativePlace = front?.nativePlace ?: back?.nativePlace
+			permanentAddress = front?.permanentAddress ?: back?.permanentAddress
+			phone = front?.phone ?: back?.phone
+			placeOfBirth = front?.placeOfBirth ?: back?.placeOfBirth
+			signature = front?.signature ?: back?.signature
+			signatureUpdateTime = front?.signatureUpdateTime ?: back?.signatureUpdateTime
+			status = front?.status ?: back?.status
+		}
+	}
+	
+	fun getDataOCR(): ResponseOCR {
+		return ocrFromOTP
+	}
+	
+	fun cleanOCR(){
+		frameBatch.clear()
+		dataOCR.clear()
+		ocrFromOTP = ResponseOCR()
+	}
 }
