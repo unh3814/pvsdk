@@ -11,6 +11,7 @@ import com.pvcombank.sdk.model.MasterModel
 import com.pvcombank.sdk.model.response.ResponseOCR
 import com.pvcombank.sdk.repository.OnBoardingRepository
 import com.pvcombank.sdk.util.FileUtils.toFile
+import com.pvcombank.sdk.view.popup.AlertPopup
 import com.pvcombank.sdk.view.register.guide.face.GuideFaceIdFragment
 import com.trustingsocial.tvcoresdk.external.*
 import com.trustingsocial.tvcoresdk.external.TVSDKConfiguration.TVCardSide
@@ -126,7 +127,23 @@ class GuideCardIdFragment : PVFragment<FragmentGuideCardCaptureBinding>() {
 						}
 					}
 				} else {
-					showToastMessage(data.error!!)
+					AlertPopup.show(
+						fragmentManager = childFragmentManager,
+						title = "Thông báo",
+						message = "${data.errorMessage}",
+						primaryTitle = "OK",
+						primaryButtonListener = object : AlertPopup.PrimaryButtonListener{
+							override fun onClickListener(v: View) {
+								startCaptureCard(
+									if (typeCard.contains("back")){
+										TVCardSide.BACK
+									} else {
+										TVCardSide.FRONT
+									}
+								)
+							}
+						}
+					)
 				}
 			} ?: kotlin.run {
 				hideLoading()

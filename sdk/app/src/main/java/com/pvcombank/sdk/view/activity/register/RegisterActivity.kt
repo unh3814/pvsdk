@@ -37,7 +37,7 @@ class RegisterActivity : PVActivity<ActivityRegisterBinding>() {
 		initTrustVision()
 		viewBinding.apply {
 			openFragment(
-				GuideFaceIdFragment::class.java,
+				HomeFragment::class.java,
 				Bundle(),
 				true
 			)

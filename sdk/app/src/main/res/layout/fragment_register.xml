@@ -296,11 +296,14 @@
             app:titleText="Đăng ký dịch vụ ngân hàng điện tử" />
 
         <CheckBox
+            android:drawablePadding="8dp"
+            android:drawableTint="@color/color_blue"
+            android:drawableEnd="@drawable/tv_ic_info"
             android:focusable="false"
             android:clickable="false"
             android:id="@+id/pvc_online"
             style="@style/PVCheckBox"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
             android:gravity="center_vertical"
@@ -308,10 +311,13 @@
             android:text="@string/txt_online_banking" />
 
         <CheckBox
+            android:drawablePadding="8dp"
+            android:drawableTint="@color/color_blue"
+            android:drawableEnd="@drawable/tv_ic_info"
             android:focusable="false"
             android:clickable="false"
             style="@style/PVCheckBox"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
             android:checked="true"

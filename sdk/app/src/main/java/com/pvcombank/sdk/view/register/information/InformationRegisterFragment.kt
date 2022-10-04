@@ -53,6 +53,9 @@ class InformationRegisterFragment : PVFragment<FragmentRegisterBinding>() {
 			}
 			phoneNumber.setText(data.mobilePhone ?: MasterModel.getInstance().cacheCreateAccountPhone)
 			edtContract.setText(data.permanentAddress)
+			edtContract.addTextChangedListener {
+				btnConfirm.isEnabled = validate()
+			}
 			permanentAddress.setText(data.permanentAddress)
 			titleCommonInformation.setViewExpend(containerCommonInformation)
 			edtBranch.setOnClickListener {
@@ -121,13 +124,14 @@ class InformationRegisterFragment : PVFragment<FragmentRegisterBinding>() {
 		}
 	}
 	
-	fun FragmentRegisterBinding.validate(): Boolean {
+	private fun FragmentRegisterBinding.validate(): Boolean {
 		return cbCheckRules1.isChecked
 				&& cbCheckRules2.isChecked
 				&& pvcOnline.isChecked
 				&& yes.isChecked
 				&& aNo.isChecked
 				&& edtBranch.text.isNotEmpty()
+				&& edtContract.text.isNotEmpty()
 	}
 	
 	override fun onBack(): Boolean = false

@@ -55,8 +55,8 @@ object Constants {
 			"  sdk_settings: {" +
 			"    active_liveness_settings: {" +
 			"      face_tracking_setting: {" +
-			"        android_terminate_threshold: 0.002847," +
-			"        android_warning_threshold: 0.001474," +
+			"        android_terminate_threshold: 0.003393," +
+			"        android_warning_threshold: 0.002176," +
 			"        enable: true," +
 			"        ios_terminate_threshold: 0.003393," +
 			"        ios_warning_threshold: 0.002176," +
@@ -77,9 +77,9 @@ object Constants {
 			"        frames_interval_ms: 180" +
 			"       }," +
 			"      terminate_if_no_face: {" +
-			"        enable: false," +
+			"        enable: true," +
 			"        max_invalid_frame: 5," +
-			"        max_time_ms: 3000" +
+			"        max_time_ms: 1000" +
 			"      }" +
 			"    }," +
 			"    id_detection_settings: {" +
@@ -88,7 +88,7 @@ object Constants {
 			"        show_capture_button: true" +
 			"      }," +
 			"      blur_check: {" +
-			"        enable: false," +
+			"        enable: true," +
 			"        threshold: 0.29" +
 			"      }," +
 			"      disable_capture_button_if_alert: true," +

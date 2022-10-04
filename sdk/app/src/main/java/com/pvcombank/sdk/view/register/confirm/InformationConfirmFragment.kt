@@ -66,7 +66,7 @@ class InformationConfirmFragment : PVFragment<FragmentCardCaptureResultBinding>(
 				}
 				validate()
 			}
-			if (arguments?.getString("type_card")?.contains("vn.passport") == true) {
+			if ((arguments?.getString("type_card")?.contains("passport") == true) || data.nativePlace.isNullOrEmpty() || data.permanentAddress.isNullOrEmpty()) {
 				village.isFocusable = true
 				village.isClickable = true
 				liveIn.isFocusable = true
@@ -97,7 +97,7 @@ class InformationConfirmFragment : PVFragment<FragmentCardCaptureResultBinding>(
 						data.expDate?.isNotEmpty() == true &&
 						data.issuePlace?.isNotEmpty() == true &&
 						data.permanentAddress?.isNotEmpty() == true &&
-						data.placeOfBirth?.isNotEmpty() == true
+						data.nativePlace?.isNotEmpty() == true
 				)
 	}
 	

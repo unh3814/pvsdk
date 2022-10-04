@@ -7,36 +7,17 @@
     android:background="@color/color_white"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/tv_thanh_toan"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Mã đơn hàng: #005002\nSố tiền : %s\nNội dung: Thanh toan vien phi tai BV"
-        android:textColor="@color/color_black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/edt_currency"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:hint="Số tiền cần thanh toán"
-        android:textColor="@color/color_black"
-        android:textColorHint="@color/color_black"
-        app:layout_constraintEnd_toEndOf="@+id/tv_thanh_toan"
-        app:layout_constraintStart_toStartOf="@+id/tv_thanh_toan"
-        app:layout_constraintTop_toBottomOf="@+id/tv_thanh_toan" />
 
     <Button
         android:id="@+id/btn_thanh_toan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
         android:text="Thanh toán"
-        app:layout_constraintEnd_toEndOf="@+id/tv_thanh_toan"
-        app:layout_constraintStart_toStartOf="@+id/tv_thanh_toan"
-        app:layout_constraintTop_toBottomOf="@+id/edt_currency" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btn_register"

@@ -11,6 +11,7 @@ data class ResponseOCR(
 	@SerializedName("dob") var dob: String? = null,
 	@SerializedName("email") var email: String? = null,
 	@SerializedName("error") var error: String? = null,
+	@SerializedName("errorMessage") var errorMessage: String? = null,
 	@SerializedName("expDate") var expDate: String? = null,
 	@SerializedName("gender") var gender: Boolean? = false,
 	@SerializedName("getCifNumber") var getCifNumber: String? = null,

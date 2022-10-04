@@ -52,6 +52,7 @@ class OnBoardingRepository {
 					} else {
 						result["success"] = it
 					}
+//					result["success"] = it
 					callBack.invoke(
 						result
 					)

@@ -52,7 +52,7 @@ class SelectBranchBottomSheet(private val callBack: (item: BranchModel) -> Unit)
 						dataResult.clear()
 						dataResult.addAll(
 							data.filter { model ->
-								model.bRANCHNAME.contains(it.toString())
+								model.bRANCHNAME.contains(it.toString(), true)
 							}
 						)
 						adapter.notifyDataSetChanged()
@@ -69,7 +69,7 @@ class SelectBranchBottomSheet(private val callBack: (item: BranchModel) -> Unit)
 		super.onStart()
 		dialog?.window
 			?.setSoftInputMode(
-				WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN
+				WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
 			)
 	}
 	
