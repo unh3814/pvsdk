@@ -9,10 +9,10 @@ object Constants {
 	const val GRANT_TYPE_PASSWORD = "password"
 	//endregion Auth
 	
-	const val BASE_URL = "https://connect.apps.ocp4-dev03.pvcomtestocp.com/"
+	const val BASE_URL = "https://connect.apps-ext.ocp4-dev03.pvcomtestocp.com/"
 	const val BASE_URL_OTHER = "https://iuhfhsds3h.execute-api.ap-southeast-1.amazonaws.com/"
 	const val REDIRECT_URL = "https://10.0.15.60/connect"
-	const val url = "https://connect.apps.ocp4-dev03.pvcomtestocp.com/auth/realms/pvcombank/protocol/openid-connect/auth?client_id=vietsens-sdk&state=589i2mgvijs&redirect_uri=$REDIRECT_URL&scope=openid&response_type=code"
+	const val url = "https://connect.apps-ext.ocp4-dev03.pvcomtestocp.com/auth/realms/pvcombank/protocol/openid-connect/auth?client_id=vietsens-sdk&state=589i2mgvijs&redirect_uri=$REDIRECT_URL&scope=openid&response_type=code"
 	//https://connect.apps.ocp4-dev03.pvcomtestocp.com/auth/realms/pvcombank/protocol/openid-connect/auth?client_id=vietsens-sdk&state=589i2mgvijs&redirect_uri=https://10.0.15.60/connect&scope=openid&response_type=code
 	var TOKEN: String = ""
 	
