@@ -1,5 +1,6 @@
 package com.pvcombank.sdk.repository
 
+import android.os.Build
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.pvcombank.sdk.model.request.AuthToken
@@ -16,6 +17,7 @@ import com.pvcombank.sdk.util.NetworkUtil.getErrorBody
 import com.pvcombank.sdk.util.Utils.toObjectData
 import com.pvcombank.sdk.util.security.SecurityHelper
 import com.google.gson.Gson
+import com.pvcombank.sdk.BuildConfig
 import com.pvcombank.sdk.model.*
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -26,7 +28,7 @@ class AuthRepository() {
 		.create(ApiHelper::class.java)
 	
 	private val apiOther: ApiOther = RetrofitHelper.instance()
-		.createServices(Constants.BASE_URL_OTHER)
+		.createServices(BuildConfig.SERVER_URL)
 		.create(ApiOther::class.java)
 	
 	private val masterData = MasterModel.getInstance()

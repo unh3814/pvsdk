@@ -1,19 +1,21 @@
 plugins {
     id 'com.android.library'
+//    id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
+    id 'maven-publish'
 }
 
 android {
     compileSdk 33
 
     defaultConfig {
+//        applicationId "com.pvcombank.sdk"
         minSdk 23
         targetSdk 33
         versionCode 1
         versionName "1.0"
-        multiDexEnabled true
     }
 
     buildTypes {
@@ -22,12 +24,71 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    flavorDimensions ''
+    productFlavors {
+        def SERVER_URL = "SERVER_URL"
+        def ONBOARDING_URL = "ONBOARDING_URL"
+        def STRING = "String"
+        vietsens {
+            dimension ''
+            buildConfigField(STRING, ONBOARDING_URL, '"https://onboarding-udnb-staging.pvcombank.com.vn/api/"')
+            buildConfigField(STRING, SERVER_URL, '"https://iuhfhsds3h.execute-api.ap-southeast-1.amazonaws.com/"')
+            aarMetadata {
+                minSdk = 23
+            }
+        }
+        onboading{
+            dimension ''
+            buildConfigField(STRING, ONBOARDING_URL, '"https://onboarding-udnb-staging.pvcombank.com.vn/api/"')
+            buildConfigField(STRING, SERVER_URL, '"https://sandbox-connect.pvcombank.com.vn/"')
+            aarMetadata {
+                minSdk = 23
+            }
+        }
+        dev {
+            dimension ''
+            buildConfigField(STRING, ONBOARDING_URL, '"https://onboarding-udnb-staging.pvcombank.com.vn/api/"')
+            buildConfigField(STRING, SERVER_URL, '"https://connect.apps.ocp4-dev03.pvcomtestocp.com/"')
+            aarMetadata {
+                minSdk = 23
+            }
+        }
+    }
+    publishing {
+        publications {
+            release(MavenPublication) {
+                groupId = 'com.pvcombank.sdk'
+                artifactId = 'pvsdk'
+                version = '0.1.0'
+                pom.withXml {
+                    def dependenciesNode = asNode().appendNode('dependencies')
+                    configurations.implementation.allDependencies.each { dependency ->
+                        if (dependency.name != 'unspecified') {
+                            def dependencyNode = dependenciesNode.appendNode('dependency')
+                            dependencyNode.appendNode('groupId', dependency.group)
+                            dependencyNode.appendNode('artifactId', dependency.name)
+                            dependencyNode.appendNode('version', dependency.version)
+                        }
+                    }
+                }
+            }
+        }
+        repositories {
+            maven {
+                name = 'myrepo'
+                url = "${project.buildDir}/repo"
+            }
+        }
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+    lintOptions {
+        abortOnError false
     }
     aaptOptions {
         noCompress "tflite"
@@ -42,7 +103,6 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation "androidx.multidex:multidex:2.0.1"
     //OKHTTP
     implementation(platform("com.squareup.okhttp3:okhttp-bom:4.9.0"))
     implementation("com.squareup.okhttp3:okhttp")
@@ -66,8 +126,6 @@ dependencies {
     //RX
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
     implementation 'io.reactivex.rxjava3:rxjava:3.0.0'
-    //CAMERA VIEW
-    api 'com.otaliastudios:cameraview:2.7.2'
     //SECURITY
     implementation("androidx.security:security-crypto:1.0.0")
     //DATASTORE
@@ -75,11 +133,8 @@ dependencies {
     implementation("androidx.datastore:datastore-preferences-rxjava3:1.0.0")
     //CIRCLE_IMAGE_VIEW
     implementation 'de.hdodenhof:circleimageview:3.1.0'
-    //FACE_DETECTION
-    implementation 'com.google.mlkit:face-detection:16.1.5'
-    //TRUST VISION
-    implementation("com.trustvision:tv_sdk:2.1.0.4@aar"){
-        transitive = true
-    }
     testImplementation 'junit:junit:4.12'
+}
+repositories {
+    mavenCentral()
 }

@@ -17,15 +17,12 @@ import com.pvcombank.sdk.model.MasterModel
 import com.pvcombank.sdk.repository.AuthRepository
 import com.pvcombank.sdk.view.otp.select_card.PaymentInformationFragment
 import com.pvcombank.sdk.view.popup.AlertPopup
-import com.pvcombank.sdk.view.register.after_create.AfterCreateFragment
 import java.util.*
 
 class AuthWebLoginFragment : PVFragment<FragmentWebLoginBinding>() {
 	private val masterData = MasterModel.getInstance()
-	private var isLogin = false
 	private val webClient = object : WebViewClient() {
 		override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-			showLoading()
 			handlerUrl(url)
 		}
 		
@@ -63,6 +60,12 @@ class AuthWebLoginFragment : PVFragment<FragmentWebLoginBinding>() {
 	private val chromeClient = object : WebChromeClient() {
 		override fun onProgressChanged(view: WebView?, newProgress: Int) {
 			super.onProgressChanged(view, newProgress)
+			if (newProgress < 100){
+				showLoading()
+				hideKeyboard()
+			} else {
+				hideLoading()
+			}
 			if (view?.url?.startsWith(Constants.REDIRECT_URL) == true && view?.url != Constants.url){
 				viewBinding.layoutLoaddingWeb.visibility = View.VISIBLE
 			}
@@ -85,7 +88,6 @@ class AuthWebLoginFragment : PVFragment<FragmentWebLoginBinding>() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		hideInlineMessage()
-		showLoading()
 		topBar.hide()
 		viewBinding.webViewer.apply {
 			clearCache(true)
@@ -104,19 +106,7 @@ class AuthWebLoginFragment : PVFragment<FragmentWebLoginBinding>() {
 	}
 	
 	private fun handlerUrl(url: String?) {
-		val uri = Uri.parse(url)
-//		toCreateUser(uri)
 		toLogin(url)
-	}
-	
-	private fun toCreateUser(uri: Uri) {
-		if (uri.pathSegments.last() == "registration") {
-			openFragment(
-				AfterCreateFragment::class.java,
-				Bundle(),
-				true
-			)
-		}
 	}
 	
 	private fun toLogin(url: String?) {

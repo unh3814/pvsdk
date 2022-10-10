@@ -32,7 +32,7 @@
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="12dp"
             android:gravity="center_horizontal"
-            android:textColor="@android:color/black"
+            android:textColor="@color/color_black"
             android:textSize="15sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -48,6 +48,7 @@
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="24dp"
             android:textSize="13sp"
+            android:textColor="@color/color_black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_title"
@@ -71,6 +72,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
+                android:textColor="@color/color_black"
                 android:background="@drawable/bg_border"
                 android:text="Phụ" />
 
@@ -81,6 +83,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
+                android:textColor="@color/color_black"
                 android:background="@drawable/bg_primary"
                 android:text="Chính" />
         </LinearLayout>

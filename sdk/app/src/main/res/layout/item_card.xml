@@ -18,6 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:textColor="@color/color_grey"
         android:id="@+id/tv_label"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -35,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:clickable="false"
-        android:textColor="@android:color/black"
+        android:textColor="@color/color_black"
         android:textSize="13sp"
         app:layout_constraintEnd_toStartOf="@+id/img_checked"
         app:layout_constraintStart_toEndOf="@+id/imageView2"

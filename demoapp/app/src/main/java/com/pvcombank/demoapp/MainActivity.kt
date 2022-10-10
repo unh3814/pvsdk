@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
 				clientSecret = "97392180-9aeb-4fe4-9c24-0676d35b4505",
 				currency = edtCurrency?.text.toString(),
 				idOrder = "005002",
-				appUnitId = "GEBIuX+mVEJzPZG/QuVkVQ=="
+				appUnitId = "ONELINK"
 			)
 			setListener(object : PVCBAuthListener {
 				override fun onError(message: String) {

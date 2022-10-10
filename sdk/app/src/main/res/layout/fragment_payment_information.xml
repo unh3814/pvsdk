@@ -21,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/account"
-            android:textColor="@android:color/black"
+            android:textColor="@color/color_black"
             android:textSize="13sp" />
 
         <LinearLayout
@@ -50,6 +50,7 @@
                     tools:ignore="ContentDescription" />
 
                 <TextView
+                    android:textColor="@color/color_grey"
                     android:id="@+id/tv_label_card"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -66,7 +67,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="4dp"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/color_black"
                     android:textSize="13sp"
                     app:layout_constraintEnd_toStartOf="@+id/imageView"
                     app:layout_constraintStart_toEndOf="@+id/img_card"
@@ -91,7 +92,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:text="@string/information_payment"
-            android:textColor="@android:color/black"
+            android:textColor="@color/color_black"
             android:textSize="13sp" />
 
         <LinearLayout
@@ -116,7 +117,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/number_order"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/color_black"
                     android:textSize="13sp" />
 
                 <TextView
@@ -125,6 +126,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="end"
+                    android:textColor="@color/color_grey"
                     android:singleLine="true"
                     android:textSize="13sp"
                     tools:text="739232" />
@@ -144,7 +146,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/number_payment"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/color_black"
                     android:textSize="13sp" />
 
                 <TextView
@@ -152,6 +154,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textColor="@color/color_grey"
                     android:gravity="end"
                     android:singleLine="true"
                     android:textSize="13sp"
@@ -172,7 +175,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/content_order"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/color_black"
                     android:textSize="13sp" />
 
                 <TextView
@@ -181,6 +184,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="end"
+                    android:textColor="@color/color_grey"
                     android:textSize="13sp"
                     tools:text="Thanh toán đơn hàng %s " />
             </LinearLayout>
@@ -201,7 +205,7 @@
         <TextView
             android:gravity="center"
             android:paddingVertical="16dp"
-            android:textColor="@android:color/black"
+            android:textColor="@color/color_black"
             android:id="@+id/btn_cancel_order"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -217,6 +221,7 @@
             android:gravity="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button"
             android:id="@+id/btn_confirm"
+            android:textColor="@color/color_black"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
