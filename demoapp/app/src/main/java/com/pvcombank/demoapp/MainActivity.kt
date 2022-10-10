@@ -18,19 +18,17 @@ class MainActivity : AppCompatActivity() {
 		btnThanhToan?.setOnClickListener {
 			startPayment()
 		}
-
-		findViewById<Button>(R.id.btn_register).setOnClickListener {
-			PVCBAuth().apply {
-				setClient(
-					clientId = "vietsens-sdk",
-					clientSecret = "97392180-9aeb-4fe4-9c24-0676d35b4505",
-					currency = "90000",
-					idOrder = "005002",
-					appUnitId = "GEBIuX+mVEJzPZG/QuVkVQ=="
-				)
-				build(this@MainActivity)
-				startRegister()
-			}
+		
+		PVCBAuth().apply {
+			setClient(
+				clientId = "vietsens-sdk",
+				clientSecret = "97392180-9aeb-4fe4-9c24-0676d35b4505",
+				currency = "90000",
+				idOrder = "005002",
+				appUnitId = "GEBIuX+mVEJzPZG/QuVkVQ=="
+			)
+			build(this@MainActivity)
+			startRegister()
 		}
 	}
 	

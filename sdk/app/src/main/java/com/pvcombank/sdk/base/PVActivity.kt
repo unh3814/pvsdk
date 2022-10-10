@@ -38,6 +38,7 @@ abstract class PVActivity<VB : ViewBinding> : FragmentActivity() {
 	
 	fun hideKeyboard() {
 		currentFocus?.let {
+			it.clearFocus()
 			(getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)?.apply {
 				hideSoftInputFromWindow(it.windowToken, 0)
 			}

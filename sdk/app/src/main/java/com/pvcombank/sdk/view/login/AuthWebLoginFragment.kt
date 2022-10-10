@@ -158,7 +158,7 @@ class AuthWebLoginFragment : PVFragment<FragmentWebLoginBinding>() {
 		AlertPopup.show(
 			fragmentManager = childFragmentManager,
 			title = "Thông báo",
-			message = "Bạn có muốn huỷ giao dịch này không",
+			message = "Bạn có muốn kết thúc không",
 			primaryTitle = "OK",
 			primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
 				override fun onClickListener(v: View) {

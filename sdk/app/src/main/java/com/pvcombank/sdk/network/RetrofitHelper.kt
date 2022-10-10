@@ -50,4 +50,33 @@ class RetrofitHelper {
 			.client(client)
 			.build()
 	}
+	fun createNewServices(baseURL: String): Retrofit {
+		val client = OkHttpClient.Builder()
+			.readTimeout(60, TimeUnit.SECONDS)
+			.connectTimeout(60, TimeUnit.SECONDS)
+			.callTimeout(60, TimeUnit.SECONDS)
+			.writeTimeout(60, TimeUnit.SECONDS)
+			.addInterceptor(Interceptor { chain ->
+				val request = chain.request().newBuilder()
+					.addHeader("Authorization", Constants.TOKEN)
+					.addHeader(
+						"x-idempotency-key",
+						UUID.randomUUID().toString().lowercase(Locale.ROOT)
+					)
+					.addHeader("Content-Type", "application/json")
+					.addHeader("app_unit_id", MasterModel.getInstance().appUnitID ?: "")
+					.addHeader("signature", MasterModel.getInstance().uniId)
+					.build()
+				chain.proceed(request)
+			})
+			.addInterceptor(HttpLoggingInterceptor().apply { setLevel(HttpLoggingInterceptor.Level.BODY) })
+			.addInterceptor(HttpLoggingInterceptor().apply { setLevel(HttpLoggingInterceptor.Level.HEADERS) })
+			.build()
+		return Retrofit.Builder()
+			.baseUrl(baseURL)
+			.addCallAdapterFactory(ApiResponseCallFactory())
+			.addConverterFactory(GsonConverterFactory.create())
+			.client(client)
+			.build()
+	}
 }

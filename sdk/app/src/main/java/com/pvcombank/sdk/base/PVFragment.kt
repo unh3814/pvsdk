@@ -9,17 +9,18 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.pvcombank.sdk.util.Utils.openFragment
+import com.pvcombank.sdk.util.execute.MyThreadFactory
+import com.pvcombank.sdk.util.execute.ThreadExecutor
 
 abstract class PVFragment<VB : ViewBinding> : Fragment() {
 	lateinit var viewBinding: VB
 	abstract fun onBack(): Boolean
 	val handler = Handler(Looper.getMainLooper())
 	val topBar get() = (requireActivity() as PVActivity<*>).topBar
+	
 	override fun onStart() {
 		super.onStart()
-		viewBinding.root.setOnClickListener {
-			hideKeyboard()
-		}
+		hideKeyboard()
 	}
 	override fun onStop() {
 		super.onStop()

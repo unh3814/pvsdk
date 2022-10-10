@@ -21,6 +21,7 @@ class SuccessFragment : PVFragment<FragmentRegisterSuccessBinding>() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		viewBinding.apply {
+			topBar.hide()
 			btnConfirm.setOnClickListener {
 				MasterModel.getInstance().cleanOCR()
 				requireActivity().finish()

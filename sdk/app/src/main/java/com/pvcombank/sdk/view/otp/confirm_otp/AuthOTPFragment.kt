@@ -231,8 +231,8 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 						0, 5, 6 -> {
 							AlertPopup.show(
 								fragmentManager = childFragmentManager,
-								title = "Đăng nhập",
-								message = "",
+								title = "Thông báo",
+								message = "Tài khoản đã được tạo, vui lòng đăng nhập.",
 								primaryTitle = "Đồng ý",
 								primaryButtonListener = object : AlertPopup.PrimaryButtonListener{
 									override fun onClickListener(v: View) {
@@ -260,9 +260,10 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 							)
 						}
 						3, 4 -> {
+							requireArguments().putBoolean("hide_back", true)
 							openFragment(
 								InformationConfirmFragment::class.java,
-								Bundle(),
+								requireArguments(),
 								true
 							)
 						}
@@ -357,11 +358,15 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 			primaryTitle = "Thử lại",
 			primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
 				override fun onClickListener(v: View) {
-					openFragment(
-						PaymentInformationFragment::class.java,
-						Bundle(),
-						false
-					)
+					if (!MasterModel.getInstance().isCreateAccount){
+						openFragment(
+							PaymentInformationFragment::class.java,
+							Bundle(),
+							false
+						)
+					} else {
+						goBack()
+					}
 				}
 			},
 			secondTitle = "Liên hệ Hotline",

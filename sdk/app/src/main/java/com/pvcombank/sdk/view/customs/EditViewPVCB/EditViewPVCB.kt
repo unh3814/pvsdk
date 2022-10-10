@@ -94,14 +94,10 @@ class EditViewPVCB(context: Context, attributeSet: AttributeSet) : LinearLayoutC
 	fun setNote(value: String? = null) {
 		binding.apply {
 			sNote = (value ?: sNote)
-			if (isErrorEnable || sError.isNotEmpty()) {
+			if (sNote.isEmpty() || (sError.isNotEmpty() && isErrorEnable)){
 				note.visibility = View.GONE
-				return
-			}
-			if ((sError.isEmpty() && sNote.isNotEmpty()) || !isErrorEnable) {
+			} else{
 				note.visibility = View.VISIBLE
-			} else {
-				note.visibility = View.GONE
 			}
 			note.text = sNote
 		}
@@ -110,16 +106,19 @@ class EditViewPVCB(context: Context, attributeSet: AttributeSet) : LinearLayoutC
 	fun setError(value: String? = null) {
 		binding.apply {
 			sError = (value ?: sError)
-			if (!isErrorEnable && sError.isNullOrEmpty()) {
-				error.visibility = View.GONE
-				return
-			}
-			if (sError.isNotEmpty()) {
+			val isShowError = isErrorEnable
+					&& sError.isNotEmpty()
+			if (isShowError){
 				error.visibility = View.VISIBLE
+				note.visibility = View.GONE
 				error.text = sError
-				editor.setBackgroundResource(R.drawable.bg_error)
-			} else {
-				error.visibility = View.GONE
+			} else{
+				if (sNote.isNotEmpty()){
+					error.visibility = View.GONE
+					note.visibility = View.VISIBLE
+				} else{
+					error.visibility = View.INVISIBLE
+				}
 			}
 		}
 	}
@@ -148,6 +147,7 @@ class EditViewPVCB(context: Context, attributeSet: AttributeSet) : LinearLayoutC
 				if (event.action == MotionEvent.ACTION_UP) {
 					if (event.getRawX() >= (binding.editor.right - binding.editor.compoundDrawables[DRAWABLE_RIGHT].bounds.width())) {
 						isPassword = !isPassword
+						changeDrawablePassword()
 						setIsPassword()
 						true
 					}

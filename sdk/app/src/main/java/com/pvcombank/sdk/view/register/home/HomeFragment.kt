@@ -24,6 +24,9 @@ class HomeFragment : PVFragment<FragmentHomeBinding>() {
 		super.onViewCreated(view, savedInstanceState)
 		viewBinding.apply {
 			topBar.hide()
+			root.setOnClickListener {
+				hideKeyboard()
+			}
 			btnToLogin.setOnClickListener {
 				openFragment(
 					AuthWebLoginFragment::class.java,
@@ -42,5 +45,13 @@ class HomeFragment : PVFragment<FragmentHomeBinding>() {
 		}
 	}
 	
-	override fun onBack(): Boolean = false
+	override fun onStart() {
+		super.onStart()
+		requireActivity().supportFragmentManager.fragments.clear()
+	}
+	
+	override fun onBack(): Boolean {
+		requireActivity().finish()
+		return true
+	}
 }

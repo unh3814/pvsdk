@@ -28,6 +28,13 @@ class InformationConfirmFragment : PVFragment<FragmentCardCaptureResultBinding>(
 		viewBinding.apply {
 			topBar.show()
 			topBar.setTitle("Xác nhận thông tin")
+			topBar.hideButtonBack()
+			root.setOnClickListener {
+				hideKeyboard()
+			}
+			container.setOnClickListener {
+				hideKeyboard()
+			}
 			val data = MasterModel.getInstance().getDataOCR()
 			name.setText(data.name ?: "")
 			data.dob?.let {

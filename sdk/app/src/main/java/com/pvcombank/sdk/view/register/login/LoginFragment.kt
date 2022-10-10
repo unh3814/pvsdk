@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.get
 import com.pvcombank.sdk.base.PVFragment
 import com.pvcombank.sdk.databinding.FragmentLoginBinding
+import com.pvcombank.sdk.model.Constants
 import com.pvcombank.sdk.view.register.after_create.AfterCreateFragment
 
 class LoginFragment : PVFragment<FragmentLoginBinding>(){
@@ -22,6 +24,18 @@ class LoginFragment : PVFragment<FragmentLoginBinding>(){
 		super.onViewCreated(view, savedInstanceState)
 		viewBinding.apply {
 			topBar.hide()
+			root.setOnClickListener {
+				hideKeyboard()
+			}
+			username.addTextChangeListener {
+				validateData()
+			}
+			passoword.addTextChangeListener {
+				validateData()
+			}
+			btnToLogin.setOnClickListener {
+			
+			}
 			btnRegister.setOnClickListener {
 				openFragment(
 					AfterCreateFragment::class.java,
@@ -31,5 +45,10 @@ class LoginFragment : PVFragment<FragmentLoginBinding>(){
 			}
 		}
 	}
+	
+	fun FragmentLoginBinding.validateData(){
+		btnToLogin.isEnabled = (passoword.getText().matches(Constants.regexPassword) && username.getText().isNotEmpty())
+	}
+	
 	override fun onBack(): Boolean = false
 }

@@ -12,6 +12,7 @@ import com.pvcombank.sdk.model.response.ResponseOCR
 import com.pvcombank.sdk.model.response.ResponsePurchase
 import com.pvcombank.sdk.repository.AuthRepository
 import com.pvcombank.sdk.view.otp.confirm_otp.AuthOTPFragment
+import com.pvcombank.sdk.view.popup.AlertPopup
 
 class AfterCreateFragment : PVFragment<FragmentCreateAccoutBinding>() {
 	private var emailString: String? = null
@@ -33,27 +34,32 @@ class AfterCreateFragment : PVFragment<FragmentCreateAccoutBinding>() {
 			topBar.show()
 			topBar.setTitle("Điền thông tin cơ bản")
 			repository = AuthRepository()
+			root.setOnClickListener {
+				hideKeyboard()
+			}
 			MasterModel.getInstance().isCreateAccount = true
 			MasterModel.getInstance().cleanOCR()
 			root.setOnClickListener {
 				hideKeyboard()
 			}
-			phoneNumber.setText("")
-			emailAddress.setText("")
 			phoneNumber.addTextChangeListener {
 				it?.let {
 					val str = it.toString()
-					if (str.matches(Constants.regexPhone)) {
+					if (str.matches(Constants.regexPhone) && str.startsWith("0")) {
 						phoneString = it.toString()
 						phoneNumber.setError("")
+						btnCreateAccount.isEnabled = true
 					} else if (str.isNullOrEmpty()) {
 						phoneNumber.setError("")
+						btnCreateAccount.isEnabled = false
 					} else {
 						phoneNumber.setError("Số điện thoại không hợp lệ, vui lòng thử lại")
+						btnCreateAccount.isEnabled = false
 					}
 				} ?: kotlin.run {
 					phoneNumber.setError("Vui lòng nhập số điện thoại")
 					phoneString = ""
+					btnCreateAccount.isEnabled = false
 				}
 			}
 			emailAddress.addTextChangeListener {
@@ -62,13 +68,21 @@ class AfterCreateFragment : PVFragment<FragmentCreateAccoutBinding>() {
 					if (str.matches(Constants.regexEmail)) {
 						emailString = it.toString()
 						emailAddress.setError("")
+						if (phoneNumber.getText().matches(Constants.regexPhone) && phoneNumber.getText().startsWith("0")){
+							btnCreateAccount.isEnabled = true
+						}
 					} else if (str.isNullOrEmpty()) {
 						emailAddress.setError("")
+						if (phoneNumber.getText().matches(Constants.regexPhone) && phoneNumber.getText().startsWith("0")){
+							btnCreateAccount.isEnabled = true
+						}
 					} else {
+						btnCreateAccount.isEnabled = false
 						emailAddress.setError("Email không đúng định dạng, vui lòng thử lại")
 					}
 				} ?: kotlin.run {
 					emailString = ""
+					btnCreateAccount.isEnabled = true
 					emailAddress.setError("")
 				}
 			}
@@ -91,6 +105,18 @@ class AfterCreateFragment : PVFragment<FragmentCreateAccoutBinding>() {
 								Bundle(),
 								false
 							)
+						} else {
+							AlertPopup.show(
+								fragmentManager = childFragmentManager,
+								title = "Thông báo",
+								message = "${it}",
+								primaryTitle = "OK",
+								primaryButtonListener = object : AlertPopup.PrimaryButtonListener{
+									override fun onClickListener(v: View) {
+									
+									}
+								}
+							)
 						}
 					}
 				}
@@ -100,6 +126,10 @@ class AfterCreateFragment : PVFragment<FragmentCreateAccoutBinding>() {
 	
 	override fun onStart() {
 		super.onStart()
+		viewBinding.apply {
+			phoneNumber.setText("")
+			emailAddress.setText("")
+		}
 		hideLoading()
 	}
 	

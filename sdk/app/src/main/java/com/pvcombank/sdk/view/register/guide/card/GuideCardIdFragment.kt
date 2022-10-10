@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.pvcombank.sdk.base.PVFragment
 import com.pvcombank.sdk.databinding.FragmentGuideCardCaptureBinding
+import com.pvcombank.sdk.model.Constants
 import com.pvcombank.sdk.model.MasterModel
 import com.pvcombank.sdk.model.response.ResponseOCR
 import com.pvcombank.sdk.repository.OnBoardingRepository
@@ -95,64 +96,90 @@ class GuideCardIdFragment : PVFragment<FragmentGuideCardCaptureBinding>() {
 			file = tvDetectionResult.frontCardImage.image.toFile(requireContext())
 			"front"
 		}
-		startVerify(file, type) { frontResponse ->
-			(frontResponse["success"] as? ResponseOCR)?.let { data ->
-				Log.d("VerifyFrontCard", "Success")
-				arguments?.putString("type_card", data.cardLabel)
-				hideLoading()
-				if (data.error == null) {
-					if (typeCard.contains("passport")) {
-						MasterModel.getInstance().dataOCR["front_card"] = data
-						MasterModel.getInstance().updateDataOCR()
-						openFragment(
-							GuideFaceIdFragment::class.java,
-							arguments ?: Bundle(),
-							false
-						)
-					}
-					if (typeCard.contains("cccd") || typeCard.contains("cmnd")) {
-						if (typeCard.contains("front")) {
-							MasterModel.getInstance().dataOCR["front_card"] = data
-							MasterModel.getInstance().updateDataOCR()
-							startCaptureCard(TVCardSide.BACK)
-						}
-						if (typeCard.contains("back")) {
-							MasterModel.getInstance().dataOCR["back_card"] = data
-							MasterModel.getInstance().updateDataOCR()
-							openFragment(
-								GuideFaceIdFragment::class.java,
-								arguments ?: Bundle(),
-								false
-							)
-						}
-					}
-				} else {
-					AlertPopup.show(
-						fragmentManager = childFragmentManager,
-						title = "Thông báo",
-						message = "${data.errorMessage}",
-						primaryTitle = "OK",
-						primaryButtonListener = object : AlertPopup.PrimaryButtonListener{
-							override fun onClickListener(v: View) {
-								startCaptureCard(
-									if (typeCard.contains("back")){
-										TVCardSide.BACK
-									} else {
-										TVCardSide.FRONT
-									}
-								)
-							}
-						}
-					)
+		startVerify(file, type) { response ->
+			hideLoading()
+			val responseSuccess = response["success"]
+			if (responseSuccess is ResponseOCR) {
+				val label = responseSuccess.cardLabel
+				if (label?.isNotEmpty() == true) {
+					arguments?.putString("type_card", label)
 				}
-			} ?: kotlin.run {
-				hideLoading()
-				showToastMessage("Đã có lỗi xảy ra")
-				if ((frontResponse["fail"] as? String)?.contains("403") == true) {
-					requireActivity().recreate()
+				if (responseSuccess.error?.isNotEmpty() != true) {
+					handlerSuccess(responseSuccess)
+				} else {
+					handlerError(responseSuccess)
 				}
 			}
+			val responseFail = response["fail"]
+			if (responseFail is String) {
+				//Lỗi api hoặc lỗi internet
+				AlertPopup.show(
+					fragmentManager = childFragmentManager,
+					title = "Thông báo",
+					message = "$responseFail",
+					primaryTitle = "OK",
+					primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
+						override fun onClickListener(v: View) {
+						
+						}
+					}
+				)
+			}
 		}
+	}
+	
+	private fun handlerSuccess(responseSuccess: ResponseOCR?) {
+		if (typeCard.contains("passport")) {
+			MasterModel.getInstance().dataOCR["front_card"] = responseSuccess
+			MasterModel.getInstance().updateDataOCR()
+			openFragment(
+				GuideFaceIdFragment::class.java,
+				arguments ?: Bundle(),
+				false
+			)
+		}
+		if (typeCard.contains("cccd") || typeCard.contains("cmnd")) {
+			if (typeCard.contains("front")) {
+				MasterModel.getInstance().dataOCR["front_card"] = responseSuccess
+				MasterModel.getInstance().updateDataOCR()
+				startCaptureCard(TVCardSide.BACK)
+			}
+			if (typeCard.contains("back")) {
+				MasterModel.getInstance().dataOCR["back_card"] = responseSuccess
+				MasterModel.getInstance().updateDataOCR()
+				openFragment(
+					GuideFaceIdFragment::class.java,
+					arguments ?: Bundle(),
+					false
+				)
+			}
+		}
+	}
+	
+	private fun handlerError(responseSuccess: ResponseOCR) {
+		val cardSite: TVCardSide = when (responseSuccess.error) {
+			in Constants.RECAPTURE_CURRENT_STEP -> {
+				if (typeCard.contains("back")) {
+					TVCardSide.BACK
+				} else {
+					TVCardSide.FRONT
+				}
+			}
+			else -> {
+				TVCardSide.FRONT
+			}
+		}
+		AlertPopup.show(
+			fragmentManager = childFragmentManager,
+			title = "Thông báo",
+			message = "${responseSuccess.errorMessage}",
+			primaryTitle = "OK",
+			primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
+				override fun onClickListener(v: View) {
+					startCaptureCard(cardSite)
+				}
+			}
+		)
 	}
 	
 	private fun startVerify(file: File, type: String, callBack: (HashMap<String, Any>) -> Unit) {

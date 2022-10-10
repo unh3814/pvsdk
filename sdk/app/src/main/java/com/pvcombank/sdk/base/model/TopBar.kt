@@ -65,8 +65,20 @@ class TopBar : TopBarInterface {
 		viewBinding.llRootView.visibility = View.VISIBLE
 	}
 	
+	fun showButtonBack(){
+		viewBinding.imgBack.visibility = View.VISIBLE
+		viewBinding.imgBack.isClickable = true
+		viewBinding.imgBack.isFocusable = true
+	}
+	
 	override fun hide() {
 		viewBinding.llRootView.visibility = View.GONE
+	}
+	
+	fun hideButtonBack(){
+		viewBinding.imgBack.visibility = View.INVISIBLE
+		viewBinding.imgBack.isClickable = false
+		viewBinding.imgBack.isFocusable = false
 	}
 	
 	companion object {

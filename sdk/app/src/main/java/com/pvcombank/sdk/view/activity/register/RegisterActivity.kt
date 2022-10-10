@@ -17,6 +17,7 @@ import com.pvcombank.sdk.databinding.ActivityRegisterBinding
 import com.pvcombank.sdk.model.Constants
 import com.pvcombank.sdk.util.Utils.openFragment
 import com.pvcombank.sdk.view.login.AuthWebLoginFragment
+import com.pvcombank.sdk.view.register.confirm.InformationConfirmFragment
 import com.pvcombank.sdk.view.register.guide.card.GuideCardIdFragment
 import com.pvcombank.sdk.view.register.guide.face.GuideFaceIdFragment
 import com.pvcombank.sdk.view.register.home.HomeFragment
@@ -25,7 +26,7 @@ import com.trustingsocial.tvcoresdk.external.*
 import com.trustingsocial.tvsdk.TrustVisionSDK
 
 class RegisterActivity : PVActivity<ActivityRegisterBinding>() {
-	
+	private val currentFragment get() = supportFragmentManager.findFragmentById(fragmentHostID)
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		viewBinding = ActivityRegisterBinding.inflate(layoutInflater)
@@ -41,6 +42,20 @@ class RegisterActivity : PVActivity<ActivityRegisterBinding>() {
 				Bundle(),
 				true
 			)
+		}
+		supportFragmentManager.addOnBackStackChangedListener {
+			if (currentFragment is InformationConfirmFragment){
+				topBar.hideButtonBack()
+			} else {
+				topBar.showButtonBack()
+			}
+		}
+		supportFragmentManager.addFragmentOnAttachListener { fragmentManager, fragment ->
+			if (fragment is InformationConfirmFragment){
+				topBar.hideButtonBack()
+			} else {
+				topBar.showButtonBack()
+			}
 		}
 	}
 	

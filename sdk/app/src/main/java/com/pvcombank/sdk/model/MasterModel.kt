@@ -37,7 +37,7 @@ class MasterModel {
 	var cacheCreateAccountMail = ""
 	var cacheCreateAccountPhone = ""
 	val frameBatch = mutableListOf<FrameBatch>()
-	val dataOCR = hashMapOf<String, Any>()
+	val dataOCR = hashMapOf<String, ResponseOCR?>()
 	var selectBranch: BranchModel? = null
 	var ocrFromOTP: ResponseOCR = ResponseOCR()
 	
@@ -53,8 +53,8 @@ class MasterModel {
 	}
 	
 	fun updateDataOCR(){
-		val front = dataOCR["front_card"] as? ResponseOCR
-		val back = dataOCR["back_card"] as? ResponseOCR
+		val front = dataOCR["front_card"]
+		val back = dataOCR["back_card"]
 		ocrFromOTP.apply {
 			cardImageId = front?.cardImageId ?: back?.cardImageId
 			cardLabel = front?.cardLabel ?: back?.cardLabel

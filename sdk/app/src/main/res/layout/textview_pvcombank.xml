@@ -6,30 +6,32 @@
     android:orientation="horizontal">
 
     <TextView
-        android:layout_gravity="center_vertical"
         android:id="@+id/title"
         style="@style/PVTextHint"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
         android:layout_weight="1"
         android:gravity="center_vertical"
-        tools:text="Abc" />
+        android:minWidth="150dp"
+        tools:text="@tools:sample/lorem/random" />
 
     <TextView
         android:id="@+id/content"
         style="@style/PVTextView.Title"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="2"
         android:gravity="end|center_vertical"
         android:textStyle="bold"
-        tools:text="Abc" />
+        tools:text="@tools:sample/lorem/random" />
 
     <ImageView
-        android:tint="@color/color_blue"
         android:id="@+id/expend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:src="@drawable/ic_round_keyboard_arrow_down_24" />
+        android:src="@drawable/ic_round_keyboard_arrow_down_24"
+        android:tint="@color/color_blue" />
 </LinearLayout>

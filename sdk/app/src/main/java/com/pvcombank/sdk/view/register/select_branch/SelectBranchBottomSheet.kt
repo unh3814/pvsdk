@@ -1,5 +1,6 @@
 package com.pvcombank.sdk.view.register.select_branch
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -14,6 +15,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.pvcombank.sdk.R
+import com.pvcombank.sdk.base.PVActivity
 import com.pvcombank.sdk.databinding.BottomsheetSelectBranchBinding
 import com.pvcombank.sdk.databinding.ItemBranchBinding
 import com.pvcombank.sdk.model.BranchModel
@@ -107,4 +109,9 @@ class SelectBranchBottomSheet(private val callBack: (item: BranchModel) -> Unit)
 		Constants.mockupBranch,
 		object : TypeToken<List<BranchModel>>() {}.type
 	)
+	
+	override fun onDismiss(dialog: DialogInterface) {
+		super.onDismiss(dialog)
+		(requireActivity() as? PVActivity<*>)?.hideKeyboard()
+	}
 }

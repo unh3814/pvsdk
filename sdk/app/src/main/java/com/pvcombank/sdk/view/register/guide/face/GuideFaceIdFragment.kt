@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.pvcombank.sdk.base.PVFragment
 import com.pvcombank.sdk.databinding.FragmentGuideFaceCaptureBinding
+import com.pvcombank.sdk.model.Constants
 import com.pvcombank.sdk.model.MasterModel
 import com.pvcombank.sdk.model.request.Gesture
 import com.pvcombank.sdk.model.request.RequestVerifySelfies
@@ -60,10 +61,19 @@ class GuideFaceIdFragment : PVFragment<FragmentGuideFaceCaptureBinding>() {
 				override fun onSuccess(tvDetectionResult: TVDetectionResult?) {
 					tvDetectionResult?.let { result ->
 						showLoading()
-						if (result.selfieImages.any{it.frontalImage == null})
-						{
+						if (result.selfieImages.any { it.frontalImage == null }) {
 							hideLoading()
-							showToastMessage("Vui lòng thực hiện lại")
+							AlertPopup.show(
+								fragmentManager = childFragmentManager,
+								title = "Thông báo",
+								message = "Có lỗi xảy ra vui lòng thực hiện lại",
+								primaryTitle = "OK",
+								primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
+									override fun onClickListener(v: View) {
+										startFaceCapture()
+									}
+								}
+							)
 							return
 						}
 						val listFrame = mutableListOf<TVFrameClass>()
@@ -75,10 +85,12 @@ class GuideFaceIdFragment : PVFragment<FragmentGuideFaceCaptureBinding>() {
 						val listGesture = mutableListOf<Gesture>()
 						val listFrontal = mutableListOf<String>()
 						result.selfieImages.forEach { selfieImage ->
-							selfieImage.gestureImage?.image?.let {bitmap ->
+							selfieImage.gestureImage?.image?.let { bitmap ->
 								val bos = ByteArrayOutputStream()
 								bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos)
-								val base64 = Base64.encodeToString(bos.toByteArray(), Base64.DEFAULT).replace("\n", "")
+								val base64 =
+									Base64.encodeToString(bos.toByteArray(), Base64.DEFAULT)
+										.replace("\n", "")
 								listGesture.add(
 									Gesture(
 										base64 = base64,
@@ -89,15 +101,13 @@ class GuideFaceIdFragment : PVFragment<FragmentGuideFaceCaptureBinding>() {
 							selfieImage.frontalImage?.image?.let { bitmap ->
 								val bos = ByteArrayOutputStream()
 								bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos)
-								val base64 = Base64.encodeToString(bos.toByteArray(), Base64.DEFAULT).replace("\n", "")
+								val base64 =
+									Base64.encodeToString(bos.toByteArray(), Base64.DEFAULT)
+										.replace("\n", "")
 								listFrontal.add(base64)
 							}
 						}
-						val newFrame = mutableListOf<TVFrameClass>()
-						listFrame.forEach {
-							val frame = TVFrameClass(it.framesBase64, it.index, "id_card")
-							newFrame.add(frame)
-						}
+						
 						val requestModel = RequestVerifySelfies(
 							frontal = listFrontal,
 							videos = listFrame,
@@ -105,25 +115,29 @@ class GuideFaceIdFragment : PVFragment<FragmentGuideFaceCaptureBinding>() {
 						)
 						repository.verifySelfies(requestModel) {
 							hideLoading()
-							if (it["success"] is ResponseOCR) {
-								openFragment(
-									InformationConfirmFragment::class.java,
-									arguments ?: Bundle(),
-									true
-								)
+							val responseSuccess = it["success"]
+							if (responseSuccess is ResponseOCR) {
+								if (responseSuccess.error == null) {
+									openFragment(
+										InformationConfirmFragment::class.java,
+										arguments ?: Bundle(),
+										true
+									)
+								} else {
+									handlerError(responseSuccess)
+								}
 							}
-							if (it["fail"] is String){
+							val responseError = it["fail"]
+							if (responseError is String) {
 								AlertPopup.show(
 									fragmentManager = childFragmentManager,
 									title = "Thông báo",
-									message = "${it["fail"] as String}",
+									message = "$responseError",
 									primaryTitle = "OK",
-									primaryButtonListener = object : AlertPopup.PrimaryButtonListener{
+									primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
 										override fun onClickListener(v: View) {
-											if (it.contains("403")){
+											if (it.contains("403")) {
 												requireActivity().recreate()
-											} else {
-												startFaceCapture()
 											}
 										}
 									}
@@ -142,6 +156,35 @@ class GuideFaceIdFragment : PVFragment<FragmentGuideFaceCaptureBinding>() {
 					MasterModel.getInstance().frameBatch.add(p0)
 				}
 				
+			}
+		)
+	}
+	
+	private fun handlerError(responseSuccess: ResponseOCR){
+		val countDown: Long?
+		val needRecapture: Boolean
+		when (responseSuccess.error) {
+			in Constants.COUNT_DOWN_3_MINUTES -> {
+				countDown = 3000L
+				needRecapture = false
+			}
+			else -> {
+				countDown = null
+				needRecapture = true
+			}
+		}
+		AlertPopup.show(
+			fragmentManager = childFragmentManager,
+			title = "Thông báo",
+			message = "${responseSuccess.errorMessage}",
+			primaryTitle = "OK",
+			autoFinish = countDown,
+			primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
+				override fun onClickListener(v: View) {
+					if(needRecapture){
+						startFaceCapture()
+					}
+				}
 			}
 		)
 	}

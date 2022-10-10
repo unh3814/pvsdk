@@ -8,9 +8,11 @@ import com.pvcombank.sdk.base.PVFragment
 import com.pvcombank.sdk.databinding.FragmentPasswordRegisterBinding
 import com.pvcombank.sdk.model.Constants
 import com.pvcombank.sdk.model.MasterModel
+import com.pvcombank.sdk.repository.OnBoardingRepository
 import com.pvcombank.sdk.view.register.SuccessFragment
 
 class PasswordRegisterFragment : PVFragment<FragmentPasswordRegisterBinding>() {
+	private val repository = OnBoardingRepository()
 	override fun onCreateView(
 		inflater: LayoutInflater,
 		container: ViewGroup?,
@@ -25,6 +27,9 @@ class PasswordRegisterFragment : PVFragment<FragmentPasswordRegisterBinding>() {
 		viewBinding.apply {
 			topBar.show()
 			topBar.setTitle("Đăng ký dịch vụ ngân hàng số")
+			root.setOnClickListener {
+				hideKeyboard()
+			}
 			val data = MasterModel.getInstance().getDataOCR()
 			name.setText(data.name)
 			identity.setText(data.mobilePhone ?: MasterModel.getInstance().cacheCreateAccountPhone)
@@ -32,10 +37,17 @@ class PasswordRegisterFragment : PVFragment<FragmentPasswordRegisterBinding>() {
 				it?.let {
 					val str = it.toString()
 					if (str.matches(Constants.regexPassword)){
-						password.setError("Mật khẩu tối thiểu 6 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt")
-					} else {
-						password.setError("")
+						if (confirmPassword.getText() == str){
+							btnRegister.isEnabled = true
+						} else {
+							btnRegister.isEnabled = false
+							confirmPassword.setError("Mật khẩu không chính xác")
+						}
 						password.setNote("Mật khẩu tối thiểu 6 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt")
+					} else {
+						btnRegister.isEnabled = false
+						password.setNote("")
+						password.setError("Mật khẩu tối thiểu 6 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt")
 					}
 				}
 			}
@@ -45,10 +57,11 @@ class PasswordRegisterFragment : PVFragment<FragmentPasswordRegisterBinding>() {
 					btnRegister.isEnabled = false
 				} else {
 					confirmPassword.setError("")
-					btnRegister.isEnabled = true
+					btnRegister.isEnabled = password.getText().matches(Constants.regexPassword)
 				}
 			}
 			btnRegister.setOnClickListener {
+				repository.updatePassword(confirmPassword.getText())
 				openFragment(
 					SuccessFragment::class.java,
 					Bundle(),
@@ -58,8 +71,5 @@ class PasswordRegisterFragment : PVFragment<FragmentPasswordRegisterBinding>() {
 		}
 	}
 	
-	override fun onBack(): Boolean {
-		requireActivity().finish()
-		return true
-	}
+	override fun onBack(): Boolean = false
 }
