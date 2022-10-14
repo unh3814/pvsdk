@@ -6,6 +6,7 @@ import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentManager
 import com.pvcombank.sdk.base.PVFragment
 import com.pvcombank.sdk.databinding.FragmentGuideFaceCaptureBinding
 import com.pvcombank.sdk.model.Constants
@@ -14,8 +15,10 @@ import com.pvcombank.sdk.model.request.Gesture
 import com.pvcombank.sdk.model.request.RequestVerifySelfies
 import com.pvcombank.sdk.model.response.ResponseOCR
 import com.pvcombank.sdk.repository.OnBoardingRepository
+import com.pvcombank.sdk.util.execute.MyExecutor
 import com.pvcombank.sdk.view.popup.AlertPopup
 import com.pvcombank.sdk.view.register.confirm.InformationConfirmFragment
+import com.pvcombank.sdk.view.register.home.HomeFragment
 import com.trustingsocial.tvcoresdk.external.*
 import com.trustingsocial.tvsdk.TrustVisionSDK
 import java.io.ByteArrayOutputStream
@@ -63,16 +66,20 @@ class GuideFaceIdFragment : PVFragment<FragmentGuideFaceCaptureBinding>() {
 						showLoading()
 						if (result.selfieImages.any { it.frontalImage == null }) {
 							hideLoading()
-							AlertPopup.show(
-								fragmentManager = childFragmentManager,
-								title = "Thông báo",
-								message = "Có lỗi xảy ra vui lòng thực hiện lại",
-								primaryTitle = "OK",
-								primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
-									override fun onClickListener(v: View) {
-										startFaceCapture()
-									}
-								}
+							handler.postDelayed(
+								{
+									AlertPopup.show(
+										fragmentManager = childFragmentManager,
+										title = "Thông báo",
+										message = "Có lỗi xảy ra vui lòng thực hiện lại",
+										primaryTitle = "OK",
+										primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
+											override fun onClickListener(v: View) {
+												startFaceCapture()
+											}
+										}
+									)
+								}, 300L
 							)
 							return
 						}
@@ -129,15 +136,30 @@ class GuideFaceIdFragment : PVFragment<FragmentGuideFaceCaptureBinding>() {
 							}
 							val responseError = it["fail"]
 							if (responseError is String) {
+								val isEndAuth = responseError.contains("403")
+								var message = responseError
+								when{
+									isEndAuth -> {
+										message = "Phiên làm việc hết hạn."
+									}
+								}
 								AlertPopup.show(
 									fragmentManager = childFragmentManager,
 									title = "Thông báo",
-									message = "$responseError",
+									message = "$message",
 									primaryTitle = "OK",
 									primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
 										override fun onClickListener(v: View) {
-											if (it.contains("403")) {
-												requireActivity().recreate()
+											if (isEndAuth) {
+												requireActivity().supportFragmentManager.popBackStack(
+													null,
+													FragmentManager.POP_BACK_STACK_INCLUSIVE
+												)
+												openFragment(
+													HomeFragment::class.java,
+													arguments ?: Bundle(),
+													true
+												)
 											}
 										}
 									}
@@ -160,32 +182,43 @@ class GuideFaceIdFragment : PVFragment<FragmentGuideFaceCaptureBinding>() {
 		)
 	}
 	
-	private fun handlerError(responseSuccess: ResponseOCR){
-		val countDown: Long?
-		val needRecapture: Boolean
-		when (responseSuccess.error) {
-			in Constants.COUNT_DOWN_3_MINUTES -> {
-				countDown = 3000L
-				needRecapture = false
-			}
-			else -> {
-				countDown = null
-				needRecapture = true
-			}
-		}
-		AlertPopup.show(
-			fragmentManager = childFragmentManager,
-			title = "Thông báo",
-			message = "${responseSuccess.errorMessage}",
-			primaryTitle = "OK",
-			autoFinish = countDown,
-			primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
-				override fun onClickListener(v: View) {
-					if(needRecapture){
-						startFaceCapture()
+	private fun handlerError(responseSuccess: ResponseOCR) {
+		MyExecutor.Default
+			.build()
+			.executeDefault()
+			.execute {
+				Constants.errorCaptureMap[responseSuccess.error]?.apply {
+					val message = this.second
+					when (this.first) {
+						Constants.CAPTURE_FACE -> {
+							AlertPopup.show(
+								fragmentManager = childFragmentManager,
+								title = "Thông báo",
+								message = responseSuccess.errorMessage ?: message,
+								primaryTitle = "OK",
+								primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
+									override fun onClickListener(v: View) {
+										startFaceCapture()
+									}
+								}
+							)
+						}
+						else -> {
+						
+						}
 					}
+				} ?: kotlin.run {
+					AlertPopup.show(
+						fragmentManager = childFragmentManager,
+						title = "Thông báo",
+						message = responseSuccess.errorMessage,
+						primaryTitle = "OK",
+						primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
+							override fun onClickListener(v: View) {
+							}
+						}
+					)
 				}
 			}
-		)
 	}
 }

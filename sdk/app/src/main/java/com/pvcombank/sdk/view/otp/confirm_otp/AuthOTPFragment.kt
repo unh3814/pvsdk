@@ -43,9 +43,11 @@ import com.pvcombank.sdk.view.popup.GuideCardCaptureDialog
 import com.pvcombank.sdk.view.register.confirm.InformationConfirmFragment
 import com.pvcombank.sdk.view.register.guide.card.GuideCardIdFragment
 import com.pvcombank.sdk.view.register.guide.face.GuideFaceIdFragment
+import java.util.*
 
 class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 	private var repository: AuthRepository? = null
+	private val cache get() = MasterModel.getInstance().cache
 	override fun onCreateView(
 		inflater: LayoutInflater,
 		container: ViewGroup?,
@@ -114,7 +116,7 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 			}
 			val text = getString(
 				R.string.sended_otp_to_number_phone,
-				arguments?.getParcelable<ResponsePurchase>("data")?.phoneNumber ?: MasterModel.getInstance().cacheCreateAccountPhone
+				requireArguments().getParcelable<ResponsePurchase>("data")?.phoneNumber ?: (cache["phone_number"] as? String)
 			)
 			val spanText = SpannableString(text)
 			spanText.setSpan(
@@ -157,8 +159,8 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 		val card = requireArguments().getParcelable<CardModel>("card")
 		showLoading()
 		if (MasterModel.getInstance().isCreateAccount) {
-			val mail = MasterModel.getInstance().cacheCreateAccountMail
-			val phone = MasterModel.getInstance().cacheCreateAccountPhone
+			val mail = (cache["email"] as? String) ?: ""
+			val phone = (cache["phone_number"] as? String) ?: ""
 			
 			repository?.sendOTP(phone, mail) {
 				if (it !is String) {
@@ -224,9 +226,8 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 			repository?.verifyOnboardOTP(RequestModel(data = stringEncrypt)) {
 				hideLoading()
 				if (it is ResponseVerifyOnboardOTP) {
-					//Kiểm tra PVConnect sau
 					MasterModel.getInstance().ocrFromOTP = it.ekyc
-					MasterModel.getInstance().getDataOCR().mobilePhone = MasterModel.getInstance().cacheCreateAccountPhone
+					MasterModel.getInstance().getDataOCR().mobilePhone = (cache["phone_number"] as? String) ?: ""
 					when (it.ekyc.step) {
 						0, 5, 6 -> {
 							AlertPopup.show(
@@ -246,6 +247,7 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 							)
 						}
 						1 -> {
+							MasterModel.getInstance().timeLogin = Date().time
 							openFragment(
 								GuideCardIdFragment::class.java,
 								Bundle(),
@@ -253,6 +255,7 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 							)
 						}
 						2 -> {
+							MasterModel.getInstance().timeLogin = Date().time
 							openFragment(
 								GuideFaceIdFragment::class.java,
 								Bundle(),
@@ -260,6 +263,7 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 							)
 						}
 						3, 4 -> {
+							MasterModel.getInstance().timeLogin = Date().time
 							requireArguments().putBoolean("hide_back", true)
 							openFragment(
 								InformationConfirmFragment::class.java,

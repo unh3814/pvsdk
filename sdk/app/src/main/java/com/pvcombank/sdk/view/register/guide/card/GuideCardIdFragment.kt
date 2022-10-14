@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentManager
 import com.pvcombank.sdk.base.PVFragment
 import com.pvcombank.sdk.databinding.FragmentGuideCardCaptureBinding
 import com.pvcombank.sdk.model.Constants
@@ -12,8 +13,10 @@ import com.pvcombank.sdk.model.MasterModel
 import com.pvcombank.sdk.model.response.ResponseOCR
 import com.pvcombank.sdk.repository.OnBoardingRepository
 import com.pvcombank.sdk.util.FileUtils.toFile
+import com.pvcombank.sdk.util.execute.MyExecutor
 import com.pvcombank.sdk.view.popup.AlertPopup
 import com.pvcombank.sdk.view.register.guide.face.GuideFaceIdFragment
+import com.pvcombank.sdk.view.register.home.HomeFragment
 import com.trustingsocial.tvcoresdk.external.*
 import com.trustingsocial.tvcoresdk.external.TVSDKConfiguration.TVCardSide
 import com.trustingsocial.tvsdk.TrustVisionSDK
@@ -25,7 +28,7 @@ import java.io.File
 class GuideCardIdFragment : PVFragment<FragmentGuideCardCaptureBinding>() {
 	override fun onBack(): Boolean = false
 	private val repository = OnBoardingRepository()
-	private val typeCard: String get() = arguments?.getString("type_card") ?: ""
+	private val typeCard: String get() = requireArguments().getString("type_card") ?: ""
 	override fun onCreateView(
 		inflater: LayoutInflater,
 		container: ViewGroup?,
@@ -102,7 +105,7 @@ class GuideCardIdFragment : PVFragment<FragmentGuideCardCaptureBinding>() {
 			if (responseSuccess is ResponseOCR) {
 				val label = responseSuccess.cardLabel
 				if (label?.isNotEmpty() == true) {
-					arguments?.putString("type_card", label)
+					requireArguments().putString("type_card", label)
 				}
 				if (responseSuccess.error?.isNotEmpty() != true) {
 					handlerSuccess(responseSuccess)
@@ -112,15 +115,27 @@ class GuideCardIdFragment : PVFragment<FragmentGuideCardCaptureBinding>() {
 			}
 			val responseFail = response["fail"]
 			if (responseFail is String) {
-				//Lỗi api hoặc lỗi internet
+				val isEndAuth = responseFail.contains("403")
+				var message = responseFail
+				when {
+					isEndAuth -> {
+						message = "Phiên làm việc hết hạn."
+					}
+				}
 				AlertPopup.show(
 					fragmentManager = childFragmentManager,
 					title = "Thông báo",
-					message = "$responseFail",
+					message = "$message",
 					primaryTitle = "OK",
 					primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
 						override fun onClickListener(v: View) {
-						
+							if (isEndAuth) {
+								requireActivity().supportFragmentManager.popBackStack(
+									null,
+									FragmentManager.POP_BACK_STACK_INCLUSIVE
+								)
+								openFragment(HomeFragment::class.java, arguments ?: Bundle(), true)
+							}
 						}
 					}
 				)
@@ -157,29 +172,58 @@ class GuideCardIdFragment : PVFragment<FragmentGuideCardCaptureBinding>() {
 	}
 	
 	private fun handlerError(responseSuccess: ResponseOCR) {
-		val cardSite: TVCardSide = when (responseSuccess.error) {
-			in Constants.RECAPTURE_CURRENT_STEP -> {
-				if (typeCard.contains("back")) {
-					TVCardSide.BACK
-				} else {
-					TVCardSide.FRONT
+		MyExecutor.Default
+			.build()
+			.executeDefault()
+			.execute {
+				var message = "" // Cái này không chắc là cần
+				var cardSide = TVCardSide.FRONT
+				Constants.errorCaptureMap[responseSuccess.error]?.apply {
+					message = this.second
+					when(this.first){
+						Constants.CAPTURE_CURRENT_STEP -> {
+							cardSide = if (typeCard.contains("back")) {
+								TVCardSide.BACK
+							} else {
+								TVCardSide.FRONT
+							}
+						}
+						Constants.CAPTURE_FIRST, Constants.CAPTURE_CARD_NOT_MATCH -> {
+							cardSide = TVCardSide.FRONT
+						}
+						else -> {
+							requireArguments().putString("type_card", null)
+							cardSide = TVCardSide.FRONT
+						}
+					}
+					if(message.isNotEmpty()){
+						AlertPopup.show(
+							fragmentManager = childFragmentManager,
+							title = "Thông báo",
+							message = responseSuccess.errorMessage ?: message,
+							primaryTitle = "OK",
+							primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
+								override fun onClickListener(v: View) {
+									startCaptureCard(cardSide)
+								}
+							}
+						)
+					}
+				} ?: kotlin.run {
+					requireArguments().putString("type_card", null)
+					AlertPopup.show(
+						fragmentManager = childFragmentManager,
+						title = "Thông báo",
+						message = responseSuccess.errorMessage,
+						primaryTitle = "OK",
+						primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
+							override fun onClickListener(v: View) {
+								startCaptureCard(cardSide)
+							}
+						}
+					)
 				}
 			}
-			else -> {
-				TVCardSide.FRONT
-			}
-		}
-		AlertPopup.show(
-			fragmentManager = childFragmentManager,
-			title = "Thông báo",
-			message = "${responseSuccess.errorMessage}",
-			primaryTitle = "OK",
-			primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
-				override fun onClickListener(v: View) {
-					startCaptureCard(cardSite)
-				}
-			}
-		)
 	}
 	
 	private fun startVerify(file: File, type: String, callBack: (HashMap<String, Any>) -> Unit) {

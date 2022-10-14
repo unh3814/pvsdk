@@ -2,6 +2,8 @@ package com.pvcombank.sdk.view.customs.EditViewPVCB
 
 import android.content.Context
 import android.text.Editable
+import android.text.InputFilter
+import android.text.InputType
 import android.text.TextWatcher
 import android.text.method.PasswordTransformationMethod
 import android.util.AttributeSet
@@ -12,6 +14,7 @@ import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.widget.addTextChangedListener
 import com.pvcombank.sdk.R
 import com.pvcombank.sdk.databinding.EditviewPvcombankBinding
+import kotlin.math.max
 
 class EditViewPVCB(context: Context, attributeSet: AttributeSet) : LinearLayoutCompat(
 	context,
@@ -32,6 +35,8 @@ class EditViewPVCB(context: Context, attributeSet: AttributeSet) : LinearLayoutC
 	private var sNote: String = ""
 	private var isPassword: Boolean = false
 	private var iconPassword: Boolean = false
+	private var maxLengh: Int = 0
+	private var inputType: String? = "full"
 	//endregion variable
 	
 	init {
@@ -47,12 +52,16 @@ class EditViewPVCB(context: Context, attributeSet: AttributeSet) : LinearLayoutC
 					isErrorEnable = getBoolean(R.styleable.EditViewPVCB_errorEnabled, false)
 					isPassword = getBoolean(R.styleable.EditViewPVCB_isPassword, false)
 					iconPassword = getBoolean(R.styleable.EditViewPVCB_isShowPassword, false)
+					maxLengh = getInteger(R.styleable.EditViewPVCB_maxLengh, 0)
+					inputType = getString(R.styleable.EditViewPVCB_inputType)
 					setIsPassword()
 					showIconPassword()
 					setNote()
 					setTitle()
 					setHint()
 					setError()
+					setInputType()
+					setMaxLengh()
 					editor.addTextChangedListener {
 						editor.setBackgroundResource(R.drawable.bg_edit)
 						error.visibility = View.GONE
@@ -128,6 +137,23 @@ class EditViewPVCB(context: Context, attributeSet: AttributeSet) : LinearLayoutC
 			binding.editor.transformationMethod = PasswordTransformationMethod()
 		} else {
 			binding.editor.transformationMethod = null
+		}
+	}
+	
+	fun setInputType(){
+		when(inputType){
+			"full" -> {
+				binding.editor.inputType = InputType.TYPE_CLASS_TEXT
+			}
+			"number" -> {
+				binding.editor.inputType = InputType.TYPE_CLASS_NUMBER
+			}
+		}
+	}
+	
+	fun setMaxLengh(){
+		if (maxLengh > 0){
+			binding.editor.filters = arrayOf(InputFilter.LengthFilter(maxLengh))
 		}
 	}
 	

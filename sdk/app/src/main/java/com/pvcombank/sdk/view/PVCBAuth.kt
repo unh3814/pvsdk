@@ -17,12 +17,26 @@ class PVCBAuth() {
 	private var activity: FragmentActivity? = null
 	
 	fun build(
-		activity: FragmentActivity
+		activity: FragmentActivity,
+		listener: PVCBAuthListener
 	) {
 		this.activity = activity
+		masterModel.errorString
+			.observeOn(AndroidSchedulers.mainThread())
+			.subscribeOn(Schedulers.io())
+			.subscribe {
+				listener?.onError(it)
+			}
+		masterModel.successString
+			.observeOn(AndroidSchedulers.mainThread())
+			.subscribeOn(Schedulers.io())
+			.subscribe {
+				listener?.onSuccess(it)
+			}
+		this.listener = listener
 	}
 	
-	fun startRegister(){
+	fun startRegister() {
 		activity?.apply {
 			startActivity(
 				Intent(
@@ -31,37 +45,6 @@ class PVCBAuth() {
 				)
 			)
 		}
-	}
-	fun setClient(
-		clientId: String,
-		clientSecret: String,
-		currency: String,
-		idOrder: String,
-		appUnitId: String
-	) {
-		masterModel.apply {
-			this.clientId = clientId
-			this.clientSecret = clientSecret
-			this.orderCurrency = currency
-			this.idOrder = idOrder
-			this.appUnitID = appUnitId
-		}
-		masterModel.errorString
-			.observeOn(AndroidSchedulers.mainThread())
-			.subscribeOn(Schedulers.io())
-			.subscribe{
-				listener?.onError(it)
-			}
-		masterModel.successString
-			.observeOn(AndroidSchedulers.mainThread())
-			.subscribeOn(Schedulers.io())
-			.subscribe{
-				listener?.onSuccess(it)
-			}
-	}
-	
-	fun setListener(listener: PVCBAuthListener) {
-		this.listener = listener
 	}
 	
 	fun show() {

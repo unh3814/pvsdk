@@ -1,28 +1,28 @@
 package com.pvcombank.sdk.repository
 
+import com.google.gson.Gson
 import com.pvcombank.sdk.BuildConfig
-import com.pvcombank.sdk.model.request.RequestFinish
-import com.pvcombank.sdk.model.request.RequestUpdatePassword
-import com.pvcombank.sdk.model.request.RequestVerifySelfies
+import com.pvcombank.sdk.model.Constants
+import com.pvcombank.sdk.model.MasterModel
+import com.pvcombank.sdk.model.ResponseData
+import com.pvcombank.sdk.model.request.*
+import com.pvcombank.sdk.model.response.ResponsePurchase
 import com.pvcombank.sdk.network.ApiEKYC
-import com.pvcombank.sdk.network.ApiResponse
 import com.pvcombank.sdk.network.RetrofitHelper
-import com.pvcombank.sdk.util.execute.ThreadExecutor
+import com.pvcombank.sdk.util.Utils.toObjectData
+import com.pvcombank.sdk.util.security.SecurityHelper
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.ObservableTransformer
 import io.reactivex.rxjava3.schedulers.Schedulers
 import okhttp3.RequestBody
-import java.util.concurrent.Executors
 
 class OnBoardingRepository {
-	private val executeFactory = ThreadExecutor.Default.build()
 	private val apiServices: ApiEKYC = RetrofitHelper.instance()
 		.createServices(BuildConfig.ONBOARDING_URL)
 		.create(ApiEKYC::class.java)
-	private val newApiServices: ApiEKYC = RetrofitHelper.instance()
-		.createNewServices(BuildConfig.ONBOARDING_URL)
+	private val retrofitUpdatePassword = RetrofitHelper.instance()
+		.createServices("https://iuhfhsds3h.execute-api.ap-southeast-1.amazonaws.com/staging/v1/")
 		.create(ApiEKYC::class.java)
+	private val securityHelper = SecurityHelper.instance().cryptoBuild(type = SecurityHelper.AES)
 	
 	fun verifyCard(
 		requestBody: RequestBody,
@@ -88,18 +88,37 @@ class OnBoardingRepository {
 			)
 	}
 	
-	fun updatePassword(password: String) {
-		executeFactory.executeIO().execute {
-			newApiServices.updatePassword(
-				RequestUpdatePassword(password)
-			).apply {
-				when (this) {
-					is ApiResponse.ApiError -> {}
-					is ApiResponse.NetworkError -> {}
-					is ApiResponse.UnknownError -> {}
-					is ApiResponse.Success -> {}
+	fun updatePassword(password: String, callBack: (HashMap<String, Any>) -> Unit) {
+		val result = hashMapOf<String, Any>()
+		val requestRaw = RequestUpdatePassword(password)
+		val stringEncrypt = SecurityHelper.instance()
+			.cryptoBuild(type = SecurityHelper.AES)
+			?.encrypt(Gson().toJson(requestRaw))
+		
+		retrofitUpdatePassword.updatePassword(
+			RequestModel(data = stringEncrypt)
+		).observeOn(Schedulers.io())
+			.subscribeOn(AndroidSchedulers.mainThread())
+			.subscribe(
+				{
+					val decryptText = securityHelper?.decrypt(it.data ?: "")
+					decryptText?.toObjectData<ResponseData<Any>>()?.let {
+						if (it.code == Constants.CODE_SUCCESS) {
+							result["success"] = it
+						} else {
+							result["fail"] = it.message ?: "Đã có lỗi, vui lòng thử lại"
+						}
+						callBack.invoke(
+							result
+						)
+					}
+				},
+				{
+					result["fail"] = it.message.toString()
+					callBack.invoke(
+						result
+					)
 				}
-			}
-		}
+			)
 	}
 }

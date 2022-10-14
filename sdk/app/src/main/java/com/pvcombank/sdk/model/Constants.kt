@@ -16,10 +16,8 @@ object Constants {
 	const val REDIRECT_SANBOX_URL = "https://awsapi.pvcombank.com.vn/connect"
 	const val CLIENT_ID = "430434b7"
 	const val CLIENT_SECRET = "4e22f497-4f20-4a3e-a950-4e29e6df6729"
-	const val url =
-		"https://connect.apps.ocp4-dev03.pvcomtestocp.com/auth/realms/pvcombank/protocol/openid-connect/auth?client_id=vietsens-sdk&state=589i2mgvijs&redirect_uri=$REDIRECT_URL&scope=openid&response_type=code"
-	const val url_sanbox =
-		"https://sandbox-connect.pvcombank.com.vn/auth/realms/pvcombank/protocol/openid-connect/auth?client_id=$CLIENT_ID&state=589i2mgvijs&redirect_uri=$REDIRECT_SANBOX_URL&response_type=code&scope=openid"
+	const val url = "https://connect.apps.ocp4-dev03.pvcomtestocp.com/auth/realms/pvcombank/protocol/openid-connect/auth?client_id=vietsens-sdk&state=589i2mgvijs&redirect_uri=$REDIRECT_URL&scope=openid&response_type=code"
+	const val url_sanbox = "https://sandbox-connect.pvcombank.com.vn/auth/realms/pvcombank/protocol/openid-connect/auth?client_id=$CLIENT_ID&state=589i2mgvijs&redirect_uri=$REDIRECT_SANBOX_URL&response_type=code&scope=openid"
 	
 	//https://connect.apps.ocp4-dev03.pvcomtestocp.com/auth/realms/pvcombank/protocol/openid-connect/auth?client_id=vietsens-sdk&state=589i2mgvijs&redirect_uri=https://10.0.15.60/connect&scope=openid&response_type=code
 	var TOKEN: String = ""
@@ -215,5 +213,101 @@ object Constants {
 		"incorrect_native_place",
 		"wrong_format_in_dob",
 		"not_in_same_card"
+	)
+	const val CAPTURE_NEXT = 0
+	const val CAPTURE_CURRENT_STEP = CAPTURE_NEXT + 1
+	const val CAPTURE_FIRST = CAPTURE_CURRENT_STEP + 1
+	const val CAPTURE_ALL_DONE = CAPTURE_FIRST + 1
+	const val CAPTURE_FACE = CAPTURE_ALL_DONE + 1
+	const val CAPTURE_CARD_NOT_MATCH = CAPTURE_FACE + 1
+	const val CAPTURE_NOTHING = CAPTURE_CARD_NOT_MATCH + 1
+	val errorCaptureMap = hashMapOf(
+		"abnormal_object_inner" to Pair(CAPTURE_CURRENT_STEP, "Cảnh báo có vật lạ/ che ở bên trong ID"),
+		"abnormal_object_edge " to Pair(CAPTURE_CURRENT_STEP, "Cảnh báo có vật lạ/ che ở viền ID"),
+		"image1_too_dark" to Pair(CAPTURE_CURRENT_STEP, "Ảnh bị tối, chỉnh lại góc chụp chút nhé!"),
+		"image2_too_bright" to Pair(CAPTURE_CURRENT_STEP, "Ảnh bị chói sáng, chỉnh lại góc chụp chút nhé!"),
+		"covered" to Pair(CAPTURE_CURRENT_STEP, "Ảnh chụp bị che khuất, chỉnh lại góc chụp chút nhé!"),
+		"face_too_bright" to Pair(CAPTURE_CURRENT_STEP, "Có vẻ đang bị lóa sáng, chỉnh lại góc chụp chút nhé!"),
+		"id_unsure" to Pair(CAPTURE_CURRENT_STEP, "Không thể đọc chính xác số giấy tờ, hãy chụp lại nào!"),
+		"image_has_cut" to Pair(CAPTURE_CURRENT_STEP, "Giấy tờ tùy thân bị mất góc, bạn thử chụp lại nhé"),
+		"image_too_blur" to Pair(CAPTURE_CURRENT_STEP, "Có vẻ đang bị lóa sáng, chỉnh lại góc chụp chút nhé!"),
+		"image_too_bright" to Pair(CAPTURE_CURRENT_STEP, "Có vẻ đang bị lóa sáng, chỉnh lại góc chụp chút nhé!"),
+		"image_too_dark" to Pair(CAPTURE_CURRENT_STEP, "Ảnh chụp bị tối rồi, chỉnh lại góc chụp chút nhé!"),
+		"image1_blurry" to Pair(CAPTURE_CURRENT_STEP, "Ảnh bị mờ, chỉnh lại góc chụp chút nhé!"),
+		"image1_dirty" to Pair(CAPTURE_CURRENT_STEP, "Giấy tờ bị bẩn, hãy làm sạch và chụp lại nào!"),
+		"image1_glare" to Pair(CAPTURE_CURRENT_STEP, "Ảnh bị chói sáng, chỉnh lại góc chụp chút nhé!"),
+		"image1_glare_safe" to Pair(CAPTURE_CURRENT_STEP, "Ảnh bị chói sáng, chỉnh lại góc chụp chút nhé!"),
+		"image1_glare_unsafe" to Pair(CAPTURE_CURRENT_STEP, "Ảnh bị chói sáng, chỉnh lại góc chụp chút nhé!"),
+		"image1_too_bright" to Pair(CAPTURE_CURRENT_STEP, "Ảnh bị chói sáng, chỉnh lại góc chụp chút nhé!"),
+		"image2_blurry" to Pair(CAPTURE_CURRENT_STEP, "Ảnh bị mờ, chỉnh lại góc chụp chút nhé!"),
+		"image2_dirty" to Pair(CAPTURE_CURRENT_STEP, "Giấy tờ bị bẩn, hãy làm sạch và chụp lại nhé!"),
+		"image2_glare" to Pair(CAPTURE_CURRENT_STEP, "Ảnh bị chói sáng, chỉnh lại góc chụp chút nhé!"),
+		"image2_glare_safe" to Pair(CAPTURE_CURRENT_STEP, "Ảnh bị chói sáng, chỉnh lại góc chụp chút nhé!"),
+		"image2_glare_unsafe" to Pair(CAPTURE_CURRENT_STEP, "Ảnh bị chói sáng, chỉnh lại góc chụp chút nhé!"),
+		"image2_too_dark" to Pair(CAPTURE_CURRENT_STEP, "Ảnh bị tối, chỉnh lại góc chụp chút nhé!"),
+		"incomplete" to Pair(CAPTURE_CURRENT_STEP, "Ảnh chụp bị chụp thiếu góc, chỉnh lại góc chụp chút nhé!"),
+		"left" to Pair(CAPTURE_CURRENT_STEP, "Chưa chụp được ảnh rồi, hãy thử lại bạn!"),
+		"nocard_or_multicard_image" to Pair(CAPTURE_CURRENT_STEP, "Chụp bằng CMND/CCCD hoặc hộ chiếu bạn nhé!"),
+		"right" to Pair(CAPTURE_CURRENT_STEP, "Chưa chụp được ảnh rồi, hãy thử lại nào!"),
+		"matched" to Pair(CAPTURE_NEXT, "Khớp "),
+		"good" to Pair(CAPTURE_NEXT, "Verdict Chung_Ảnh đạt chất lượng tốt"),
+		"abnormal_emblem" to Pair(CAPTURE_FIRST, "Giấy tờ tùy không hợp lệ, Chụp bằng giấy tờ khác nhé!"),
+		"age_not_match" to Pair(CAPTURE_FIRST, "Giấy tờ tùy thân không hợp lệ, Bạn vui lòng chụp lại hoặc dùng Giấy tờ khác nhé!"),
+		"card_expired" to Pair(CAPTURE_FIRST, "Giấy tờ đã hết hạn, Chụp bằng giấy tờ khác nhé!"),
+		"cut" to Pair(CAPTURE_FIRST, "Giấy tờ tùy thân không hợp lệ, Bạn vui lòng chụp lại hoặc dùng Giấy tờ khác nhé!"),
+		"document_used" to Pair(CAPTURE_FIRST, "Giấy tờ tùy thân bị mất góc, bạn thử chụp lại nhé"),
+		"emblem_covered" to Pair(CAPTURE_FIRST, "Số giấy tờ của bạn đã định danh tại PVcomBank rồi"),
+		"hole" to Pair(CAPTURE_FIRST, "Hình ảnh quốc huy bị che khuất, Chụp bằng giấy tờ khác nhé!"),
+		"id_not_follow_rule" to Pair(CAPTURE_FIRST, "Giấy tờ tùy thân không hợp lệ, Bạn vui lòng chụp lại hoặc dùng Giấy tờ khác nhé!"),
+		"id_with_printed_fonts" to Pair(CAPTURE_FIRST, "Chụp bằng CMND/CCCD hoặc hộ chiếu bạn nhé!"),
+		"id_with_typewriter_fonts" to Pair(CAPTURE_FIRST, "Giấy tờ tùy không hợp lệ, Chụp bằng giấy tờ khác nhé!"),
+		"image_has_hole" to Pair(CAPTURE_FIRST, "Giấy tờ tùy không hợp lệ, Chụp bằng giấy tờ khác nhé!"),
+		"image_has_hole_and_cut" to Pair(CAPTURE_FIRST, "Giấy tờ tùy thân không hợp lệ, Bạn vui lòng chụp lại hoặc dùng Giấy tờ khác nhé!"),
+		"incorrect_issue_date" to Pair(CAPTURE_FIRST, "Giấy tờ tùy thân không hợp lệ, Bạn vui lòng chụp lại hoặc dùng Giấy tờ khác nhé!"),
+		"incorrect_native_place" to Pair(CAPTURE_FIRST, "Giấy tờ tùy không hợp lệ, Chụp bằng giấy tờ khác nhé!"),
+		"info_tampered" to Pair(CAPTURE_FIRST, "Giấy tờ tùy không hợp lệ, Chụp bằng giấy tờ khác nhé!"),
+		"invalid_expiry_date" to Pair(CAPTURE_FIRST, "Giấy tờ tùy thân không hợp lệ, Bạn vui lòng chụp lại hoặc dùng Giấy tờ khác nhé!"),
+		"mrz_not_follow_rule" to Pair(CAPTURE_FIRST, "Giấy tờ đã hết hạn, Chụp bằng giấy tờ khác nhé!"),
+		"no_card_or_incomplete_card" to Pair(CAPTURE_FIRST, "Giấy tờ tùy thân không hợp lệ, Bạn vui lòng chụp lại hoặc dùng Giấy tờ khác nhé!"),
+		"no_emblem" to Pair(CAPTURE_FIRST, "Chụp bằng CMND/CCCD hoặc hộ chiếu bạn nhé!"),
+		"non_liveness" to Pair(CAPTURE_FIRST, "Giấy tờ tùy không hợp lệ, Chụp bằng giấy tờ khác nhé!"),
+		"non-liveness" to Pair(CAPTURE_FIRST, "Giấy tờ tùy thân không hợp lệ, Bạn vui lòng chụp lại hoặc dùng Giấy tờ khác nhé!"),
+		"not_in_same_card" to Pair(CAPTURE_FIRST, "Giấy tờ tùy thân không hợp lệ, Bạn vui lòng chụp lại hoặc dùng Giấy tờ khác nhé!"),
+		"photo_tampered" to Pair(CAPTURE_FIRST, "Mặt trước và mặt sau giấy tờ không khớp nhau, hãy chụp lại nhé!"),
+		"photocopied" to Pair(CAPTURE_FIRST, "Giấy tờ tùy thân không hợp lệ, Bạn vui lòng chụp lại hoặc dùng Giấy tờ khác nhé!"),
+		"photocopy" to Pair(CAPTURE_FIRST, "Giấy tờ tùy thân không hợp lệ, Bạn vui lòng chụp lại hoặc dùng Giấy tờ khác nhé!"),
+		"qr_info_not_match" to Pair(CAPTURE_FIRST, "Giấy tờ tùy thân không hợp lệ, Bạn vui lòng chụp lại hoặc dùng Giấy tờ khác nhé!"),
+		"signer_name_unmatched" to Pair(CAPTURE_FIRST, "Giấy tờ tùy thân không hợp lệ, Bạn vui lòng chụp lại hoặc dùng Giấy tờ khác nhé!"),
+		"signer_name_unmatched_overlap" to Pair(CAPTURE_FIRST, "Giấy tờ tùy thân không hợp lệ, Bạn vui lòng chụp lại hoặc dùng Giấy tờ khác nhé!"),
+		"tax_name_unmatched" to Pair(CAPTURE_FIRST, "Giấy tờ tùy thân không hợp lệ, Bạn vui lòng chụp lại hoặc dùng Giấy tờ khác nhé!"),
+		"wrong_font" to Pair(CAPTURE_FIRST, "Tên trên ảnh không trùng khớp tên khai báo thuế rồi!"),
+		"wrong_font_in_residential_place" to Pair(CAPTURE_FIRST, "Giấy tờ tùy không hợp lệ, Chụp bằng giấy tờ khác nhé!"),
+		"wrong_format_in_dob" to Pair(CAPTURE_FIRST, "Giấy tờ tùy không hợp lệ, Chụp bằng giấy tờ khác nhé!"),
+		"wrong_format_in_recognizable_feature_phrase" to Pair(CAPTURE_FIRST, "Giấy tờ tùy không hợp lệ, Chụp bằng giấy tờ khác nhé!"),
+		"face_duplicated" to Pair(CAPTURE_ALL_DONE, "Khuôn mặt đã tồn tại trên hệ thống rồi!"),
+		"closed_eye" to Pair(CAPTURE_FACE, "Ảnh chụp nhắm mắt rồi, hãy thử lại bạn nhé!"),
+		"closed_eye,closed_eye" to Pair(CAPTURE_FACE, "Ảnh chụp nhắm mắt rồi, thử lại bạn nhé!"),
+		"closed_eye,open_eye" to Pair(CAPTURE_FACE, "Ảnh chụp nhắm mắt rồi, thử lại bạn nhé!"),
+		"closed_eye,sunglasses" to Pair(CAPTURE_FACE, "Ảnh chụp nhắm mắt rồi, thử lại bạn nhé!"),
+		"face_not_match" to Pair(CAPTURE_FACE, "Bạn ơi khuôn mặt không trùng khớp, chụp lại nhé!"),
+		"face_too_big" to Pair(CAPTURE_FACE, "Bạn ơi để camera ra xa chút nhé!"),
+		"face_too_dark" to Pair(CAPTURE_FACE, "Ảnh chụp tối quá, chỉnh lại góc chụp chút nhé!"),
+		"face_too_small" to Pair(CAPTURE_FACE, "Khuôn mặt quá nhỏ rồi, để camera lại gần một chút nào!"),
+		"image_has_multiple_faces" to Pair(CAPTURE_FACE, "Bạn ơi nhiều khuôn mặt nằm trong khung hình quá, thử lại nhé!"),
+		"mage_has_no_face" to Pair(CAPTURE_FACE, "Bạn ơi khuôn mặt không nằm trong khung hình rồi, thử lại nào!"),
+		"not_qualified" to Pair(CAPTURE_FACE, "Không để lẫn vật thể khác trong khung hình nhé!"),
+		"open_eye,closed_eye" to Pair(CAPTURE_FACE, "Ảnh chụp nhắm mắt rồi, thử lại bạn nhé!"),
+		"open_eye,sunglasses" to Pair(CAPTURE_FACE, "Bỏ kính ra và chụp lại nào!"),
+		"sunglasses" to Pair(CAPTURE_FACE, "Bỏ kính ra và chụp lại lần nữa nào!"),
+		"sunglasses,closed_eye" to Pair(CAPTURE_FACE, "Ảnh chụp nhắm mắt rồi, thử lại bạn nhé!"),
+		"sunglasses,open_eye" to Pair(CAPTURE_FACE, "Bỏ kính ra và chụp lại nào!"),
+		"sunglasses,sunglasses" to Pair(CAPTURE_FACE, "Bỏ kính ra và chụp lại nào!"),
+		"unmatched" to Pair(CAPTURE_FACE, "Bạn ơi khuôn mặt không trùng khớp, chụp lại nhé"),
+		"incorrect_card_type" to Pair(CAPTURE_CARD_NOT_MATCH, "Không đúng loại GTTT, bạn chọn CMND/CCCD hoặc hộ chiếu nhé!"),
+		"unsure" to Pair(CAPTURE_NOTHING, ""),
+		"image_has_no_faces" to Pair(CAPTURE_FACE, "Bạn ơi khuôn mặt không nằm trong khung hình rồi, thử lại nào!"),
+		"invalid_face_movement" to Pair(CAPTURE_FACE, "Thực hiện thao tác quay như hướng dẫn bạn nhé"),
+		"is_live: false" to Pair(CAPTURE_FACE, "Hình selfie không từ thực thể sống"),
+		"is_live: true" to Pair(CAPTURE_NOTHING, "Hình selfie từ thực thể sống")
 	)
 }

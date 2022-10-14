@@ -130,7 +130,6 @@ class AuthWebLoginFragment : PVFragment<FragmentWebLoginBinding>() {
 			Uri.parse(url)?.apply {
 				this.getQueryParameter("code")?.let {
 					val code = it
-					MasterModel.getInstance().timeLogin = Date().time
 					AuthRepository().apply {
 						Handler(Looper.getMainLooper()).post {
 							getTokenByCode(

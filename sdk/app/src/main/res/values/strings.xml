@@ -56,8 +56,9 @@
     <string name="txt_sms_banking">PV-SMS Banking</string>
     <string name="txt_user_introduce">Người giới thiệu</string>
     <string name="txt_register_rule_1">Tôi cam đoan là chủ sở hữu hưởng lợi của các tài khoản mở tại Ngân hàng, các dịch vụ và các giao dịch liên quan đến các tài khoản này.</string>
-    <string name="txt_register_rule_2">Tôi đã đọc, hiểu và đồng ý với <a href="https://www.pvcombank.com.vn/static/product/2021/MB05_DKDK%20mo%20va%20su%20dung%20dich%20vu%20TKTT%20PVcomBank.pdf"><font color="#313442">Các điều khoản &amp; điều kiện</font></a> mở tài khoản thanh toán.</string>
+    <string name="txt_register_rule_2">Tôi đã đọc, hiểu và đồng ý với <font color="#3A9EFC"><a href="https://www.pvcombank.com.vn/static/product/2021/MB05_DKDK%20mo%20va%20su%20dung%20dich%20vu%20TKTT%20PVcomBank.pdf">Các điều khoản &amp; điều kiện</a></font> mở tài khoản thanh toán.</string>
     <string name="error_default">Có lỗi xảy ra khi thực hiện giao dịch, bạn vui lòng thử lại hoặc liên hệ <font color="#3A9EFC">1900 5555 92</font> để được hỗ trợ</string>
+    <string name="default_message">Quý khách vui lòng tới chi nhánh PVcomBank gần nhất để đăng ký và sử dụng dịch vụ hoặc liên hệ tổng đài: <font color="#3A9EFC">1900 5555 92</font></string>
     <string name="error_system">Lỗi hệ thống, thử lại sau.</string>
     <string name="txt_email_address">Địa chỉ email</string>
     <string name="txt_create_account">Đăng ký</string>

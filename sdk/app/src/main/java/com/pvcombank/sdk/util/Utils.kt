@@ -15,6 +15,8 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.pvcombank.sdk.base.PVActivity
 import com.pvcombank.sdk.model.Constants
+import com.pvcombank.sdk.model.MasterModel
+import com.pvcombank.sdk.util.Utils.toPVDate
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -52,7 +54,12 @@ object Utils {
 		val f1 = SimpleDateFormat("dd/MM/yyyy")
 		val f2 = SimpleDateFormat("yyyy-MM-dd")
 		return f1.format(f2.parse(this))
-		
+	}
+	
+	fun Date.toPVDate(): String{
+		val f2 = SimpleDateFormat("dd/MM/yyyy")
+		val f1 = SimpleDateFormat("yyyy-MM-dd")
+		return f2.format(this)
 	}
 	
 	fun onDrawableClick(rawView: TextView, position: Int, callback: () -> Unit){
@@ -97,5 +104,14 @@ object Utils {
 		}
 		//make sure movement method is set
 		movementMethod = LinkMovementMethod.getInstance()
+	}
+	
+	fun checkOutOfTime(): Boolean {
+		MasterModel.getInstance().timeLogin?.let {
+			val currentTime = Date().time
+			val `10Minute` = 6000000
+			return (currentTime - it) >= `10Minute`
+		}
+		return false
 	}
 }

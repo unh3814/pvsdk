@@ -3,31 +3,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:layout_margin="8dp"
     android:background="@color/color_white"
-    app:cardCornerRadius="8dp"
-    android:layout_height="wrap_content">
+    app:cardCornerRadius="8dp">
 
     <LinearLayout
-        android:orientation="vertical"
+        android:padding="16dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <ImageView
-            android:layout_marginBottom="12dp"
             android:id="@+id/img_alert"
             android:layout_width="match_parent"
             android:layout_height="128dp"
+            android:layout_marginBottom="12dp"
             android:padding="30dp"
             android:visibility="gone"
             tools:src="@drawable/ic_success"
-            tools:visibility="visible" />
+            tools:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
             android:gravity="center_horizontal"
             android:textColor="@color/color_black"
             android:textSize="15sp"
@@ -35,27 +35,25 @@
             tools:text="Insert the title here" />
 
         <TextView
-            android:gravity="center"
             android:id="@+id/tv_message"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
+            android:layout_height="0dp"
             android:layout_marginTop="24dp"
-            android:textSize="13sp"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
             android:lineHeight="20dp"
+            android:text="@string/default_message"
             android:textColor="@color/color_grey"
+            android:textSize="13sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_title"
-            tools:lines="2"
-            android:text="@string/error_default"/>
+            tools:lines="2" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="24dp">
+            android:layout_marginTop="24dp">
 
             <TextView
                 android:id="@+id/btn_second"
@@ -64,12 +62,11 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
-                android:textColor="@color/color_black"
                 android:background="@drawable/bg_border"
-                android:text="Phụ" />
+                android:text="Phụ"
+                android:textColor="@color/color_black" />
 
             <TextView
-                android:textColor="@color/color_white"
                 android:id="@+id/btn_primary"
                 style="@style/Widget.AppCompat.Button"
                 android:layout_width="0dp"
@@ -77,7 +74,8 @@
                 android:layout_margin="4dp"
                 android:layout_weight="1"
                 android:background="@drawable/bg_primary"
-                android:text="Chính" />
+                android:text="Chính"
+                android:textColor="@color/color_white" />
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

@@ -8,7 +8,7 @@ import android.os.Process
 import java.util.concurrent.LinkedBlockingQueue
 import java.util.concurrent.TimeUnit
 
-sealed class ThreadExecutor {
+sealed class MyExecutor {
 	class Main : Executor {
 		private val handler = Handler(Looper.getMainLooper())
 		override fun execute(command: Runnable) {

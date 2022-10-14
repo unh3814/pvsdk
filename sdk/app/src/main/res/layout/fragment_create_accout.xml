@@ -13,6 +13,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:inputType="number"
+        app:maxLengh="10"
         app:textHint="Nhập nội dung số điện thoại"
         app:textTitle="Số điện thoại" />
 

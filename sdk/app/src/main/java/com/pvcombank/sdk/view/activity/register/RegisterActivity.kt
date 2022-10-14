@@ -6,7 +6,8 @@ import android.os.CountDownTimer
 import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.pvcombank.sdk.R
 import com.pvcombank.sdk.base.PVActivity
 import com.pvcombank.sdk.base.PVFragment
@@ -16,13 +17,8 @@ import com.pvcombank.sdk.base.model.TopBarListener
 import com.pvcombank.sdk.databinding.ActivityRegisterBinding
 import com.pvcombank.sdk.model.Constants
 import com.pvcombank.sdk.util.Utils.openFragment
-import com.pvcombank.sdk.view.login.AuthWebLoginFragment
 import com.pvcombank.sdk.view.register.confirm.InformationConfirmFragment
-import com.pvcombank.sdk.view.register.guide.card.GuideCardIdFragment
-import com.pvcombank.sdk.view.register.guide.face.GuideFaceIdFragment
 import com.pvcombank.sdk.view.register.home.HomeFragment
-import com.pvcombank.sdk.view.register.information.InformationRegisterFragment
-import com.trustingsocial.tvcoresdk.external.*
 import com.trustingsocial.tvsdk.TrustVisionSDK
 
 class RegisterActivity : PVActivity<ActivityRegisterBinding>() {
@@ -37,6 +33,7 @@ class RegisterActivity : PVActivity<ActivityRegisterBinding>() {
 		initTopBar()
 		initTrustVision()
 		viewBinding.apply {
+			supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
 			openFragment(
 				HomeFragment::class.java,
 				Bundle(),

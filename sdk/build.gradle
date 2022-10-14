@@ -22,7 +22,7 @@ plugins {
 allprojects {
     repositories {
         maven { url "https://maven.google.com" }
-        maven { url "${project.rootDir}/repo" }
+        maven { url "${project.rootDir}/app/src/libs/repo" }
         jcenter()
         google()
         maven { url "https://jitpack.io" }

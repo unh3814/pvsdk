@@ -3,9 +3,8 @@
     <style name="Theme.Demoapp" parent="Theme.MaterialComponents.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryDark">@color/purple_700</item>
+        <item name="colorPrimaryDark">#FFC709</item>
         <item name="colorAccent">@color/teal_200</item>
-        <item name="statusBarBackground">#FFC709</item>
         <!-- Customize your theme here. -->
     </style>
 </resources>

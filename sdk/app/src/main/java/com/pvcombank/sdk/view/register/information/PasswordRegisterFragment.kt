@@ -4,20 +4,29 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentManager
 import com.pvcombank.sdk.base.PVFragment
 import com.pvcombank.sdk.databinding.FragmentPasswordRegisterBinding
 import com.pvcombank.sdk.model.Constants
 import com.pvcombank.sdk.model.MasterModel
+import com.pvcombank.sdk.model.ResponseData
+import com.pvcombank.sdk.model.request.RequestFinish
+import com.pvcombank.sdk.network.ApiResponse
 import com.pvcombank.sdk.repository.OnBoardingRepository
+import com.pvcombank.sdk.view.popup.AlertPopup
 import com.pvcombank.sdk.view.register.SuccessFragment
+import com.pvcombank.sdk.view.register.home.HomeFragment
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.schedulers.Schedulers
 
 class PasswordRegisterFragment : PVFragment<FragmentPasswordRegisterBinding>() {
 	private val repository = OnBoardingRepository()
+	private val cache get() = MasterModel.getInstance().cache
 	override fun onCreateView(
 		inflater: LayoutInflater,
 		container: ViewGroup?,
 		savedInstanceState: Bundle?
-	): View? {
+	): View {
 		viewBinding = FragmentPasswordRegisterBinding.inflate(inflater, container, false)
 		return viewBinding.root
 	}
@@ -32,12 +41,12 @@ class PasswordRegisterFragment : PVFragment<FragmentPasswordRegisterBinding>() {
 			}
 			val data = MasterModel.getInstance().getDataOCR()
 			name.setText(data.name)
-			identity.setText(data.mobilePhone ?: MasterModel.getInstance().cacheCreateAccountPhone)
+			identity.setText(data.mobilePhone ?: (cache["phone_number"] as? String) ?: "")
 			password.addTextChangeListener {
 				it?.let {
 					val str = it.toString()
-					if (str.matches(Constants.regexPassword)){
-						if (confirmPassword.getText() == str){
+					if (str.matches(Constants.regexPassword)) {
+						if (confirmPassword.getText() == str) {
 							btnRegister.isEnabled = true
 						} else {
 							btnRegister.isEnabled = false
@@ -52,7 +61,7 @@ class PasswordRegisterFragment : PVFragment<FragmentPasswordRegisterBinding>() {
 				}
 			}
 			confirmPassword.addTextChangeListener {
-				if (it.toString() != password.getText()){
+				if (it.toString() != password.getText()) {
 					confirmPassword.setError("Mật khẩu không chính xác")
 					btnRegister.isEnabled = false
 				} else {
@@ -61,13 +70,121 @@ class PasswordRegisterFragment : PVFragment<FragmentPasswordRegisterBinding>() {
 				}
 			}
 			btnRegister.setOnClickListener {
-				repository.updatePassword(confirmPassword.getText())
-				openFragment(
-					SuccessFragment::class.java,
-					Bundle(),
-					false
+				showLoading()
+				startUpdatePassword()
+			}
+		}
+	}
+	
+	private fun FragmentPasswordRegisterBinding.startUpdatePassword() {
+		repository.updatePassword(confirmPassword.getText()) {
+			(it["success"] as? ResponseData<*>)?.let {
+				//Cập nhập password thành công thì cập nhập thông tin cif
+				startOpenCIF()
+			}
+			(it["fail"] as? String)?.let {
+				val isEndAuth = it.contains("403")
+				var message = it
+				when {
+					isEndAuth -> {
+						message = "Phiên làm việc hết hạn."
+					}
+				}
+				AlertPopup.show(
+					fragmentManager = childFragmentManager,
+					title = "Thông báo",
+					message = message,
+					primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
+						override fun onClickListener(v: View) {
+							if (isEndAuth) {
+								requireActivity().supportFragmentManager.popBackStack(
+									null,
+									FragmentManager.POP_BACK_STACK_INCLUSIVE
+								)
+								openFragment(
+									HomeFragment::class.java,
+									Bundle(),
+									true
+								)
+							}
+						}
+					},
+					primaryTitle = "OK"
 				)
 			}
+		}
+	}
+	
+	private fun startOpenCIF() {
+		requireArguments().getParcelable<RequestFinish>("request_data_finish")
+			?.let {
+				repository.finish(it) {
+					(it["success"] as? ResponseData<*>)?.let { response ->
+						hideLoading()
+						if (response.code == "1") {
+							openFragment(
+								SuccessFragment::class.java,
+								requireArguments(),
+								true
+							)
+						} else {
+							AlertPopup.show(
+								fragmentManager = childFragmentManager,
+								title = "Thông báo",
+								message = "Đã có lỗi xảy ra.\nVui lòng thực hiện lại sau!",
+								primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
+									override fun onClickListener(v: View) {
+									
+									}
+								},
+								primaryTitle = "OK"
+							)
+						}
+					}
+					(it["fail"] as? String)?.let { errorStr ->
+						hideLoading()
+						val isEndAuth = errorStr.contains("403")
+						var message = errorStr
+						when {
+							isEndAuth -> {
+								message = "Phiên làm việc hết hạn."
+							}
+						}
+						AlertPopup.show(
+							fragmentManager = childFragmentManager,
+							title = "Thông báo",
+							message = message,
+							primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
+								override fun onClickListener(v: View) {
+									if (isEndAuth) {
+										requireActivity().supportFragmentManager.popBackStack(
+											null,
+											FragmentManager.POP_BACK_STACK_INCLUSIVE
+										)
+										openFragment(
+											HomeFragment::class.java,
+											Bundle(),
+											true
+										)
+									}
+								}
+							},
+							primaryTitle = "OK"
+						)
+					}
+				}
+			} ?: kotlin.run {
+			hideLoading()
+			AlertPopup.show(
+				fragmentManager = childFragmentManager,
+				title = "Thông báo",
+				message = "Có lỗi vui lòng thử lại",
+				primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
+					override fun onClickListener(v: View) {
+					}
+				},
+				primaryTitle = "OK"
+			)
 		}
 	}
 	

@@ -13,7 +13,7 @@ import java.io.IOException
 internal class ApiResponseCall<S : Any>(
 	private val delegate: Call<S>,
 	private val errorConverter: Converter<ResponseBody, ResponseData<Any>>
-	) : Call<ApiResponse<S>> {
+) : Call<ApiResponse<S>> {
 	override fun clone(): Call<ApiResponse<S>> = ApiResponseCall(delegate.clone(), errorConverter)
 	
 	override fun execute(): Response<ApiResponse<S>> {

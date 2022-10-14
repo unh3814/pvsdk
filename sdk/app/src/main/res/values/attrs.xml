@@ -18,6 +18,8 @@
         <attr name="note" format="string" />
         <attr name="isPassword" format="boolean" />
         <attr name="isShowPassword" format="boolean" />
+        <attr name="maxLengh" format="integer"/>
+        <attr name="inputType" format="string"/>
     </declare-styleable>
 
 </resources>

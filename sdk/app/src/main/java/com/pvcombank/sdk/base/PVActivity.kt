@@ -2,6 +2,7 @@ package com.pvcombank.sdk.base
 
 import android.content.Context
 import android.graphics.drawable.Drawable
+import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Looper
 import android.view.View
@@ -13,6 +14,9 @@ import com.pvcombank.sdk.R
 import com.pvcombank.sdk.base.model.AlertInline
 import com.pvcombank.sdk.base.model.Loading
 import com.pvcombank.sdk.base.model.TopBar
+import com.pvcombank.sdk.model.MasterModel
+import com.pvcombank.sdk.util.Utils
+import com.pvcombank.sdk.view.popup.AlertPopup
 
 abstract class PVActivity<VB : ViewBinding> : FragmentActivity() {
 	lateinit var viewBinding: VB
@@ -23,9 +27,31 @@ abstract class PVActivity<VB : ViewBinding> : FragmentActivity() {
 	
 	val handler = android.os.Handler(Looper.getMainLooper())
 	
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+		MasterModel.getInstance().timeLogin = null
+	}
+	
 	override fun onStop() {
 		super.onStop()
 		handler.removeCallbacksAndMessages(null)
+	}
+	
+	override fun onResume() {
+		super.onResume()
+		if (Utils.checkOutOfTime()) {
+			AlertPopup.show(
+				fragmentManager = supportFragmentManager,
+				title = "Thông báo",
+				message = "Quá thời gian thao tác, vui lòng thực hiện lại.",
+				primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
+					override fun onClickListener(v: View) {
+						recreate()
+					}
+				},
+				primaryTitle = "OK"
+			)
+		}
 	}
 	
 	override fun onBackPressed() {

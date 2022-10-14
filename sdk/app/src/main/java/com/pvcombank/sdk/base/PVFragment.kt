@@ -8,9 +8,9 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
+import com.pvcombank.sdk.util.Utils
 import com.pvcombank.sdk.util.Utils.openFragment
-import com.pvcombank.sdk.util.execute.MyThreadFactory
-import com.pvcombank.sdk.util.execute.ThreadExecutor
+import com.pvcombank.sdk.view.popup.AlertPopup
 
 abstract class PVFragment<VB : ViewBinding> : Fragment() {
 	lateinit var viewBinding: VB
@@ -25,6 +25,23 @@ abstract class PVFragment<VB : ViewBinding> : Fragment() {
 	override fun onStop() {
 		super.onStop()
 		handler.removeCallbacksAndMessages(null)
+	}
+	
+	override fun onResume() {
+		super.onResume()
+		if (Utils.checkOutOfTime()) {
+			AlertPopup.show(
+				fragmentManager = childFragmentManager,
+				title = "Thông báo",
+				message = "Quá thời gian thao tác, vui lòng thực hiện lại.",
+				primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
+					override fun onClickListener(v: View) {
+						requireActivity().recreate()
+					}
+				},
+				primaryTitle = "OK"
+			)
+		}
 	}
 	
 	fun openFragment(

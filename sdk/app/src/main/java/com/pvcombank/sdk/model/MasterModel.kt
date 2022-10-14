@@ -10,14 +10,14 @@ import io.reactivex.rxjava3.subjects.PublishSubject
 import java.util.*
 
 class MasterModel {
-	var clientId: String? = null
+	var clientId: String? = "vietsens-sdk"
 	var clientSecret: String? = null
 	var orderCurrency: String? = null
 	var idOrder: String? = null
 	var orderDesc: String? = null
 	var appUnitID: String? = null
 	var uuidOfOTP: String? = null
-	var timeLogin: Long = 0
+	var timeLogin: Long? = null
 	var uniId: String = ""
 		get() {
 			val obj = Gson().toJson(
@@ -34,13 +34,11 @@ class MasterModel {
 	val errorString: PublishSubject<String> = PublishSubject.create()
 	val successString: PublishSubject<String> = PublishSubject.create()
 	var isCreateAccount = false
-	var cacheCreateAccountMail = ""
-	var cacheCreateAccountPhone = ""
 	val frameBatch = mutableListOf<FrameBatch>()
 	val dataOCR = hashMapOf<String, ResponseOCR?>()
 	var selectBranch: BranchModel? = null
 	var ocrFromOTP: ResponseOCR = ResponseOCR()
-	
+	val cache = hashMapOf<String, Any>()
 	companion object {
 		@JvmStatic
 		private var INSTANCE: MasterModel? = null

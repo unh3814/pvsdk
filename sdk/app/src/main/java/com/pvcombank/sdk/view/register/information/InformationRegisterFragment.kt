@@ -1,19 +1,14 @@
 package com.pvcombank.sdk.view.register.information
 
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
-import android.os.Message
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
 import android.widget.LinearLayout.LayoutParams
 import android.widget.PopupWindow
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import com.pvcombank.sdk.R
@@ -22,21 +17,19 @@ import com.pvcombank.sdk.databinding.FragmentRegisterBinding
 import com.pvcombank.sdk.databinding.TooltipsCustomBinding
 import com.pvcombank.sdk.model.Constants
 import com.pvcombank.sdk.model.MasterModel
-import com.pvcombank.sdk.model.ResponseData
 import com.pvcombank.sdk.model.request.RequestFinish
-import com.pvcombank.sdk.repository.OnBoardingRepository
 import com.pvcombank.sdk.util.Utils.handleUrlClicks
 import com.pvcombank.sdk.util.Utils.onDrawableClick
 import com.pvcombank.sdk.util.Utils.toPVDate
 import com.pvcombank.sdk.view.popup.AlertPopup
-import com.pvcombank.sdk.view.register.home.HomeFragment
 import com.pvcombank.sdk.view.register.select_branch.SelectBranchBottomSheet
-import okhttp3.ResponseBody
+import java.text.SimpleDateFormat
+import java.util.*
 
 class InformationRegisterFragment : PVFragment<FragmentRegisterBinding>() {
 	private var tooltips: Int? = null
 	private val requestFinish = RequestFinish()
-	private val repository = OnBoardingRepository()
+	private val cache get() = MasterModel.getInstance().cache
 	override fun onCreateView(
 		inflater: LayoutInflater,
 		container: ViewGroup?,
@@ -76,7 +69,7 @@ class InformationRegisterFragment : PVFragment<FragmentRegisterBinding>() {
 				expDate.setText(it.toPVDate())
 			}
 			phoneNumber.setText(
-				data.mobilePhone ?: MasterModel.getInstance().cacheCreateAccountPhone
+				data.mobilePhone ?: (cache["phone_number"] as? String) ?: ""
 			)
 			edtContract.setText(data.permanentAddress)
 			edtContract.addTextChangedListener {
@@ -103,9 +96,6 @@ class InformationRegisterFragment : PVFragment<FragmentRegisterBinding>() {
 					AlertPopup.show(
 						fragmentManager = childFragmentManager,
 						title = "Thông báo",
-						message = "Quÿ khách vui löng tói chi nhánh PVcomBank\n" +
-								"gân nhât dé däng ky và sü dung dich vu hoàc\n" +
-								"liên he töng dai: 1900 5555 92",
 						primaryTitle = "Đóng",
 						primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
 							override fun onClickListener(v: View) {
@@ -120,9 +110,6 @@ class InformationRegisterFragment : PVFragment<FragmentRegisterBinding>() {
 					AlertPopup.show(
 						fragmentManager = childFragmentManager,
 						title = "Thông báo",
-						message = "Quÿ khách vui löng tói chi nhánh PVcomBank\n" +
-								"gân nhât dé däng ky và sü dung dich vu hoàc\n" +
-								"liên he töng dai: 1900 5555 92",
 						primaryTitle = "Đóng",
 						primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
 							override fun onClickListener(v: View) {
@@ -157,47 +144,25 @@ class InformationRegisterFragment : PVFragment<FragmentRegisterBinding>() {
 				requestFinish.introducer = it.toString()
 			}
 			btnConfirm.setOnClickListener {
-				repository.finish(requestFinish) {
-					(it["success"] as? ResponseData<*>)?.let {response ->
-						if (response.code == "1"){
-							openFragment(
-								PasswordRegisterFragment::class.java,
-								Bundle(),
-								true
-							)
-						} else {
-							AlertPopup.show(
-								fragmentManager = childFragmentManager,
-								title = "Thông báo",
-								message = "Đã có lỗi xảy ra.\nVui lòng thực hiện lại sau!",
-								primaryButtonListener = object : AlertPopup.PrimaryButtonListener{
-									override fun onClickListener(v: View) {
-									
-									}
-								},
-								primaryTitle = "OK"
-							)						}
-					}
-					(it["fail"] as? String)?.let { errorStr ->
-						AlertPopup.show(
-							fragmentManager = childFragmentManager,
-							title = "Thông báo",
-							message = errorStr,
-							primaryButtonListener = object : AlertPopup.PrimaryButtonListener{
-								override fun onClickListener(v: View) {
-									if (errorStr.contains("403")){
-										openFragment(
-											HomeFragment::class.java,
-											Bundle(),
-											true
-										)
-									}
-								}
-							},
-							primaryTitle = "OK"
-						)
-					}
+				var date = if (data.expDate.isNullOrEmpty()) {
+					val tDate = SimpleDateFormat(Constants.TIME_FORMAT).parse(data.issueDate)
+					val calendar = Calendar.getInstance()
+					calendar.time = tDate
+					calendar.add(Calendar.YEAR, 15)
+					calendar.time
+				} else {
+					SimpleDateFormat(Constants.TIME_FORMAT).parse(data.expDate)
 				}
+				requestFinish.expiredDate = date.toPVDate()
+				requireArguments().putParcelable("request_data_finish", requestFinish)
+				openFragment(
+					PasswordRegisterFragment::class.java,
+					requireArguments(),
+					true
+				)
+				
+//				repository.finish(requestFinish) {
+//				}
 			}
 			root.setOnClickListener {
 				hideKeyboard()

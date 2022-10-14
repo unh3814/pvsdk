@@ -5,12 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.FragmentManager
 import com.pvcombank.sdk.base.PVFragment
 import com.pvcombank.sdk.databinding.FragmentCardCaptureResultBinding
 import com.pvcombank.sdk.model.MasterModel
 import com.pvcombank.sdk.model.response.ResponseOCR
 import com.pvcombank.sdk.util.Utils.toPVDate
+import com.pvcombank.sdk.view.popup.AlertPopup
 import com.pvcombank.sdk.view.register.guide.card.GuideCardIdFragment
+import com.pvcombank.sdk.view.register.home.HomeFragment
 import com.pvcombank.sdk.view.register.information.InformationRegisterFragment
 
 class InformationConfirmFragment : PVFragment<FragmentCardCaptureResultBinding>() {
@@ -28,7 +31,11 @@ class InformationConfirmFragment : PVFragment<FragmentCardCaptureResultBinding>(
 		viewBinding.apply {
 			topBar.show()
 			topBar.setTitle("Xác nhận thông tin")
-			topBar.hideButtonBack()
+			if (requireArguments().getBoolean("hide_back")){
+				topBar.hideButtonBack()
+			} else {
+				topBar.showButtonBack()
+			}
 			root.setOnClickListener {
 				hideKeyboard()
 			}
@@ -108,5 +115,29 @@ class InformationConfirmFragment : PVFragment<FragmentCardCaptureResultBinding>(
 				)
 	}
 	
-	override fun onBack(): Boolean = false
+	override fun onBack(): Boolean {
+		if(requireArguments().getBoolean("hide_back")){
+			AlertPopup.show(
+				fragmentManager = childFragmentManager,
+				title = "Thông báo",
+				message = "Bạn muốn dừng không",
+				primaryTitle = "OK",
+				primaryButtonListener = object : AlertPopup.PrimaryButtonListener{
+					override fun onClickListener(v: View) {
+						requireActivity().supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+						openFragment(HomeFragment::class.java, Bundle(), true)
+					}
+				},
+				secondTitle = "Không",
+				secondButtonListener = object : AlertPopup.SecondButtonListener{
+					override fun onClickListener(v: View) {
+					
+					}
+				}
+			)
+		} else {
+			openFragment(GuideCardIdFragment::class.java, Bundle(), true)
+		}
+		return true
+	}
 }

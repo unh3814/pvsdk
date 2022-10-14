@@ -20,6 +20,7 @@ import com.pvcombank.sdk.BuildConfig
 import com.pvcombank.sdk.model.*
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
+import io.reactivex.rxjava3.subjects.PublishSubject
 
 class AuthRepository() {
 	private val apiHelper: ApiHelper = RetrofitHelper.instance()

@@ -1,7 +1,10 @@
 package com.pvcombank.sdk.model.request
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class RequestFinish(
 	@SerializedName("currentAddr") var currentAddress: String? = "", // Địa chỉ hiện tại
 	@SerializedName("reside") var reside: Boolean = true, // Cư trú
@@ -22,4 +25,4 @@ data class RequestFinish(
 	@SerializedName("cardDeliveryAddress") var cardDeliveryAddress: String? = "",// Địa chỉ nhận thẻ
 	@SerializedName("branchCode") var branchCode: String? = "",// Địa chỉ nhận thẻ
 	@SerializedName("expiredDate") var expiredDate: String? = ""// Địa chỉ nhận thẻ
-)
+): Parcelable
