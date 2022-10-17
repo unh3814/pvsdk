@@ -31,7 +31,7 @@
         app:textTitle="Địa chỉ email (Không bắt buộc)" />
 
     <Button
-        android:enabled="false"
+        android:enabled="true"
         android:id="@+id/btn_create_account"
         style="@style/PVButton"
         android:layout_width="match_parent"

@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
 import com.pvcombank.sdk.base.PVFragment
 import com.pvcombank.sdk.databinding.FragmentRegisterSuccessBinding
 import com.pvcombank.sdk.model.MasterModel
 
-class SuccessFragment : PVFragment<FragmentRegisterSuccessBinding>() {
+class SuccessFragment : DialogFragment() {
+	lateinit var viewBinding: FragmentRegisterSuccessBinding
 	override fun onCreateView(
 		inflater: LayoutInflater,
 		container: ViewGroup?,
@@ -21,7 +23,6 @@ class SuccessFragment : PVFragment<FragmentRegisterSuccessBinding>() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		viewBinding.apply {
-			topBar.hide()
 			btnConfirm.setOnClickListener {
 				MasterModel.getInstance().cleanOCR()
 				requireActivity().finish()
@@ -29,5 +30,13 @@ class SuccessFragment : PVFragment<FragmentRegisterSuccessBinding>() {
 		}
 	}
 	
-	override fun onBack(): Boolean = false
+	override fun onStart() {
+		super.onStart()
+		dialog?.let {
+			it.window?.apply {
+				setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+			}
+			it.setCanceledOnTouchOutside(false)
+		}
+	}
 }

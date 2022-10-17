@@ -81,7 +81,7 @@ class AuthRepository() {
 				.subscribeOn(Schedulers.io())
 				.subscribe(
 					{
-						if (it.code == "401") onNeedLogin.postValue(it)
+						if (it.code?.toInt() in (401..499)) onNeedLogin.postValue(it)
 						val decryptText = securityHelper?.decrypt(it.data ?: "")
 						decryptText?.toObjectData<ResponseData<List<CardModel>>>()?.let {
 							if (it.code == Constants.CODE_SUCCESS && it.data != null) {
@@ -114,7 +114,7 @@ class AuthRepository() {
 					}
 				}, {
 					it.getErrorBody()?.let { requestModel ->
-						if (requestModel.code == "401") onNeedLogin.postValue(requestModel)
+						if (requestModel.code?.toInt() in (401..499)) onNeedLogin.postValue(requestModel)
 						requestModel.data?.apply {
 							callBack.invoke(securityHelper?.decrypt(this))
 						}
@@ -150,7 +150,7 @@ class AuthRepository() {
 						},
 						{
 							it.getErrorBody()?.let { requestModel ->
-								if (requestModel.code == "401") onNeedLogin.postValue(requestModel)
+								if (requestModel.code?.toInt() in (401..499)) onNeedLogin.postValue(requestModel)
 								requestModel.data?.apply {
 									callBack.invoke(securityHelper.decrypt(this))
 								}
@@ -186,7 +186,7 @@ class AuthRepository() {
 					},
 					{
 						it.getErrorBody()?.let { requestModel ->
-							if (requestModel.code == "401") onNeedLogin.postValue(requestModel)
+							if (requestModel.code?.toInt() in (401..499)) onNeedLogin.postValue(requestModel)
 							requestModel.data?.apply {
 								callBack.invoke(securityHelper!!.decrypt(this))
 							}
@@ -198,9 +198,9 @@ class AuthRepository() {
 		}
 	}
 	
-	fun verifyOnboardOTP(request: RequestModel, callBack: (Any) -> Unit){
+	fun verifyOnboardOTP(request: RequestModel, callBack: (Any) -> Unit) {
 		apiOther.apply {
-			this.verifyOnboardOTP(request =request)
+			this.verifyOnboardOTP(request = request)
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribeOn(Schedulers.io())
 				.subscribe(
@@ -208,7 +208,7 @@ class AuthRepository() {
 						val decryptText = securityHelper?.decrypt(it.data ?: "")
 						decryptText?.toObjectData<ResponseData<ResponseVerifyOnboardOTP>>()?.let {
 							if (it.code == Constants.CODE_SUCCESS && it.data != null) {
-								it.data?.token?.let{
+								it.data?.token?.let {
 									Constants.TOKEN = "Bearer $it"
 								}
 								callBack.invoke(it.data!!)
@@ -220,7 +220,7 @@ class AuthRepository() {
 					{
 						val error = RequestModel()
 						it.getErrorBody()?.let { requestErrorBody ->
-							if (requestErrorBody.code == "401") {
+							if (requestErrorBody.code?.toInt() in (401..499)) {
 								onNeedLogin.postValue(
 									requestErrorBody
 								)
@@ -249,6 +249,7 @@ class AuthRepository() {
 				)
 		}
 	}
+	
 	fun verifyOTP(request: RequestModel, callBack: (Any) -> Unit) {
 		apiOther.apply {
 			this.verifyOTP(request)
@@ -268,7 +269,7 @@ class AuthRepository() {
 					{
 						val error = RequestModel()
 						it.getErrorBody()?.let { requestErrorBody ->
-							if (requestErrorBody.code == "401") {
+							if (requestErrorBody.code?.toInt() in (401..499)) {
 								onNeedLogin.postValue(
 									requestErrorBody
 								)

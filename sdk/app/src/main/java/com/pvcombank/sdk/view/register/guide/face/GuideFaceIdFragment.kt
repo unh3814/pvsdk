@@ -125,9 +125,10 @@ class GuideFaceIdFragment : PVFragment<FragmentGuideFaceCaptureBinding>() {
 							val responseSuccess = it["success"]
 							if (responseSuccess is ResponseOCR) {
 								if (responseSuccess.error == null) {
+									requireArguments().putBoolean("hide_back", false)
 									openFragment(
 										InformationConfirmFragment::class.java,
-										arguments ?: Bundle(),
+										requireArguments(),
 										true
 									)
 								} else {
@@ -136,7 +137,7 @@ class GuideFaceIdFragment : PVFragment<FragmentGuideFaceCaptureBinding>() {
 							}
 							val responseError = it["fail"]
 							if (responseError is String) {
-								val isEndAuth = responseError.contains("403")
+								val isEndAuth = responseError.contains("403") || responseError.contains("401")
 								var message = responseError
 								when{
 									isEndAuth -> {
@@ -204,7 +205,17 @@ class GuideFaceIdFragment : PVFragment<FragmentGuideFaceCaptureBinding>() {
 							)
 						}
 						else -> {
-						
+							AlertPopup.show(
+								fragmentManager = childFragmentManager,
+								title = "Thông báo",
+								message = responseSuccess.errorMessage ?: message,
+								primaryTitle = "OK",
+								primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
+									override fun onClickListener(v: View) {
+									
+									}
+								}
+							)
 						}
 					}
 				} ?: kotlin.run {

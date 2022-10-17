@@ -68,14 +68,13 @@
 
             <TextView
                 android:id="@+id/btn_primary"
-                style="@style/Widget.AppCompat.Button"
+                style="@style/PVButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
                 android:background="@drawable/bg_primary"
-                android:text="Chính"
-                android:textColor="@color/color_white" />
+                android:text="Chính"/>
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

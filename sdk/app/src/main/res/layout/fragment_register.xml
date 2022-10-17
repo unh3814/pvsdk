@@ -321,9 +321,8 @@
             android:layout_height="wrap_content"
             android:checked="true"
             android:clickable="false"
-            android:drawableEnd="@drawable/tv_ic_info"
+            android:drawableEnd="@drawable/ic_round_info_24"
             android:drawablePadding="8dp"
-            android:drawableTint="@color/color_blue"
             android:focusable="false"
             android:gravity="center_vertical"
             android:paddingVertical="8dp"
@@ -337,9 +336,8 @@
             android:layout_marginBottom="12dp"
             android:checked="true"
             android:clickable="false"
-            android:drawableEnd="@drawable/tv_ic_info"
+            android:drawableEnd="@drawable/ic_round_info_24"
             android:drawablePadding="8dp"
-            android:drawableTint="@color/color_blue"
             android:focusable="false"
             android:gravity="center_vertical"
             android:paddingVertical="8dp"
@@ -414,6 +412,7 @@
             android:layout_height="wrap_content"
             android:gravity="top|start"
             android:paddingLeft="16dp"
+            android:textColorLink="@color/color_blue"
             android:text="@string/txt_register_rule_2" />
 
         <Button

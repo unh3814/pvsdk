@@ -115,7 +115,7 @@ class GuideCardIdFragment : PVFragment<FragmentGuideCardCaptureBinding>() {
 			}
 			val responseFail = response["fail"]
 			if (responseFail is String) {
-				val isEndAuth = responseFail.contains("403")
+				val isEndAuth = responseFail.contains("403") || responseFail.contains("401")
 				var message = responseFail
 				when {
 					isEndAuth -> {
@@ -149,7 +149,7 @@ class GuideCardIdFragment : PVFragment<FragmentGuideCardCaptureBinding>() {
 			MasterModel.getInstance().updateDataOCR()
 			openFragment(
 				GuideFaceIdFragment::class.java,
-				arguments ?: Bundle(),
+				requireArguments(),
 				false
 			)
 		}
@@ -164,7 +164,7 @@ class GuideCardIdFragment : PVFragment<FragmentGuideCardCaptureBinding>() {
 				MasterModel.getInstance().updateDataOCR()
 				openFragment(
 					GuideFaceIdFragment::class.java,
-					arguments ?: Bundle(),
+					requireArguments(),
 					false
 				)
 			}

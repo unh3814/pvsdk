@@ -109,7 +109,7 @@ object Utils {
 	fun checkOutOfTime(): Boolean {
 		MasterModel.getInstance().timeLogin?.let {
 			val currentTime = Date().time
-			val `10Minute` = 6000000
+			val `10Minute` = 600000
 			return (currentTime - it) >= `10Minute`
 		}
 		return false

@@ -32,14 +32,11 @@ import com.pvcombank.sdk.model.MasterModel
 import com.pvcombank.sdk.model.request.RequestModel
 import com.pvcombank.sdk.model.request.RequestVerifyOTP
 import com.pvcombank.sdk.model.response.ResponsePurchase
-import com.pvcombank.sdk.model.response.ResponseVerifyOTP
 import com.pvcombank.sdk.model.response.ResponseVerifyOnboardOTP
 import com.pvcombank.sdk.repository.AuthRepository
 import com.pvcombank.sdk.util.security.SecurityHelper
 import com.pvcombank.sdk.view.login.AuthWebLoginFragment
-import com.pvcombank.sdk.view.otp.select_card.PaymentInformationFragment
 import com.pvcombank.sdk.view.popup.AlertPopup
-import com.pvcombank.sdk.view.popup.GuideCardCaptureDialog
 import com.pvcombank.sdk.view.register.confirm.InformationConfirmFragment
 import com.pvcombank.sdk.view.register.guide.card.GuideCardIdFragment
 import com.pvcombank.sdk.view.register.guide.face.GuideFaceIdFragment
@@ -127,7 +124,7 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 			)
 			tvShowNumberPhone.text = spanText
 			startCountDownTimer()
-			repository!!.onNeedLogin.observe(
+			repository?.onNeedLogin?.observe(
 				viewLifecycleOwner,
 				Observer {
 					AlertPopup.show(
@@ -151,6 +148,7 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 	override fun onStop() {
 		super.onStop()
 		handler.removeCallbacksAndMessages(null)
+		repository?.onNeedLogin?.postValue(null)
 	}
 	
 	private fun getNewOtp() {
@@ -293,83 +291,32 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 									viewBinding.errorMessage.text = errorModel.message
 								}
 								else -> {
-									showAlertErrorPayment(errorModel.message)
+									showAlerError(errorModel.message)
 								}
 							}
 						} ?: kotlin.run {
-							showAlertErrorPayment(getString(R.string.error_system))
+							showAlerError(getString(R.string.error_system))
 						}
 						MasterModel.getInstance().errorString.onNext(
 							errorModel.message ?: getString(R.string.error_system)
 						)
 					} ?: run {
-						showAlertErrorPayment(getString(R.string.error_system))
+						showAlerError(getString(R.string.error_system))
 					}
 				}
-			}
-		} else {
-			repository?.verifyOTP(RequestModel(data = stringEncrypt)) {
-				when (it) {
-					is ResponseVerifyOTP -> {
-						MasterModel.getInstance().successString.onNext("Thanh toán thành công")
-						viewBinding.errorMessage.text = ""
-						AlertPopup.show(
-							icon = R.drawable.ic_success,
-							fragmentManager = childFragmentManager,
-							title = "Thanh toán thành công",
-							message = "Bạn sẽ được đưa về ${MasterModel.getInstance().clientId} để tiếp tục đơn hàng sau 5 giây.\n",
-							primaryTitle = "Quay về ${MasterModel.getInstance().clientId}",
-							autoFinish = 6000L,
-							primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
-								override fun onClickListener(v: View) {
-									requireActivity().finish()
-								}
-							}
-						)
-					}
-					else -> {
-						(it as? RequestModel)?.let { errorModel ->
-							errorModel.code?.let {
-								when (errorModel.code) {
-									"117" -> {
-										viewBinding.errorMessage.text = errorModel.message
-									}
-									else -> {
-										showAlertErrorPayment(errorModel.message)
-									}
-								}
-							} ?: kotlin.run {
-								showAlertErrorPayment(getString(R.string.error_system))
-							}
-							MasterModel.getInstance().errorString.onNext(
-								errorModel.message ?: getString(R.string.error_system)
-							)
-						} ?: run {
-							showAlertErrorPayment(getString(R.string.error_system))
-						}
-					}
-				}
-				hideLoading()
 			}
 		}
 	}
 	
-	private fun showAlertErrorPayment(message: String? = null) {
+	private fun showAlerError(message: String? = null) {
 		AlertPopup.show(
-			icon = R.drawable.warning,
 			fragmentManager = childFragmentManager,
-			title = message ?: "Thanh toán không thành công",
+			title = message ?: "Đã có lỗi, vui lòng thử lại sau.",
 			primaryTitle = "Thử lại",
 			primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
 				override fun onClickListener(v: View) {
-					if (!MasterModel.getInstance().isCreateAccount){
-						openFragment(
-							PaymentInformationFragment::class.java,
-							Bundle(),
-							false
-						)
-					} else {
-						goBack()
+					if (MasterModel.getInstance().isCreateAccount){
+						startVerifyOTP()
 					}
 				}
 			},
@@ -377,7 +324,6 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 			secondButtonListener = object : AlertPopup.SecondButtonListener {
 				override fun onClickListener(v: View) {
 					Handler(Looper.getMainLooper()).post {
-						openFragment(PaymentInformationFragment::class.java, Bundle(), false)
 						requireActivity().startActivity(
 							Intent(
 								Intent.ACTION_DIAL,

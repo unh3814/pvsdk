@@ -4,8 +4,6 @@ import android.content.Intent
 import androidx.fragment.app.FragmentActivity
 import com.pvcombank.sdk.PVCBAuthListener
 import com.pvcombank.sdk.model.MasterModel
-import com.pvcombank.sdk.view.activity.payment.PVCBActivity
-import com.pvcombank.sdk.view.activity.register.RegisterActivity
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 
@@ -43,14 +41,6 @@ class PVCBAuth() {
 					this,
 					RegisterActivity::class.java
 				)
-			)
-		}
-	}
-	
-	fun show() {
-		activity?.apply {
-			startActivity(
-				Intent(this, PVCBActivity::class.java)
 			)
 		}
 	}

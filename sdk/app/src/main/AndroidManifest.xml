@@ -16,10 +16,7 @@
     <application
         android:supportsRtl="true"
         tools:targetApi="32" >
-        <activity android:name=".view.activity.payment.PVCBActivity"
-            android:windowSoftInputMode="adjustPan|stateVisible">
-        </activity>
-        <activity android:name=".view.activity.register.RegisterActivity"
+        <activity android:name=".view.RegisterActivity"
             android:windowSoftInputMode="adjustResize|stateAlwaysVisible"/>
     </application>
 </manifest>

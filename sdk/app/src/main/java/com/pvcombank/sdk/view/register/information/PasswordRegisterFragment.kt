@@ -11,13 +11,10 @@ import com.pvcombank.sdk.model.Constants
 import com.pvcombank.sdk.model.MasterModel
 import com.pvcombank.sdk.model.ResponseData
 import com.pvcombank.sdk.model.request.RequestFinish
-import com.pvcombank.sdk.network.ApiResponse
 import com.pvcombank.sdk.repository.OnBoardingRepository
 import com.pvcombank.sdk.view.popup.AlertPopup
 import com.pvcombank.sdk.view.register.SuccessFragment
 import com.pvcombank.sdk.view.register.home.HomeFragment
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.schedulers.Schedulers
 
 class PasswordRegisterFragment : PVFragment<FragmentPasswordRegisterBinding>() {
 	private val repository = OnBoardingRepository()
@@ -83,7 +80,7 @@ class PasswordRegisterFragment : PVFragment<FragmentPasswordRegisterBinding>() {
 				startOpenCIF()
 			}
 			(it["fail"] as? String)?.let {
-				val isEndAuth = it.contains("403")
+				val isEndAuth = it.contains("403") || it.contains("401")
 				var message = it
 				when {
 					isEndAuth -> {
@@ -122,11 +119,7 @@ class PasswordRegisterFragment : PVFragment<FragmentPasswordRegisterBinding>() {
 					(it["success"] as? ResponseData<*>)?.let { response ->
 						hideLoading()
 						if (response.code == "1") {
-							openFragment(
-								SuccessFragment::class.java,
-								requireArguments(),
-								true
-							)
+							SuccessFragment().show(childFragmentManager, "SUCCESS")
 						} else {
 							AlertPopup.show(
 								fragmentManager = childFragmentManager,
@@ -143,7 +136,7 @@ class PasswordRegisterFragment : PVFragment<FragmentPasswordRegisterBinding>() {
 					}
 					(it["fail"] as? String)?.let { errorStr ->
 						hideLoading()
-						val isEndAuth = errorStr.contains("403")
+						val isEndAuth = errorStr.contains("403") || errorStr.contains("401")
 						var message = errorStr
 						when {
 							isEndAuth -> {

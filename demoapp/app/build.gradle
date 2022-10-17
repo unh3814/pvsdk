@@ -36,22 +36,12 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-//    implementation files('libs/pvsdk.aar')
-
     implementation 'androidx.appcompat:appcompat:1.4.2'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.core:core-ktx:1.5.0'
-    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
-    implementation 'io.reactivex.rxjava3:rxjava:3.0.0'
-    implementation 'com.google.code.gson:gson:2.9.1'
-    implementation "com.squareup.okhttp3:okhttp:4.9.0"
-    implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava3:2.9.0'
-    implementation 'com.google.android.material:material:1.6.1'
-    implementation ('com.pvcombank.sdk:pvsdk:0.1.0@aar'){
+    //TRUST VISION
+    implementation("com.pvcombank.sdk:pvsdk:0.1.0@aar") {
         transitive = true
     }
+
 }
