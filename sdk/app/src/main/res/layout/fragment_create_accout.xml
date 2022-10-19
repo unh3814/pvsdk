@@ -15,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:inputType="number"
         app:maxLengh="10"
-        app:textHint="Nhập nội dung số điện thoại"
+        app:textHint="Nhập số điện thoại"
         app:textTitle="Số điện thoại" />
 
     <com.pvcombank.sdk.view.customs.EditViewPVCB.EditViewPVCB

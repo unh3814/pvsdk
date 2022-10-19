@@ -10,61 +10,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="56717764-574b-4463-9248-57df47e30dc1" name="Changes" comment="fix bug">
-      <change afterPath="$PROJECT_DIR$/app/src/debug/ic_launcher-playstore.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/debug/res/drawable-hdpi/ic_action_name.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/debug/res/drawable-mdpi/ic_action_name.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/debug/res/drawable-xhdpi/ic_action_name.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/debug/res/drawable-xxhdpi/ic_action_name.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/debug/res/drawable-xxxhdpi/ic_action_name.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/debug/res/mipmap-anydpi-v26/ic_launcher.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/debug/res/mipmap-anydpi-v26/ic_launcher_round.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/debug/res/mipmap-hdpi/ic_launcher.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/debug/res/mipmap-hdpi/ic_launcher_foreground.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/debug/res/mipmap-hdpi/ic_launcher_round.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/debug/res/mipmap-mdpi/ic_launcher.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/debug/res/mipmap-mdpi/ic_launcher_foreground.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/debug/res/mipmap-mdpi/ic_launcher_round.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/debug/res/mipmap-xhdpi/ic_launcher.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/debug/res/mipmap-xhdpi/ic_launcher_foreground.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/debug/res/mipmap-xhdpi/ic_launcher_round.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/debug/res/mipmap-xxhdpi/ic_launcher.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/debug/res/mipmap-xxhdpi/ic_launcher_foreground.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/debug/res/mipmap-xxhdpi/ic_launcher_round.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/debug/res/mipmap-xxxhdpi/ic_launcher.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/debug/res/mipmap-xxxhdpi/ic_launcher_foreground.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/debug/res/mipmap-xxxhdpi/ic_launcher_round.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/debug/res/values/ic_launcher_background.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../sdk/app/src/main/res/drawable/bg_card_success.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../sdk/app/src/main/res/drawable/frame_last_fail.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/git_toolbox_prj.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/base/PVActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/base/PVActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/base/PVFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/base/PVFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/model/Constants.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/model/Constants.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/view/RegisterActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/view/RegisterActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/view/login/AuthWebLoginFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/view/login/AuthWebLoginFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/util/Utils.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/util/Utils.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/view/otp/confirm_otp/AuthOTPFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/view/otp/confirm_otp/AuthOTPFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/view/popup/AlertPopup.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/view/popup/AlertPopup.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/view/register/SuccessFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/view/register/SuccessFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/view/register/after_create/AfterCreateFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/view/register/after_create/AfterCreateFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/view/register/confirm/InformationConfirmFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/view/register/confirm/InformationConfirmFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/view/register/guide/card/GuideCardIdFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/view/register/guide/card/GuideCardIdFragment.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/view/register/guide/face/GuideFaceIdFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/view/register/guide/face/GuideFaceIdFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/view/register/home/HomeFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/view/register/home/HomeFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/view/register/information/InformationRegisterFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/view/register/information/InformationRegisterFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/view/register/information/PasswordRegisterFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/view/register/information/PasswordRegisterFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/view/register/select_branch/SelectBranchBottomSheet.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/view/register/select_branch/SelectBranchBottomSheet.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/res/drawable/identity_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/res/drawable/identity_1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/res/drawable/identity_blink.png" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/res/drawable/identity_blink.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/res/drawable/identity_blur.png" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/res/drawable/identity_blur.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/res/drawable/identity_crop.png" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/res/drawable/identity_crop.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/res/layout/fragment_guide_card_capture.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/res/layout/fragment_guide_card_capture.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/res/layout/fragment_home.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/res/layout/fragment_home.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/res/layout/fragment_popup.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/res/layout/fragment_popup.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/res/layout/fragment_card_capture_result.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/res/layout/fragment_card_capture_result.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/res/layout/fragment_create_accout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/res/layout/fragment_create_accout.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/res/layout/fragment_guide_face_capture.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/res/layout/fragment_guide_face_capture.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/res/layout/fragment_register.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/res/layout/fragment_register.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/res/layout/fragment_register_success.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/res/layout/fragment_register_success.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/res/layout/item_branch.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/res/layout/item_branch.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/res/layout/otp_view.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/res/layout/otp_view.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/res/values/strings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/res/values/style.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/res/values/style.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,7 +30,7 @@
   <component name="DockDockBuild.Settings">
     <option name="codePath" value="$PROJECT_DIR$" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[50f5869d]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[/Users/tranhung/.android/avd/8_Fold-out_API_30.avd]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -152,6 +108,7 @@
     <property name="DEBUGGABLE_DEVICE" value="Pixel_4_API_33 [emulator-5554]" />
     <property name="DEBUGGABLE_PROCESS" value="com.pvcombank.demoapp" />
     <property name="DEBUGGER_ID" value="Auto" />
+    <property name="ResourceManagerPrefKey.ResourceType" value="DRAWABLE" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="RunOnceActivity.cidr.known.project.marker" value="true" />
@@ -247,6 +204,14 @@
       <option name="presentableId" value="Default" />
       <updated>1663638751395</updated>
     </task>
+    <task id="LOCAL-00001" summary="fix bug">
+      <created>1666147009926</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1666147009926</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -262,6 +227,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="fix bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix bug" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -34,6 +34,7 @@ import com.pvcombank.sdk.model.request.RequestVerifyOTP
 import com.pvcombank.sdk.model.response.ResponsePurchase
 import com.pvcombank.sdk.model.response.ResponseVerifyOnboardOTP
 import com.pvcombank.sdk.repository.AuthRepository
+import com.pvcombank.sdk.util.Utils.phoneHide
 import com.pvcombank.sdk.util.security.SecurityHelper
 import com.pvcombank.sdk.view.login.AuthWebLoginFragment
 import com.pvcombank.sdk.view.popup.AlertPopup
@@ -58,7 +59,7 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 		super.onViewCreated(view, savedInstanceState)
 		repository = AuthRepository()
 		viewBinding.apply {
-			topBar.setTitle(getString(R.string.confirm_otp))
+			topBar.setTitle("Xác nhận OTP")
 			topBar.show()
 			topBar.addButtonMore(title = "Huỷ", listener = object : TopBarListener.MoreListener {
 				override fun onMoreClick() {
@@ -110,15 +111,17 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 					}
 				}
 			}
+			val phoneStr = requireArguments().getParcelable<ResponsePurchase>("data")?.phoneNumber ?: (cache["phone_number"] as? String) ?: ""
+			
 			val text = getString(
 				R.string.sended_otp_to_number_phone,
-				requireArguments().getParcelable<ResponsePurchase>("data")?.phoneNumber ?: (cache["phone_number"] as? String)
+				phoneStr.phoneHide()
 			)
 			val spanText = SpannableString(text)
 			spanText.setSpan(
 				ForegroundColorSpan(Color.parseColor("#0072BC")),
-				36,
-				48,
+				text.length - 10,
+				text.length,
 				Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
 			)
 			tvShowNumberPhone.text = spanText

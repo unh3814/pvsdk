@@ -21,7 +21,10 @@
         style="@style/PVTextView.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center"
+        android:maxWidth="200dp"
         android:text="Đảm bảo hình ảnh đủ sáng, không bị mờ, lóa"
+        android:textColor="@color/color_grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView7" />
@@ -41,17 +44,20 @@
         style="@style/PVTextView.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center"
+        android:maxWidth="200dp"
         android:text="Không đeo kính và đội mũ"
+        android:textColor="@color/color_grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView5" />
 
     <ImageView
-        android:src="@drawable/ic_face_mark"
         android:id="@+id/imageView6"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginTop="64dp"
+        android:src="@drawable/ic_face_mark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView10" />
@@ -60,14 +66,17 @@
         style="@style/PVTextView.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center"
+        android:maxWidth="200dp"
         android:text="Không đeo khẩu trang hoặc che khuôn mặt "
+        android:textColor="@color/color_grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView6" />
 
     <Button
-        style="@style/PVButton"
         android:id="@+id/btn_confirm"
+        style="@style/PVButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/i_understand"

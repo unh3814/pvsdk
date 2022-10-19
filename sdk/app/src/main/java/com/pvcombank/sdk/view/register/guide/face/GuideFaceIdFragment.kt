@@ -40,7 +40,7 @@ class GuideFaceIdFragment : PVFragment<FragmentGuideFaceCaptureBinding>() {
 		super.onViewCreated(view, savedInstanceState)
 		viewBinding.apply {
 			topBar.show()
-			topBar.setTitle("Hướng dẫn quay chân dung")
+			topBar.setTitle("Hướng dẫn quay video chân dung")
 			btnConfirm.setOnClickListener {
 				startFaceCapture()
 			}

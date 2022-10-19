@@ -13,8 +13,8 @@
     <string name="confirm_information_payment">Xác nhận thanh toán</string>
     <string name="primary_account">Tài khoản nguồn</string>
     <string name="current_balance">Số dư: %sđ</string>
-    <string name="sended_otp_to_number_phone">Mã OTP đã được gửi tới số điện thoại <font color="blue">%s</font>.\nQuý khách vui lòng nhập mã OTP để tiếp tục.</string>
-    <string name="resend_otp">Gửi lại mã %s s</string>
+    <string name="sended_otp_to_number_phone">Mã OTP đã được gửi tới số điện thoại <font color="blue">%s</font></string>
+    <string name="resend_otp">Gửi lại OTP (%ss)</string>
     <string name="date_trading">Ngày giao dịch</string>
     <string name="confirm_otp">Xác thực OTP</string>
     <string name="payment_success">Bạn sẽ được chuyển về %s để tiếp tục đơn hàng sau %s giây.</string>

@@ -74,7 +74,6 @@
                         style="@style/PVRadioButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:text="Nam" />
 
                     <RadioButton
@@ -82,7 +81,6 @@
                         style="@style/PVRadioButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:text="Nữ" />
                 </RadioGroup>
             </LinearLayout>
@@ -165,7 +163,9 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="4"
-                        android:text="Nguyên Quán" />
+                        android:textSize="13sp"
+                        android:text="Nguyên Quán"
+                        android:textColor="@color/color_grey" />
 
                     <TextView
                         android:id="@+id/tv_primary_issue"
@@ -215,11 +215,13 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:textSize="13sp"
                         style="@style/PVTextView.Title"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="4"
-                        android:text="Nơi thường trú" />
+                        android:text="Nơi thường trú"
+                        android:textColor="@color/color_grey" />
 
                     <TextView
                         android:id="@+id/tv_issued_place"
@@ -271,6 +273,7 @@
     <Button
         android:id="@+id/btn_confirm"
         style="@style/PVButton"
+        android:enabled="false"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"

@@ -56,13 +56,13 @@ object Utils {
 		return f1.format(f2.parse(this))
 	}
 	
-	fun Date.toPVDate(): String{
+	fun Date.toPVDate(): String {
 		val f2 = SimpleDateFormat("dd/MM/yyyy")
 		val f1 = SimpleDateFormat("yyyy-MM-dd")
 		return f2.format(this)
 	}
 	
-	fun onDrawableClick(rawView: TextView, position: Int, callback: () -> Unit){
+	fun onDrawableClick(rawView: TextView, position: Int, callback: () -> Unit) {
 		rawView.setOnTouchListener { _, event ->
 			onEventDrawableClick(rawView, event, position, callback)
 		}
@@ -113,5 +113,18 @@ object Utils {
 			return (currentTime - it) >= `10Minute`
 		}
 		return false
+	}
+	
+	fun String.phoneHide(): String {
+		val result = java.lang.StringBuilder()
+		if (this.isEmpty()) return ""
+		this.forEachIndexed { index, c ->
+			if (index in 3..6) {
+				result.append("*")
+			} else {
+				result.append(c)
+			}
+		}
+		return result.toString()
 	}
 }
