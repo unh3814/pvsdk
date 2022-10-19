@@ -18,7 +18,7 @@ object Constants {
 	const val CLIENT_SECRET = "4e22f497-4f20-4a3e-a950-4e29e6df6729"
 	const val url = "https://connect.apps.ocp4-dev03.pvcomtestocp.com/auth/realms/pvcombank/protocol/openid-connect/auth?client_id=vietsens-sdk&state=589i2mgvijs&redirect_uri=$REDIRECT_URL&scope=openid&response_type=code"
 	const val url_sanbox = "https://sandbox-connect.pvcombank.com.vn/auth/realms/pvcombank/protocol/openid-connect/auth?client_id=$CLIENT_ID&state=589i2mgvijs&redirect_uri=$REDIRECT_SANBOX_URL&response_type=code&scope=openid"
-	
+	//https://sandbox-connect.pvcombank.com.vn/auth/realms/pvcombank/protocol/openid-connect/auth?client_id=430434b7&state=589i2mgvijs&redirect_uri=https://awsapi.pvcombank.com.vn/connect&response_type=code&scope=openid
 	//https://connect.apps.ocp4-dev03.pvcomtestocp.com/auth/realms/pvcombank/protocol/openid-connect/auth?client_id=vietsens-sdk&state=589i2mgvijs&redirect_uri=https://10.0.15.60/connect&scope=openid&response_type=code
 	var TOKEN: String = ""
 	

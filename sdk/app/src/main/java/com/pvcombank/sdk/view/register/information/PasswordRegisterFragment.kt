@@ -89,7 +89,6 @@ class PasswordRegisterFragment : PVFragment<FragmentPasswordRegisterBinding>() {
 				}
 				AlertPopup.show(
 					fragmentManager = childFragmentManager,
-					title = "Thông báo",
 					message = message,
 					primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
 						override fun onClickListener(v: View) {
@@ -119,19 +118,9 @@ class PasswordRegisterFragment : PVFragment<FragmentPasswordRegisterBinding>() {
 					(it["success"] as? ResponseData<*>)?.let { response ->
 						hideLoading()
 						if (response.code == "1") {
-							SuccessFragment().show(childFragmentManager, "SUCCESS")
+							SuccessFragment(true).show(childFragmentManager, "SUCCESS")
 						} else {
-							AlertPopup.show(
-								fragmentManager = childFragmentManager,
-								title = "Thông báo",
-								message = "Đã có lỗi xảy ra.\nVui lòng thực hiện lại sau!",
-								primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
-									override fun onClickListener(v: View) {
-									
-									}
-								},
-								primaryTitle = "OK"
-							)
+							SuccessFragment(false).show(childFragmentManager, "FAIL")
 						}
 					}
 					(it["fail"] as? String)?.let { errorStr ->
@@ -145,7 +134,6 @@ class PasswordRegisterFragment : PVFragment<FragmentPasswordRegisterBinding>() {
 						}
 						AlertPopup.show(
 							fragmentManager = childFragmentManager,
-							title = "Thông báo",
 							message = message,
 							primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
 								override fun onClickListener(v: View) {
@@ -170,7 +158,6 @@ class PasswordRegisterFragment : PVFragment<FragmentPasswordRegisterBinding>() {
 			hideLoading()
 			AlertPopup.show(
 				fragmentManager = childFragmentManager,
-				title = "Thông báo",
 				message = "Có lỗi vui lòng thử lại",
 				primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
 					override fun onClickListener(v: View) {

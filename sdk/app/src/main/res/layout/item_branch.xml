@@ -8,14 +8,22 @@
 
     <TextView
         android:id="@+id/name"
-        android:textColor="@color/color_black"
         style="@style/PVTextView.Title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:baselineAligned="false"
         android:paddingVertical="8dp"
+        android:textColor="@color/color_black"
         android:textStyle="bold"
         tools:text="PVComBank hà Nội" />
+
+    <TextView
+        android:id="@+id/direct"
+        style="@style/PVTextView.Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        tools:text="@tools:sample/lorem" />
 
     <View
         android:layout_width="match_parent"

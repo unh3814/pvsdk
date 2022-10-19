@@ -7,7 +7,7 @@
     android:padding="16dp">
 
     <ImageView
-        android:id="@+id/imageView8"
+        android:id="@+id/img_icon"
         android:layout_width="230dp"
         android:layout_height="230dp"
         android:layout_marginTop="24dp"
@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/tv_success"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -27,19 +27,20 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView8" />
+        app:layout_constraintTop_toBottomOf="@+id/img_icon" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tv_message_success"
         style="@style/PVTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:gravity="center_horizontal"
-        android:text="Bạn đã hoàn tất đăng ký dịch vụ. Kết quả sẽ được gửi tới bạn sau tối đa 02 phút qua email và số điện thoại đã đăng ký "
+        android:text="@string/last_step_fail_message"
+        android:textColorLink="@color/color_blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_success" />
 
     <Button
         android:id="@+id/btn_confirm"
@@ -50,5 +51,5 @@
         android:text="Về trang chủ"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_message_success" />
 </androidx.constraintlayout.widget.ConstraintLayout>

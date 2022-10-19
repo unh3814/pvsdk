@@ -1,5 +1,8 @@
 package com.pvcombank.sdk.view.popup
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.LayoutInflater
@@ -30,6 +33,11 @@ class AlertPopup : DialogFragment() {
 		super.onStart()
 		dialog?.let {
 			it.window?.apply {
+				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+					setBackgroundBlurRadius(8)
+				} else{
+					setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+				}
 				setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
 			}
 		}
@@ -79,7 +87,6 @@ class AlertPopup : DialogFragment() {
 				btnPrimary.text = titlePrimary
 				View.VISIBLE
 			}
-			tvTitle.text = arguments?.getString(TITLE) ?: ""
 			if (AUTO_FINISH != null && AUTO_FINISH!! > 0) {
 				val countTime = object : CountDownTimer(AUTO_FINISH!!, 1000) {
 					override fun onTick(millisUntilFinished: Long) {
@@ -122,7 +129,6 @@ class AlertPopup : DialogFragment() {
 		fun show(
 			icon: Int? = null,
 			fragmentManager: FragmentManager,
-			title: String,
 			message: String? = null,
 			secondTitle: String? = null,
 			secondButtonListener: SecondButtonListener? = null,
@@ -135,7 +141,6 @@ class AlertPopup : DialogFragment() {
 				this.primaryButtonListener = primaryButtonListener
 				arguments = Bundle().apply {
 					putInt(ICON, icon ?: -1)
-					putString(TITLE, title)
 					putString(MESSAGE, message)
 					putString(TITLE_SECOND, secondTitle)
 					putString(TITLE_PRIMARY, primaryTitle)

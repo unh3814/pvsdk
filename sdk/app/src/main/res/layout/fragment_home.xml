@@ -17,6 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
+        style="@style/PVButton"
         android:id="@+id/btn_to_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,6 +31,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
+        style="@style/PVButton"
         android:id="@+id/btn_to_register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

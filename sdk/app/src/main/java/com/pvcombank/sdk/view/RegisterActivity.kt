@@ -16,7 +16,6 @@ import com.pvcombank.sdk.base.model.TopBarListener
 import com.pvcombank.sdk.databinding.ActivityRegisterBinding
 import com.pvcombank.sdk.model.Constants
 import com.pvcombank.sdk.util.Utils.openFragment
-import com.pvcombank.sdk.view.register.confirm.InformationConfirmFragment
 import com.pvcombank.sdk.view.register.home.HomeFragment
 import com.trustingsocial.tvsdk.TrustVisionSDK
 

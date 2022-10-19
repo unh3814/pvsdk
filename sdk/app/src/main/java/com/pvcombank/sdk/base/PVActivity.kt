@@ -42,7 +42,6 @@ abstract class PVActivity<VB : ViewBinding> : FragmentActivity() {
 		if (Utils.checkOutOfTime()) {
 			AlertPopup.show(
 				fragmentManager = supportFragmentManager,
-				title = "Thông báo",
 				message = "Quá thời gian thao tác, vui lòng thực hiện lại.",
 				primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
 					override fun onClickListener(v: View) {

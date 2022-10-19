@@ -117,8 +117,7 @@ class AfterCreateFragment : PVFragment<FragmentCreateAccoutBinding>() {
 						} else {
 							AlertPopup.show(
 								fragmentManager = childFragmentManager,
-								title = "Thông báo",
-								message = "${it}",
+								message = "$it",
 								primaryTitle = "OK",
 								primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
 									override fun onClickListener(v: View) {

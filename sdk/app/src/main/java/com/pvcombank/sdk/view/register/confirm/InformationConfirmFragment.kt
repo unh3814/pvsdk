@@ -121,7 +121,6 @@ class InformationConfirmFragment : PVFragment<FragmentCardCaptureResultBinding>(
 		if(requireArguments().getBoolean("hide_back")){
 			AlertPopup.show(
 				fragmentManager = childFragmentManager,
-				title = "Thông báo",
 				message = "Bạn muốn dừng không",
 				primaryTitle = "OK",
 				primaryButtonListener = object : AlertPopup.PrimaryButtonListener{

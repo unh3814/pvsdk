@@ -41,7 +41,6 @@ class AuthWebLoginFragment : PVFragment<FragmentWebLoginBinding>() {
 			if (error?.errorCode == -2) {
 				AlertPopup.show(
 					fragmentManager = childFragmentManager,
-					title = "Thông báo",
 					message = "Có lỗi trong quá trình kết nối, vui lòng thử lại.",
 					primaryTitle = "OK",
 					primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
@@ -156,7 +155,6 @@ class AuthWebLoginFragment : PVFragment<FragmentWebLoginBinding>() {
 	override fun onBack(): Boolean {
 		AlertPopup.show(
 			fragmentManager = childFragmentManager,
-			title = "Thông báo",
 			message = "Bạn có muốn kết thúc không",
 			primaryTitle = "OK",
 			primaryButtonListener = object : AlertPopup.PrimaryButtonListener {

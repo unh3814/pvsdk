@@ -64,7 +64,6 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 				override fun onMoreClick() {
 					AlertPopup.show(
 						fragmentManager = childFragmentManager,
-						title = "Thông báo",
 						message = "Bạn có muốn huỷ giao dịch này không",
 						primaryTitle = "OK",
 						primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
@@ -128,7 +127,6 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 				viewLifecycleOwner,
 				Observer {
 					AlertPopup.show(
-						title = "Thông báo",
 						message = "Hết thời gian đăng nhập, mời bạn đăng nhập lại",
 						primaryTitle = "OK",
 						primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
@@ -230,7 +228,6 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 						0, 5, 6 -> {
 							AlertPopup.show(
 								fragmentManager = childFragmentManager,
-								title = "Thông báo",
 								message = "Tài khoản đã được tạo, vui lòng đăng nhập.",
 								primaryTitle = "Đồng ý",
 								primaryButtonListener = object : AlertPopup.PrimaryButtonListener{
@@ -272,8 +269,7 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 						7 -> {
 							AlertPopup.show(
 								fragmentManager = childFragmentManager,
-								title = "Từ chối",
-								message = "",
+								message = "Từ chối",
 								primaryTitle = "Đồng ý",
 								primaryButtonListener = object : AlertPopup.PrimaryButtonListener{
 									override fun onClickListener(v: View) {
@@ -311,7 +307,7 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 	private fun showAlerError(message: String? = null) {
 		AlertPopup.show(
 			fragmentManager = childFragmentManager,
-			title = message ?: "Đã có lỗi, vui lòng thử lại sau.",
+			message = message ?: "Đã có lỗi, vui lòng thử lại sau.",
 			primaryTitle = "Thử lại",
 			primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
 				override fun onClickListener(v: View) {

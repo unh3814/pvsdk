@@ -416,6 +416,7 @@
             android:text="@string/txt_register_rule_2" />
 
         <Button
+            style="@style/PVButton"
             android:id="@+id/btn_confirm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

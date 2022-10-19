@@ -55,6 +55,7 @@ class SelectBranchBottomSheet(private val callBack: (item: BranchModel) -> Unit)
 						dataResult.addAll(
 							data.filter { model ->
 								model.bRANCHNAME.contains(it.toString(), true)
+										|| model.aDDRESS.contains(it.toString(), true)
 							}
 						)
 						adapter.notifyDataSetChanged()
@@ -102,6 +103,7 @@ class SelectBranchBottomSheet(private val callBack: (item: BranchModel) -> Unit)
 				onItemClick(item)
 			}
 			itemView.findViewById<TextView>(R.id.name).text = item.bRANCHNAME
+			itemView.findViewById<TextView>(R.id.direct).text = item.aDDRESS
 		}
 	}
 	

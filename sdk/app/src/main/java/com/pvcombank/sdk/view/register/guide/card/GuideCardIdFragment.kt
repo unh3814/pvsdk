@@ -124,7 +124,6 @@ class GuideCardIdFragment : PVFragment<FragmentGuideCardCaptureBinding>() {
 				}
 				AlertPopup.show(
 					fragmentManager = childFragmentManager,
-					title = "Thông báo",
 					message = "$message",
 					primaryTitle = "OK",
 					primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
@@ -199,7 +198,6 @@ class GuideCardIdFragment : PVFragment<FragmentGuideCardCaptureBinding>() {
 					if(message.isNotEmpty()){
 						AlertPopup.show(
 							fragmentManager = childFragmentManager,
-							title = "Thông báo",
 							message = responseSuccess.errorMessage ?: message,
 							primaryTitle = "OK",
 							primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
@@ -213,7 +211,6 @@ class GuideCardIdFragment : PVFragment<FragmentGuideCardCaptureBinding>() {
 					requireArguments().putString("type_card", null)
 					AlertPopup.show(
 						fragmentManager = childFragmentManager,
-						title = "Thông báo",
 						message = responseSuccess.errorMessage,
 						primaryTitle = "OK",
 						primaryButtonListener = object : AlertPopup.PrimaryButtonListener {

@@ -95,7 +95,6 @@ class InformationRegisterFragment : PVFragment<FragmentRegisterBinding>() {
 				if (checkedId == no.id) {
 					AlertPopup.show(
 						fragmentManager = childFragmentManager,
-						title = "Thông báo",
 						primaryTitle = "Đóng",
 						primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
 							override fun onClickListener(v: View) {
@@ -109,7 +108,6 @@ class InformationRegisterFragment : PVFragment<FragmentRegisterBinding>() {
 				if (checkedId == aYes.id) {
 					AlertPopup.show(
 						fragmentManager = childFragmentManager,
-						title = "Thông báo",
 						primaryTitle = "Đóng",
 						primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
 							override fun onClickListener(v: View) {

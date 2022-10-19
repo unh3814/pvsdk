@@ -70,7 +70,6 @@ class GuideFaceIdFragment : PVFragment<FragmentGuideFaceCaptureBinding>() {
 								{
 									AlertPopup.show(
 										fragmentManager = childFragmentManager,
-										title = "Thông báo",
 										message = "Có lỗi xảy ra vui lòng thực hiện lại",
 										primaryTitle = "OK",
 										primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
@@ -146,7 +145,6 @@ class GuideFaceIdFragment : PVFragment<FragmentGuideFaceCaptureBinding>() {
 								}
 								AlertPopup.show(
 									fragmentManager = childFragmentManager,
-									title = "Thông báo",
 									message = "$message",
 									primaryTitle = "OK",
 									primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
@@ -194,7 +192,6 @@ class GuideFaceIdFragment : PVFragment<FragmentGuideFaceCaptureBinding>() {
 						Constants.CAPTURE_FACE -> {
 							AlertPopup.show(
 								fragmentManager = childFragmentManager,
-								title = "Thông báo",
 								message = responseSuccess.errorMessage ?: message,
 								primaryTitle = "OK",
 								primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
@@ -207,7 +204,6 @@ class GuideFaceIdFragment : PVFragment<FragmentGuideFaceCaptureBinding>() {
 						else -> {
 							AlertPopup.show(
 								fragmentManager = childFragmentManager,
-								title = "Thông báo",
 								message = responseSuccess.errorMessage ?: message,
 								primaryTitle = "OK",
 								primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
@@ -221,7 +217,6 @@ class GuideFaceIdFragment : PVFragment<FragmentGuideFaceCaptureBinding>() {
 				} ?: kotlin.run {
 					AlertPopup.show(
 						fragmentManager = childFragmentManager,
-						title = "Thông báo",
 						message = responseSuccess.errorMessage,
 						primaryTitle = "OK",
 						primaryButtonListener = object : AlertPopup.PrimaryButtonListener {

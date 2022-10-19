@@ -63,4 +63,9 @@
     <string name="txt_email_address">Địa chỉ email</string>
     <string name="txt_create_account">Đăng ký</string>
     <string name="tooltips_pvcb_internet_banking">Miễn phí toàn bộ giao dịch chuyển tiền trên InternetBanking và phí duy trì dịch vụ khi: Khách hàng duy trì số dư bình quân tối thiểu 1.000.000đ/tháng hoặc phát sinh 3 giao dịch ghi có trong 1 tháng từ 1.000.000đ/giao dịch trở lên.</string>
+    <!--    alert last step  -->
+    <string name="last_step_success_title">Hoàn tất</string>
+    <string name="last_step_success_message">Bạn đã hoàn tất đăng ký dịch vụ. Kết quả sẽ được gửi tới bạn sau tối đa 02 phút qua email và số điện thoại đã đăng ký </string>
+    <string name="last_step_fail_title">Đăng ký thất bại</string>
+    <string name="last_step_fail_message">Hệ thống tạm thời gián đoạn vui lòng thực hiện định danh lại sau 15 phút. Chi tiết liên hệ <a href="phone_hotline">1900555592</a> .</string>
 </resources>
