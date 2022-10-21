@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.pvcombank.sdk.view.customs.EditViewPVCB.EditViewPVCB
+    <com.pvcombank.sdk.ekyc.view.customs.EditViewPVCB.EditViewPVCB
         android:id="@+id/username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
         app:layout_constraintTop_toBottomOf="@+id/img_logo"
         app:textTitle="Tên đăng nhập/ Số điện thoại" />
 
-    <com.pvcombank.sdk.view.customs.EditViewPVCB.EditViewPVCB
+    <com.pvcombank.sdk.ekyc.view.customs.EditViewPVCB.EditViewPVCB
         android:id="@+id/passoword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

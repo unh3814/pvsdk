@@ -58,7 +58,7 @@ android {
         publications {
             release(MavenPublication) {
                 groupId = 'com.pvcombank.sdk'
-                artifactId = 'pvsdk'
+                artifactId = 'ekyc'
                 version = '0.1.0'
                 pom.withXml {
                     def dependenciesNode = asNode().appendNode('dependencies')
