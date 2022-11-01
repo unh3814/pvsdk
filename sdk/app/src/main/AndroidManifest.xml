@@ -16,7 +16,7 @@
     <application
         android:supportsRtl="true"
         tools:targetApi="32" >
-        <activity android:name=".view.PVCBActivity"
+        <activity android:name=".payment.view.PVCBActivity"
             android:windowSoftInputMode="adjustPan|stateVisible"/>
     </application>
 </manifest>
