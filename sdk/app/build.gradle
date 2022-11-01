@@ -86,17 +86,8 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
-    lintOptions {
-        abortOnError false
-    }
-    aaptOptions {
-        noCompress "tflite"
-    }
     buildFeatures {
         viewBinding true
-    }
-    dexOptions {
-        javaMaxHeapSize "4g"
     }
 }
 
@@ -133,7 +124,4 @@ dependencies {
     //CIRCLE_IMAGE_VIEW
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     testImplementation 'junit:junit:4.12'
-}
-repositories {
-    mavenCentral()
 }
