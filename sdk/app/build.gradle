@@ -11,12 +11,10 @@ android {
     compileSdk 33
 
     defaultConfig {
-//        applicationId "com.pvcombank.sdk"
         minSdk 23
         targetSdk 33
         versionCode 1
         versionName "1.0"
-        multiDexEnabled true
     }
 
     buildTypes {
@@ -135,7 +133,6 @@ dependencies {
     //CIRCLE_IMAGE_VIEW
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     testImplementation 'junit:junit:4.12'
-    implementation "androidx.multidex:multidex:2.0.1"
 }
 repositories {
     mavenCentral()
