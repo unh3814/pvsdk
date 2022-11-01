@@ -4,7 +4,6 @@ import com.pvcombank.sdk.ekyc.model.Constants
 import com.pvcombank.sdk.ekyc.model.MasterModel
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -41,8 +40,8 @@ class RetrofitHelper {
 					.build()
 				chain.proceed(request)
 			})
-			.addInterceptor(HttpLoggingInterceptor().apply { setLevel(HttpLoggingInterceptor.Level.BODY) })
-			.addInterceptor(HttpLoggingInterceptor().apply { setLevel(HttpLoggingInterceptor.Level.HEADERS) })
+//			.addInterceptor(HttpLoggingInterceptor().apply { setLevel(HttpLoggingInterceptor.Level.BODY) })
+//			.addInterceptor(HttpLoggingInterceptor().apply { setLevel(HttpLoggingInterceptor.Level.HEADERS) })
 			.build()
 		return Retrofit.Builder()
 			.baseUrl(baseURL)

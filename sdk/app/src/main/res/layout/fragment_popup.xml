@@ -33,6 +33,7 @@
             android:layout_weight="1"
             android:gravity="center_horizontal"
             android:lineHeight="20dp"
+            android:textColorLink="@color/color_blue"
             android:text="@string/default_message"
             android:textColor="@color/color_black"
             android:textSize="13sp"

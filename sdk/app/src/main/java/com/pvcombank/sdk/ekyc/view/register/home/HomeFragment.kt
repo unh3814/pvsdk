@@ -8,7 +8,8 @@ import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.pvcombank.sdk.ekyc.base.PVFragment
-import com.pvcombank.sdk.databinding.FragmentHomeBinding
+import com.pvcombank.sdk.ekyc.databinding.FragmentHomeBinding
+import com.pvcombank.sdk.ekyc.model.MasterModel
 import com.pvcombank.sdk.ekyc.view.login.AuthWebLoginFragment
 import com.pvcombank.sdk.ekyc.view.popup.AlertPopup
 import com.pvcombank.sdk.ekyc.view.register.after_create.AfterCreateFragment
@@ -71,6 +72,7 @@ class HomeFragment : PVFragment<FragmentHomeBinding>() {
 				1
 			)
 		}
+		MasterModel.getInstance().cache.clear()
 	}
 	
 	override fun onBack(): Boolean {

@@ -9,93 +9,16 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="56717764-574b-4463-9248-57df47e30dc1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/repo/com/trustvision.zip" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/model/Constants.kt" afterDir="false" />
+    <list default="true" id="56717764-574b-4463-9248-57df47e30dc1" name="Changes" comment="fix bug">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sample_app.zip" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/PVCBAuthListener.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/PVCBAuthListener.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/base/PVActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/base/PVActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/base/PVFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/base/PVFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/base/model/AlertInline.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/base/model/AlertInline.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/base/model/Loading.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/base/model/Loading.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/base/model/TopBar.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/base/model/TopBar.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/model/BranchModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/model/BranchModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/model/CardInfor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/model/CardInfor.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/model/CardModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/model/CardModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/model/Constants.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/model/ErrorBody.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/model/ErrorBody.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/model/ErrorModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/model/ErrorModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/model/GetAccessTokenModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/model/GetAccessTokenModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/model/MasterModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/model/MasterModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/model/ResponseData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/model/ResponseData.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/model/TransactionHistoryModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/model/TransactionHistoryModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/model/person/Access.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/model/person/Access.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/model/person/PVConnect.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/model/person/PVConnect.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/model/request/AuthToken.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/model/request/AuthToken.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/model/request/RequestCreateAccount.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/model/request/RequestCreateAccount.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/model/request/RequestFinish.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/model/request/RequestFinish.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/model/request/RequestLockCard.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/model/request/RequestLockCard.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/model/request/RequestModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/model/request/RequestModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/model/request/RequestPurchase.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/model/request/RequestPurchase.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/model/request/RequestResetPin.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/model/request/RequestResetPin.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/model/request/RequestTransactionHistory.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/model/request/RequestTransactionHistory.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/model/request/RequestUnlockCard.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/model/request/RequestUnlockCard.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/model/request/RequestUpdatePassword.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/model/request/RequestUpdatePassword.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/model/request/RequestVerifyOTP.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/model/request/RequestVerifyOTP.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/model/request/RequestVerifySelfies.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/model/request/RequestVerifySelfies.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/model/response/ResponseGetToken.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/model/response/ResponseGetToken.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/model/response/ResponseOCR.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/model/response/ResponseOCR.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/model/response/ResponsePurchase.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/model/response/ResponsePurchase.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/model/response/ResponseVerifyOTP.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/model/response/ResponseVerifyOTP.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/model/response/ResponseVerifyOnboardOTP.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/model/response/ResponseVerifyOnboardOTP.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/network/ApiEKYC.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/network/ApiEKYC.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/network/ApiHelper.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/network/ApiHelper.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/network/ApiOther.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/network/ApiOther.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/network/ApiResponse.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/network/ApiResponse.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/network/ApiResponseAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/network/ApiResponseAdapter.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/network/ApiResponseCall.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/network/ApiResponseCall.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/network/ApiResponseCallFactory.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/network/ApiResponseCallFactory.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/network/RetrofitHelper.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/network/RetrofitHelper.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/repository/AuthRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/repository/AuthRepository.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/repository/OnBoardingRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/repository/OnBoardingRepository.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/util/FileUtils.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/util/FileUtils.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/util/NetworkUtil.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/util/NetworkUtil.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/util/PreferencesSafe.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/util/PreferencesSafe.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/util/Utils.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/util/Utils.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/util/execute/MyExecutor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/util/execute/MyExecutor.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/util/execute/MyThreadFactory.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/util/execute/MyThreadFactory.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/util/security/AesCrypto.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/util/security/AesCrypto.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/util/security/FileCrypto.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/util/security/FileCrypto.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/util/security/PVCryptography.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/util/security/PVCryptography.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/util/security/RsaCrypto.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/util/security/RsaCrypto.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/util/security/SecurityHelper.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/util/security/SecurityHelper.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/util/security/SharePreferenceSafety.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/util/security/SharePreferenceSafety.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/util/security/rsa.java" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/util/security/rsa.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/view/PVCBAuth.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/view/PVCBAuth.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/view/RegisterActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/view/RegisterActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/view/customs/EditViewPVCB/EditViewPVCB.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/view/customs/EditViewPVCB/EditViewPVCB.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/view/customs/TextViewPVCB/TextViewPVCB.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/view/customs/TextViewPVCB/TextViewPVCB.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/view/login/AuthWebLoginFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/view/login/AuthWebLoginFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/view/otp/confirm_otp/AuthOTPFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/view/otp/confirm_otp/AuthOTPFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/view/popup/AlertPopup.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/view/popup/AlertPopup.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/view/register/SuccessFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/view/register/SuccessFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/view/register/after_create/AfterCreateFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/view/register/after_create/AfterCreateFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/view/register/confirm/InformationConfirmFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/view/register/confirm/InformationConfirmFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/view/register/guide/card/GuideCardIdFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/view/register/guide/card/GuideCardIdFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/view/register/guide/face/GuideFaceIdFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/view/register/guide/face/GuideFaceIdFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/view/register/home/HomeFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/view/register/home/HomeFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/view/register/information/InformationRegisterFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/view/register/information/InformationRegisterFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/view/register/information/PasswordRegisterFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/view/register/information/PasswordRegisterFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/view/register/login/LoginFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/view/register/login/LoginFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/view/register/select_branch/SelectBranchBottomSheet.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/view/register/select_branch/SelectBranchBottomSheet.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/res/layout/fragment_card_capture_result.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/res/layout/fragment_card_capture_result.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/res/layout/fragment_create_accout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/res/layout/fragment_create_accout.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/res/layout/fragment_login.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/res/layout/fragment_login.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/res/layout/fragment_password_register.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/res/layout/fragment_password_register.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/res/layout/fragment_register.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/res/layout/fragment_register.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/repo.zip" beforeDir="false" afterPath="$PROJECT_DIR$/repo.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/repository/AuthRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/repository/AuthRepository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/repository/OnBoardingRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/repository/OnBoardingRepository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/repository/PVRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/repository/PVRepository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/view/register/after_create/AfterCreateFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/view/register/after_create/AfterCreateFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/view/register/guide/card/GuideCardIdFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/view/register/guide/card/GuideCardIdFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/view/register/information/InformationRegisterFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/view/register/information/InformationRegisterFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/view/register/information/PasswordRegisterFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/view/register/information/PasswordRegisterFragment.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -137,6 +60,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="GitToolBoxStore">
+    <option name="projectConfigVersion" value="5" />
     <option name="recentBranches">
       <RecentBranches>
         <option name="branchesForRepo">
@@ -185,7 +109,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
-    <property name="DEBUGGABLE_DEVICE" value="Pixel_4_API_33 [emulator-5554]" />
+    <property name="DEBUGGABLE_DEVICE" value="samsung-sm_a528b-R5CRA1679NV" />
     <property name="DEBUGGABLE_PROCESS" value="com.pvcombank.demoapp" />
     <property name="DEBUGGER_ID" value="Auto" />
     <property name="ResourceManagerPrefKey.ResourceType" value="DRAWABLE" />
@@ -196,11 +120,11 @@
     <property name="SHOW_ALL_PROCESSES" value="false" />
     <property name="cidr.known.project.marker" value="true" />
     <property name="dart.analysis.tool.window.visible" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/repo/com/pvcombank/sdk/pvsdk/0.1.0" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/repo/com/pvcombank/sdk/ekyc/0.1.0" />
     <property name="project.structure.last.edited" value="Dependencies" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.project.gradle" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
   <component name="PsdUISettings">
@@ -208,10 +132,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/repo/com/pvcombank/sdk/pvsdk/0.1.0" />
+      <recent name="$PROJECT_DIR$/repo/com/pvcombank/sdk/ekyc/0.1.0" />
       <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/repo" />
+      <recent name="$PROJECT_DIR$/repo/com/pvcombank/sdk/pvsdk/0.1.0" />
       <recent name="$PROJECT_DIR$/app/libs" />
-      <recent name="$PROJECT_DIR$/pvsdk" />
     </key>
   </component>
   <component name="RunManager">
@@ -291,7 +216,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666147009926</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="fix bug">
+      <created>1666927295959</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1666927295959</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

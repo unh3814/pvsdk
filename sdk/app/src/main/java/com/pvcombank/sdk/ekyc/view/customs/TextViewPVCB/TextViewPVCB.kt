@@ -7,8 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.content.ContextCompat
-import com.pvcombank.sdk.R
-import com.pvcombank.sdk.databinding.TextviewPvcombankBinding
+import com.pvcombank.sdk.ekyc.R
+import com.pvcombank.sdk.ekyc.databinding.TextviewPvcombankBinding
 
 class TextViewPVCB(
 	context: Context,

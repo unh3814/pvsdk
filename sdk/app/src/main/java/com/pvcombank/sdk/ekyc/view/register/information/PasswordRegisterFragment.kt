@@ -5,16 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Observer
 import com.pvcombank.sdk.ekyc.base.PVFragment
-import com.pvcombank.sdk.databinding.FragmentPasswordRegisterBinding
+import com.pvcombank.sdk.ekyc.databinding.FragmentPasswordRegisterBinding
 import com.pvcombank.sdk.ekyc.model.Constants
 import com.pvcombank.sdk.ekyc.model.MasterModel
-import com.pvcombank.sdk.ekyc.model.ResponseData
 import com.pvcombank.sdk.ekyc.model.request.RequestFinish
 import com.pvcombank.sdk.ekyc.repository.OnBoardingRepository
 import com.pvcombank.sdk.ekyc.view.popup.AlertPopup
 import com.pvcombank.sdk.ekyc.view.register.SuccessFragment
-import com.pvcombank.sdk.ekyc.view.register.home.HomeFragment
+import com.pvcombank.sdk.ekyc.view.register.after_create.AfterCreateFragment
 
 class PasswordRegisterFragment : PVFragment<FragmentPasswordRegisterBinding>() {
 	private val repository = OnBoardingRepository()
@@ -68,46 +68,54 @@ class PasswordRegisterFragment : PVFragment<FragmentPasswordRegisterBinding>() {
 			}
 			btnRegister.setOnClickListener {
 				showLoading()
-				startUpdatePassword()
+				repository.updatePassword(confirmPassword.getText())
 			}
-		}
-	}
-	
-	private fun FragmentPasswordRegisterBinding.startUpdatePassword() {
-		repository.updatePassword(confirmPassword.getText()) {
-			(it["success"] as? ResponseData<*>)?.let {
-				//Cập nhập password thành công thì cập nhập thông tin cif
-				startOpenCIF()
-			}
-			(it["fail"] as? String)?.let {
-				val isEndAuth = it.contains("403") || it.contains("401")
-				var message = it
-				when {
-					isEndAuth -> {
-						message = "Phiên làm việc hết hạn."
+			repository.observerUpdatePassword
+				.observe(
+					viewLifecycleOwner,
+					Observer {
+						it?.let {
+							startOpenCIF()
+						}
+					}
+				)
+			repository.observerFinish.observe(
+				viewLifecycleOwner,
+				Observer {
+				
+				}
+			)
+			repository.error.observe(
+				viewLifecycleOwner,
+				Observer {
+					it?.let {
+						if (it.first == 0) {
+							SuccessFragment(false).show(childFragmentManager, "FAIL")
+						} else {
+							AlertPopup.show(
+								fragmentManager = childFragmentManager,
+								message = it.second,
+								primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
+									override fun onClickListener(v: View) {
+										if (it.first in (401..499)) {
+											requireActivity().supportFragmentManager.popBackStack(
+												null,
+												FragmentManager.POP_BACK_STACK_INCLUSIVE
+											)
+											openFragment(
+												AfterCreateFragment::class.java,
+												Bundle(),
+												true
+											)
+										}
+									}
+								},
+								primaryTitle = "OK"
+							)
+						}
 					}
 				}
-				AlertPopup.show(
-					fragmentManager = childFragmentManager,
-					message = message,
-					primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
-						override fun onClickListener(v: View) {
-							if (isEndAuth) {
-								requireActivity().supportFragmentManager.popBackStack(
-									null,
-									FragmentManager.POP_BACK_STACK_INCLUSIVE
-								)
-								openFragment(
-									HomeFragment::class.java,
-									Bundle(),
-									true
-								)
-							}
-						}
-					},
-					primaryTitle = "OK"
-				)
-			}
+			)
 		}
 	}
 	
@@ -115,46 +123,7 @@ class PasswordRegisterFragment : PVFragment<FragmentPasswordRegisterBinding>() {
 		SuccessFragment(true).show(childFragmentManager, "SUCCESS")
 		requireArguments().getParcelable<RequestFinish>("request_data_finish")
 			?.let {
-				repository.finish(it) {
-					(it["success"] as? ResponseData<*>)?.let { response ->
-						if (response.code == "1") {
-						} else {
-							SuccessFragment(false).show(childFragmentManager, "FAIL")
-						}
-					}
-					(it["fail"] as? String)?.let { errorStr ->
-						val isEndAuth = errorStr.contains("403") || errorStr.contains("401")
-						var message = errorStr
-						when {
-							isEndAuth -> {
-								message = "Phiên làm việc hết hạn."
-							}
-							else -> {
-								SuccessFragment(false).show(childFragmentManager, "FAIL")
-							}
-						}
-						AlertPopup.show(
-							fragmentManager = childFragmentManager,
-							message = message,
-							primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
-								override fun onClickListener(v: View) {
-									if (isEndAuth) {
-										requireActivity().supportFragmentManager.popBackStack(
-											null,
-											FragmentManager.POP_BACK_STACK_INCLUSIVE
-										)
-										openFragment(
-											HomeFragment::class.java,
-											Bundle(),
-											true
-										)
-									}
-								}
-							},
-							primaryTitle = "OK"
-						)
-					}
-				}
+				repository.finish(it)
 			} ?: kotlin.run {
 			hideLoading()
 			AlertPopup.show(

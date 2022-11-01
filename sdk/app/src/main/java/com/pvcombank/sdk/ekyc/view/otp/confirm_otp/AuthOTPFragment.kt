@@ -18,25 +18,25 @@ import androidx.core.view.forEach
 import androidx.core.view.forEachIndexed
 import androidx.lifecycle.Observer
 import com.google.gson.Gson
-import com.pvcombank.sdk.R
+import com.pvcombank.sdk.ekyc.R
 import com.pvcombank.sdk.ekyc.base.PVFragment
 import com.pvcombank.sdk.ekyc.base.model.TopBarListener
-import com.pvcombank.sdk.databinding.OtpViewBinding
+import com.pvcombank.sdk.ekyc.databinding.OtpViewBinding
 import com.pvcombank.sdk.ekyc.model.CardModel
+import com.pvcombank.sdk.ekyc.model.Constants
 import com.pvcombank.sdk.ekyc.model.ErrorBody
 import com.pvcombank.sdk.ekyc.model.MasterModel
 import com.pvcombank.sdk.ekyc.model.request.RequestModel
 import com.pvcombank.sdk.ekyc.model.request.RequestVerifyOTP
 import com.pvcombank.sdk.ekyc.model.response.ResponsePurchase
-import com.pvcombank.sdk.ekyc.model.response.ResponseVerifyOnboardOTP
 import com.pvcombank.sdk.ekyc.repository.AuthRepository
 import com.pvcombank.sdk.ekyc.util.Utils.phoneHide
 import com.pvcombank.sdk.ekyc.util.security.SecurityHelper
-import com.pvcombank.sdk.ekyc.view.login.AuthWebLoginFragment
 import com.pvcombank.sdk.ekyc.view.popup.AlertPopup
 import com.pvcombank.sdk.ekyc.view.register.confirm.InformationConfirmFragment
 import com.pvcombank.sdk.ekyc.view.register.guide.card.GuideCardIdFragment
 import com.pvcombank.sdk.ekyc.view.register.guide.face.GuideFaceIdFragment
+import com.pvcombank.sdk.ekyc.view.register.home.HomeFragment
 import java.util.*
 
 class AuthOTPFragment : PVFragment<OtpViewBinding>() {
@@ -125,30 +125,115 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 			)
 			tvShowNumberPhone.text = spanText
 			startCountDownTimer()
-			repository?.onNeedLogin?.observe(
-				viewLifecycleOwner,
-				Observer {
-					AlertPopup.show(
-						message = "Hết thời gian đăng nhập, mời bạn đăng nhập lại",
-						primaryTitle = "OK",
-						primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
-							override fun onClickListener(v: View) {
-								requireActivity().recreate()
-							}
-						},
-						fragmentManager = childFragmentManager
-					)
-				}
-			)
 			otpFirst.requestFocus()
 			showKeyboard(otpFirst)
 		}
+		repository?.observerVerifyOTP
+			?.observe(
+				viewLifecycleOwner,
+				Observer {
+					it?.let {
+						hideLoading()
+						it.token?.let {
+							Constants.TOKEN = "Bearer $it"
+						}
+						masterModel.ocrFromOTP = it.ekyc
+						masterModel.getDataOCR().mobilePhone = (cache["phone_number"] as? String) ?: ""
+						when (it.ekyc.step) {
+							0 -> {
+								AlertPopup.show(
+									fragmentManager = childFragmentManager,
+									message = getString(R.string.error_0),
+									primaryTitle = "Đồng ý",
+									primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
+										override fun onClickListener(v: View) {
+											openFragment(
+												HomeFragment::class.java,
+												Bundle(),
+												false
+											)
+										}
+									}
+								)
+							}
+							5, 6 -> {
+								AlertPopup.show(
+									fragmentManager = childFragmentManager,
+									message = getString(R.string.error_5),
+									primaryTitle = "Đồng ý",
+									primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
+										override fun onClickListener(v: View) {
+											openFragment(
+												HomeFragment::class.java,
+												Bundle(),
+												false
+											)
+										}
+									}
+								)
+							}
+							1 -> {
+								masterModel.timeLogin = Date().time
+								openFragment(
+									GuideCardIdFragment::class.java,
+									Bundle(),
+									true
+								)
+							}
+							2 -> {
+								masterModel.timeLogin = Date().time
+								openFragment(
+									GuideFaceIdFragment::class.java,
+									Bundle(),
+									true
+								)
+							}
+							3, 4 -> {
+								masterModel.timeLogin = Date().time
+								openFragment(
+									InformationConfirmFragment::class.java,
+									requireArguments(),
+									true
+								)
+							}
+							7 -> {
+								AlertPopup.show(
+									fragmentManager = childFragmentManager,
+									message = getString(R.string.error_7),
+									primaryTitle = "Đồng ý",
+									primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
+										override fun onClickListener(v: View) {
+										
+										}
+									}
+								)
+							}
+						}
+						timeCountDownTimer?.cancel()
+					}
+				}
+			)
+		repository?.observerSendOTPResponse?.observe(
+			viewLifecycleOwner,
+			Observer {
+				MasterModel.getInstance().uuidOfOTP = it.uuid
+				hideLoading()
+			}
+		)
+		repository?.error?.observe(
+			viewLifecycleOwner,
+			Observer {
+				clearOTP()
+				hideLoading()
+				showAlerError(it.second)
+			}
+		)
 	}
 	
 	override fun onStop() {
 		super.onStop()
 		handler.removeCallbacksAndMessages(null)
-		repository?.onNeedLogin?.postValue(null)
+		repository?.clear()
 		clearOTP()
 	}
 	
@@ -161,29 +246,7 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 			val mail = (cache["email"] as? String) ?: ""
 			val phone = (cache["phone_number"] as? String) ?: ""
 			
-			repository?.sendOTP(phone, mail) {
-				if (it !is String) {
-				
-				}
-				hideLoading()
-				startCountDownTimer()
-			}
-		} else {
-			repository?.purchase(card?.cardToken ?: "") {
-				when (it) {
-					is ResponsePurchase -> {
-						masterModel.uuidOfOTP = it.uuid
-					}
-					is ErrorBody -> {
-						Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
-					}
-					is String -> {
-						Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
-					}
-				}
-				hideLoading()
-				startCountDownTimer()
-			}
+			repository?.sendOTP(phone, mail)
 		}
 	}
 	
@@ -222,90 +285,7 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 			.cryptoBuild(type = SecurityHelper.AES)
 			?.encrypt(Gson().toJson(request))
 		if (masterModel.isCreateAccount) {
-			repository?.verifyOnboardOTP(RequestModel(data = stringEncrypt)) {
-				hideLoading()
-				if (it is ResponseVerifyOnboardOTP) {
-					masterModel.ocrFromOTP = it.ekyc
-					masterModel.getDataOCR().mobilePhone = (cache["phone_number"] as? String) ?: ""
-					when (it.ekyc.step) {
-						0, 5, 6 -> {
-							AlertPopup.show(
-								fragmentManager = childFragmentManager,
-								message = "Tài khoản đã được tạo, vui lòng đăng nhập.",
-								primaryTitle = "Đồng ý",
-								primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
-									override fun onClickListener(v: View) {
-										openFragment(
-											AuthWebLoginFragment::class.java,
-											Bundle(),
-											false
-										)
-									}
-								}
-							)
-						}
-						1 -> {
-							masterModel.timeLogin = Date().time
-							openFragment(
-								GuideCardIdFragment::class.java,
-								Bundle(),
-								true
-							)
-						}
-						2 -> {
-							masterModel.timeLogin = Date().time
-							openFragment(
-								GuideFaceIdFragment::class.java,
-								Bundle(),
-								true
-							)
-						}
-						3, 4 -> {
-							masterModel.timeLogin = Date().time
-							requireArguments().putBoolean("hide_back", true)
-							openFragment(
-								InformationConfirmFragment::class.java,
-								requireArguments(),
-								true
-							)
-						}
-						7 -> {
-							AlertPopup.show(
-								fragmentManager = childFragmentManager,
-								message = "Từ chối",
-								primaryTitle = "Đồng ý",
-								primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
-									override fun onClickListener(v: View) {
-									
-									}
-								}
-							)
-						}
-					}
-					timeCountDownTimer?.cancel()
-				} else {
-					clearOTP()
-					(it as? RequestModel)?.let { errorModel ->
-						errorModel.code?.let {
-							when (errorModel.code) {
-								"117" -> {
-									viewBinding.errorMessage.text = errorModel.message
-								}
-								else -> {
-									showAlerError(getString(R.string.error_system))
-								}
-							}
-						} ?: kotlin.run {
-							showAlerError(getString(R.string.error_system))
-						}
-						masterModel.errorString.onNext(
-							errorModel.message ?: getString(R.string.error_system)
-						)
-					} ?: run {
-						showAlerError(getString(R.string.error_system))
-					}
-				}
-			}
+			repository?.verifyOnboardOTP(RequestModel(data = stringEncrypt))
 		}
 	}
 	
@@ -401,10 +381,10 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 	}
 	
 	private fun clearOTP() {
-		viewBinding.containerOtp.clearChildFocus(viewBinding.otpFirst)
 		viewBinding.containerOtp.forEach {
 			(it as? EditText)?.setText("")
 		}
+		requireActivity().currentFocus?.clearFocus()
 	}
 	
 	override fun onBack(): Boolean = false

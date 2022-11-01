@@ -21,8 +21,17 @@ object Constants {
 	//https://sandbox-connect.pvcombank.com.vn/auth/realms/pvcombank/protocol/openid-connect/auth?client_id=430434b7&state=589i2mgvijs&redirect_uri=https://awsapi.pvcombank.com.vn/connect&response_type=code&scope=openid
 	//https://connect.apps.ocp4-dev03.pvcomtestocp.com/auth/realms/pvcombank/protocol/openid-connect/auth?client_id=vietsens-sdk&state=589i2mgvijs&redirect_uri=https://10.0.15.60/connect&scope=openid&response_type=code
 	var TOKEN: String = ""
-	
+	var TOKEN_REFRESH = ""
 	//region http code
+	const val API_UPDATE_PASSWORD = "onboarding/update-password"
+	const val API_CHECK_ACC_BANKING = "common/accounts/check_acc_banking"
+	const val API_FINISH = "ekyc/finish"
+	const val API_VERIFY_SELFIE = "verify-selfie"
+	const val API_VERIFY = "verify"
+	const val API_SEND_OTP = "staging/v1/onboarding/send-otp"
+	const val API_VERIFY_OTP = "staging/v1/onboarding/verify-otp"
+	const val API_GET_TOKEN = "auth/realms/pvcombank/protocol/openid-connect/token"
+	const val API_REFRESH_TOKEN = "realms/pvcombank/protocol/openid-connect/token/introspect"
 	const val CODE_SUCCESS = "200"
 	val INLINE_ALERT_CODE = hashMapOf(
 		21 to "Thẻ khóa vĩnh viễn do KH yêu cầu ngưng sử dụng thẻ",

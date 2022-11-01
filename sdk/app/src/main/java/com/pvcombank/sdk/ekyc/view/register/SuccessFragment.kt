@@ -7,8 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import com.pvcombank.sdk.R
-import com.pvcombank.sdk.databinding.FragmentRegisterSuccessBinding
+import com.pvcombank.sdk.ekyc.R
+import com.pvcombank.sdk.ekyc.databinding.FragmentRegisterSuccessBinding
 import com.pvcombank.sdk.ekyc.model.MasterModel
 import com.pvcombank.sdk.ekyc.util.Utils.handleUrlClicks
 
@@ -26,24 +26,21 @@ class SuccessFragment(private val isSuccess: Boolean = false) : DialogFragment()
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		viewBinding.apply {
-			requireArguments().apply {
-				if (isSuccess) {
-					tvSuccess.text = getString(R.string.last_step_success_title)
-					tvMessageSuccess.text = getString(R.string.last_step_success_message)
-					imgIcon.setImageResource(R.drawable.success)
-					tvMessageSuccess.handleUrlClicks{
-						val target = Intent().also {
-							it.action = Intent.ACTION_CALL
-							it.data = Uri.parse("tel: 190055592")
-						}
-						startActivity(Intent.createChooser(target, "Select"))
+			if (isSuccess) {
+				tvSuccess.text = getString(R.string.last_step_success_title)
+				tvMessageSuccess.text = getString(R.string.last_step_success_message)
+				imgIcon.setImageResource(R.drawable.success)
+				tvMessageSuccess.handleUrlClicks{
+					val target = Intent().also {
+						it.action = Intent.ACTION_CALL
+						it.data = Uri.parse("tel: 190055592")
 					}
-				} else {
-					tvSuccess.text = getString(R.string.last_step_fail_title)
-					tvMessageSuccess.text = getString(R.string.last_step_fail_message)
-					imgIcon.setImageResource(R.drawable.frame_last_fail)
+					startActivity(Intent.createChooser(target, "Select"))
 				}
-				
+			} else {
+				tvSuccess.text = getString(R.string.last_step_fail_title)
+				tvMessageSuccess.text = getString(R.string.last_step_fail_message)
+				imgIcon.setImageResource(R.drawable.frame_last_fail)
 			}
 			btnConfirm.setOnClickListener {
 				MasterModel.getInstance().cleanOCR()

@@ -1,20 +1,28 @@
 package com.pvcombank.sdk.ekyc.view.register.guide.card
 
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.FragmentManager
+import com.pvcombank.sdk.ekyc.R
 import com.pvcombank.sdk.ekyc.base.PVFragment
-import com.pvcombank.sdk.databinding.FragmentGuideCardCaptureBinding
+import com.pvcombank.sdk.ekyc.databinding.FragmentGuideCardCaptureBinding
 import com.pvcombank.sdk.ekyc.model.Constants
 import com.pvcombank.sdk.ekyc.model.MasterModel
+import com.pvcombank.sdk.ekyc.model.TypeID
+import com.pvcombank.sdk.ekyc.model.request.CheckAccountRequest
 import com.pvcombank.sdk.ekyc.model.response.ResponseOCR
 import com.pvcombank.sdk.ekyc.repository.OnBoardingRepository
 import com.pvcombank.sdk.ekyc.util.FileUtils.toFile
+import com.pvcombank.sdk.ekyc.util.Utils.toTypeId
 import com.pvcombank.sdk.ekyc.util.execute.MyExecutor
 import com.pvcombank.sdk.ekyc.view.popup.AlertPopup
+import com.pvcombank.sdk.ekyc.view.register.after_create.AfterCreateFragment
+import com.pvcombank.sdk.ekyc.view.register.confirm.InformationConfirmFragment
 import com.pvcombank.sdk.ekyc.view.register.guide.face.GuideFaceIdFragment
 import com.pvcombank.sdk.ekyc.view.register.home.HomeFragment
 import com.trustingsocial.tvcoresdk.external.*
@@ -26,9 +34,22 @@ import okhttp3.RequestBody
 import java.io.File
 
 class GuideCardIdFragment : PVFragment<FragmentGuideCardCaptureBinding>() {
-	override fun onBack(): Boolean = false
+	override fun onBack(): Boolean {
+		openFragment(
+			AfterCreateFragment::class.java,
+			Bundle(),
+			true
+		)
+		return true
+	}
+	
 	private val repository = OnBoardingRepository()
 	private val typeCard: String get() = requireArguments().getString("type_card") ?: ""
+	private val phoneNumber = (MasterModel.getInstance().cache["phone_number"] as? String) ?: ""
+	private var count = 0
+	private var currentStep = TVCardSide.FRONT
+	private var idNumber = ""
+	private val hashMapImage = hashMapOf<String, Pair<Boolean, Bitmap?>>()
 	override fun onCreateView(
 		inflater: LayoutInflater,
 		container: ViewGroup?,
@@ -46,12 +67,13 @@ class GuideCardIdFragment : PVFragment<FragmentGuideCardCaptureBinding>() {
 			MasterModel.getInstance().ocrFromOTP = ResponseOCR()
 			btnConfirm.setOnClickListener {
 				//Start Scan cardID
-				startCaptureCard()
+				startCaptureCard(currentStep)
 			}
 		}
 	}
 	
 	fun startCaptureCard(cardSide: TVCardSide? = TVCardSide.FRONT) {
+		currentStep = cardSide!!
 		val nationalIdCard = TVCardType(
 			"vn.national_id",
 			"CMND cũ / CMND mới / CCCD",
@@ -91,26 +113,72 @@ class GuideCardIdFragment : PVFragment<FragmentGuideCardCaptureBinding>() {
 	}
 	
 	private fun handlerSuccessCapturing(tvDetectionResult: TVDetectionResult) {
-		val file: File
-		val type = if (typeCard.contains("front")) {
-			file = tvDetectionResult.backCardImage.image.toFile(requireContext())
-			"back"
+		var file: File? = null
+		var type = ""
+		
+		hashMapImage["front"] = Pair(false, tvDetectionResult.frontCardImage?.image)
+		hashMapImage["back"] = Pair(false, tvDetectionResult.backCardImage?.image)
+		if (hashMapImage["front"]?.first == false && hashMapImage["front"]?.second != null) {
+			file = hashMapImage["front"]?.second?.toFile(requireContext())
+			type = "front"
+		} else if (hashMapImage["back"]?.first == false && hashMapImage["back"]?.second != null) {
+			file = hashMapImage["back"]?.second?.toFile(requireContext())
+			type = "back"
 		} else {
-			file = tvDetectionResult.frontCardImage.image.toFile(requireContext())
-			"front"
+			AlertPopup.show(
+				fragmentManager = childFragmentManager,
+				message = "Đã có lỗi trong quá trình xử lý hình ảnh, vui lòng thử lại sau",
+				primaryTitle = "OK"
+			)
 		}
-		startVerify(file, type) { response ->
-			hideLoading()
+//
+//		if (typeCard.contains("front")) {
+//			tvDetectionResult.backCardImage.image?.apply {
+//				file = toFile(requireContext())
+//				type = "back"
+//			} ?: kotlin.run {
+//				type = "front"
+//			}
+//		} else {
+//			tvDetectionResult.frontCardImage.image?.apply {
+//				file = toFile(requireContext())
+//				type = "front"
+//			} ?: kotlin.run {
+//				type = "back"
+//			}
+//		}
+//		if (file == null) return
+		startVerify(file!!, type) { response ->
 			val responseSuccess = response["success"]
 			if (responseSuccess is ResponseOCR) {
 				val label = responseSuccess.cardLabel
 				if (label?.isNotEmpty() == true) {
 					requireArguments().putString("type_card", label)
 				}
-				if (responseSuccess.error?.isNotEmpty() != true) {
+				count++
+				if (responseSuccess.error.isNullOrEmpty()) {
+					hashMapImage[type]?.copy(first = true)
 					handlerSuccess(responseSuccess)
 				} else {
-					handlerError(responseSuccess)
+					hideLoading()
+					if (count >= 5){
+						AlertPopup.show(
+							fragmentManager = childFragmentManager,
+							message = "Quý khách vui lòng thực hiện lại. Chi tiết liên hệ: 1900555592",
+							primaryButtonListener = object : AlertPopup.PrimaryButtonListener{
+								override fun onClickListener(v: View) {
+									openFragment(
+										AfterCreateFragment::class.java,
+										Bundle(),
+										false
+									)
+								}
+							},
+							primaryTitle = "OK"
+						)
+					} else {
+						handlerError(responseSuccess)
+					}
 				}
 			}
 			val responseFail = response["fail"]
@@ -143,29 +211,41 @@ class GuideCardIdFragment : PVFragment<FragmentGuideCardCaptureBinding>() {
 	}
 	
 	private fun handlerSuccess(responseSuccess: ResponseOCR?) {
-		if (typeCard.contains("passport")) {
-			MasterModel.getInstance().dataOCR["front_card"] = responseSuccess
-			MasterModel.getInstance().updateDataOCR()
-			openFragment(
-				GuideFaceIdFragment::class.java,
-				requireArguments(),
-				false
-			)
+		if (!responseSuccess?.idNumber.isNullOrEmpty()){
+			idNumber = responseSuccess?.idNumber ?: ""
 		}
-		if (typeCard.contains("cccd") || typeCard.contains("cmnd")) {
-			if (typeCard.contains("front")) {
+		checkAccount(
+			idNumber = idNumber,
+			idType = responseSuccess?.cardLabel?.toTypeId() ?: "",
+			phone = phoneNumber
+		) {
+			hideLoading()
+			if (typeCard.contains("passport")) {
 				MasterModel.getInstance().dataOCR["front_card"] = responseSuccess
-				MasterModel.getInstance().updateDataOCR()
-				startCaptureCard(TVCardSide.BACK)
-			}
-			if (typeCard.contains("back")) {
-				MasterModel.getInstance().dataOCR["back_card"] = responseSuccess
 				MasterModel.getInstance().updateDataOCR()
 				openFragment(
 					GuideFaceIdFragment::class.java,
 					requireArguments(),
 					false
 				)
+			}
+			if (typeCard.contains("cccd") || typeCard.contains("cmnd")) {
+				if (typeCard.contains("front")) {
+					MasterModel.getInstance().dataOCR["front_card"] = responseSuccess
+					MasterModel.getInstance().updateDataOCR()
+					startCaptureCard(TVCardSide.BACK)
+					count--
+				}
+				if (typeCard.contains("back")) {
+					MasterModel.getInstance().dataOCR["back_card"] = responseSuccess
+					MasterModel.getInstance().updateDataOCR()
+					count--
+					openFragment(
+						GuideFaceIdFragment::class.java,
+						requireArguments(),
+						false
+					)
+				}
 			}
 		}
 	}
@@ -179,7 +259,7 @@ class GuideCardIdFragment : PVFragment<FragmentGuideCardCaptureBinding>() {
 				var cardSide = TVCardSide.FRONT
 				Constants.errorCaptureMap[responseSuccess.error]?.apply {
 					message = this.second
-					when(this.first){
+					when (this.first) {
 						Constants.CAPTURE_CURRENT_STEP -> {
 							cardSide = if (typeCard.contains("back")) {
 								TVCardSide.BACK
@@ -195,7 +275,7 @@ class GuideCardIdFragment : PVFragment<FragmentGuideCardCaptureBinding>() {
 							cardSide = TVCardSide.FRONT
 						}
 					}
-					if(message.isNotEmpty()){
+					if (message.isNotEmpty()) {
 						AlertPopup.show(
 							fragmentManager = childFragmentManager,
 							message = responseSuccess.errorMessage ?: message,
@@ -203,6 +283,7 @@ class GuideCardIdFragment : PVFragment<FragmentGuideCardCaptureBinding>() {
 							primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
 								override fun onClickListener(v: View) {
 									startCaptureCard(cardSide)
+									count++
 								}
 							}
 						)
@@ -216,6 +297,7 @@ class GuideCardIdFragment : PVFragment<FragmentGuideCardCaptureBinding>() {
 						primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
 							override fun onClickListener(v: View) {
 								startCaptureCard(cardSide)
+								count++
 							}
 						}
 					)
@@ -236,5 +318,62 @@ class GuideCardIdFragment : PVFragment<FragmentGuideCardCaptureBinding>() {
 			.addFormDataPart("label", type)
 			.build()
 		repository.verifyCard(body, callBack)
+	}
+	
+	private fun checkAccount(
+		idNumber: String,
+		idType: String,
+		phone: String,
+		success: () -> Unit
+	) {
+		repository.checkAccount(
+			request = CheckAccountRequest(
+				idNumber = idNumber,
+				idType = idType,
+				phone = phone
+			)
+		) {
+			hideLoading()
+			(it["fail"] as? String)?.let { message ->
+				AlertPopup.show(
+					fragmentManager = childFragmentManager,
+					message = message,
+					primaryTitle = "OK",
+					primaryButtonListener = object : AlertPopup.PrimaryButtonListener{
+						override fun onClickListener(v: View) {
+						
+						}
+					}
+				)
+			}
+			(it["error_network"] as? String)?.let { message ->
+				AlertPopup.show(
+					fragmentManager = childFragmentManager,
+					message = message,
+					primaryTitle = "OK",
+					primaryButtonListener = object : AlertPopup.PrimaryButtonListener{
+						override fun onClickListener(v: View) {
+						
+						}
+					}
+				)
+			}
+			
+			(it["next"] as? String)?.let {
+				success.invoke()
+			}
+			(it["stop"] as? String)?.let { message ->
+				AlertPopup.show(
+					fragmentManager = childFragmentManager,
+					message = message,
+					primaryTitle = "OK",
+					primaryButtonListener = object : AlertPopup.PrimaryButtonListener{
+						override fun onClickListener(v: View) {
+						
+						}
+					}
+				)
+			}
+		}
 	}
 }

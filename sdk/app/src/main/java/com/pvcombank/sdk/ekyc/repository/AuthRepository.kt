@@ -1,28 +1,23 @@
 package com.pvcombank.sdk.ekyc.repository
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.google.gson.Gson
+import com.pvcombank.sdk.ekyc.BuildConfig
+import com.pvcombank.sdk.ekyc.model.Constants
+import com.pvcombank.sdk.ekyc.model.GetAccessTokenModel
 import com.pvcombank.sdk.ekyc.model.request.AuthToken
 import com.pvcombank.sdk.ekyc.model.request.RequestCreateAccount
 import com.pvcombank.sdk.ekyc.model.request.RequestModel
-import com.pvcombank.sdk.ekyc.model.request.RequestPurchase
 import com.pvcombank.sdk.ekyc.model.response.ResponsePurchase
-import com.pvcombank.sdk.ekyc.model.response.ResponseVerifyOTP
 import com.pvcombank.sdk.ekyc.model.response.ResponseVerifyOnboardOTP
 import com.pvcombank.sdk.ekyc.network.ApiHelper
 import com.pvcombank.sdk.ekyc.network.ApiOther
 import com.pvcombank.sdk.ekyc.network.RetrofitHelper
-import com.pvcombank.sdk.ekyc.util.NetworkUtil.getErrorBody
 import com.pvcombank.sdk.ekyc.util.Utils.toObjectData
-import com.pvcombank.sdk.ekyc.util.security.SecurityHelper
-import com.google.gson.Gson
-import com.pvcombank.sdk.BuildConfig
-import com.pvcombank.sdk.ekyc.model.*
-import com.pvcombank.sdk.ekyc.model.*
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 
-class AuthRepository() {
+class AuthRepository : PVRepository(), HandlerData {
 	private val apiHelper: ApiHelper = RetrofitHelper.instance()
 		.createServices(BuildConfig.SERVER_URL)
 		.create(ApiHelper::class.java)
@@ -31,271 +26,95 @@ class AuthRepository() {
 		.createServices(Constants.BASE_URL_OTHER)
 		.create(ApiOther::class.java)
 	
-	private val masterData = MasterModel.getInstance()
-	
-	val onNeedLogin = MutableLiveData<RequestModel>()
-	private val securityHelper = SecurityHelper.instance().cryptoBuild(type = SecurityHelper.AES)
+	val observerSendOTPResponse = MutableLiveData<ResponsePurchase>()
+	val observerVerifyOTP = MutableLiveData<ResponseVerifyOnboardOTP>()
+	val observerGetToken = MutableLiveData<GetAccessTokenModel>()
 	
 	fun getTokenByCode(
 		code: String,
 		clientId: String,
-		clientSecret: String,
-		callBack: (GetAccessTokenModel?) -> Unit
+		clientSecret: String
 	) {
 		apiHelper.apply {
-			this.getAccessToken(code = code, clientId = clientId, clientSecret = clientSecret)
+			this.getAccessToken(
+				code = code,
+				clientId = clientId,
+				clientSecret = clientSecret
+			)
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribeOn(Schedulers.io())
 				.subscribe(
-					{
-						callBack.invoke(it)
-					},
-					{
-						callBack.invoke(null)
-						Log.e("ERROR", it.message.toString())
-					}
+					{ handlerSuccess<GetAccessTokenModel>(this@AuthRepository, it, Constants.API_GET_TOKEN) },
+					{ handlerError(it) }
 				)
 		}
 	}
 	
-	fun checkAccessToken(request: AuthToken, callBack: (Any) -> Unit) {
+	fun checkAccessToken(request: AuthToken) {
 		apiHelper.apply {
 			this.checkAccessToken(request)
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribeOn(Schedulers.io())
 				.subscribe(
-					{
-						callBack.invoke(it)
-					},
-					{
-						Log.e("ERROR", it.message.toString())
-					}
+					{ handlerSuccess<GetAccessTokenModel>(this@AuthRepository, it, Constants.API_REFRESH_TOKEN) },
+					{ handlerError(it) }
 				)
 		}
 	}
 	
-	fun getListCard(callBack: (List<CardModel>?) -> Unit) {
+	fun sendOTP(phoneNumber: String, email: String) {
+		val request = encryptRequest(
+			RequestCreateAccount(email, phoneNumber)
+		)
 		apiOther.apply {
-			this.getListCardDetail()
+			this.sendOTP(request)
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribeOn(Schedulers.io())
 				.subscribe(
-					{
-						if (it.code?.toInt() in (401..499)) onNeedLogin.postValue(it)
-						val decryptText = securityHelper?.decrypt(it.data ?: "")
-						decryptText?.toObjectData<ResponseData<List<CardModel>>>()?.let {
-							if (it.code == Constants.CODE_SUCCESS && it.data != null) {
-								callBack.invoke(it.data)
-							}
-						}
-					},
-					{
-						Log.d("ERROR", "${it.message}")
-						it.getErrorBody()?.let { requestModel ->
-							if (requestModel.code == "401") onNeedLogin.postValue(requestModel)
-						}
-						callBack.invoke(null)
-					}
+					{ handlerSuccess<ResponsePurchase>(this@AuthRepository, it, Constants.API_SEND_OTP) },
+					{ handlerError(it) }
 				)
 		}
 	}
 	
-	fun getCard(cardToken: String, callBack: (Any?) -> Unit) {
-		apiOther.getCardDetail(cardToken)
-			.observeOn(AndroidSchedulers.mainThread())
-			.subscribeOn(Schedulers.io())
-			.subscribe(
-				{
-					val decryptText = securityHelper?.decrypt(it.data ?: "")
-					decryptText?.toObjectData<ResponseData<CardModel>>()?.let {
-						if (it.code == Constants.CODE_SUCCESS) {
-							callBack.invoke(it.data)
-						}
-					}
-				}, {
-					it.getErrorBody()?.let { requestModel ->
-						if (requestModel.code?.toInt() in (401..499)) onNeedLogin.postValue(requestModel)
-						requestModel.data?.apply {
-							callBack.invoke(securityHelper?.decrypt(this))
-						}
-					} ?: kotlin.run {
-						callBack.invoke(it.message.toString())
-					}
-				}
-			)
-	}
-	
-	fun purchase(cardToken: String, callBack: (Any) -> Unit) {
-		apiOther.apply {
-			val request = RequestPurchase(
-				amount = masterData.orderCurrency?.toLong() ?: 0L,
-				description = masterData.orderDesc,
-				traceNumber = masterData.idOrder,
-				cardToken = cardToken
-			)
-			val requestModel = RequestModel()
-			securityHelper?.encrypt(Gson().toJson(request))?.apply {
-				requestModel.data = this
-				purchase(request = requestModel)
-					.observeOn(AndroidSchedulers.mainThread())
-					.subscribeOn(Schedulers.io())
-					.subscribe(
-						{
-							val decryptText = securityHelper.decrypt(it.data ?: "")
-							decryptText.toObjectData<ResponseData<ResponsePurchase>>()?.let {
-								if (it.code == Constants.CODE_SUCCESS && it.data != null) {
-									callBack.invoke(it.data!!)
-								}
-							}
-						},
-						{
-							it.getErrorBody()?.let { requestModel ->
-								if (requestModel.code?.toInt() in (401..499)) onNeedLogin.postValue(requestModel)
-								requestModel.data?.apply {
-									callBack.invoke(securityHelper.decrypt(this))
-								}
-							} ?: kotlin.run {
-								callBack.invoke(it.message.toString())
-							}
-						}
-					)
-			}
-		}
-	}
-	
-	fun sendOTP(phoneNumber: String, email: String, callBack: (Any) -> Unit) {
-		val request = RequestCreateAccount(email, phoneNumber)
-		val stringEncrypt = SecurityHelper.instance()
-			.cryptoBuild(type = SecurityHelper.AES)
-			?.encrypt(Gson().toJson(request))
-		apiOther.apply {
-			this.sendOTP(RequestModel(data = stringEncrypt))
-				.observeOn(AndroidSchedulers.mainThread())
-				.subscribeOn(Schedulers.io())
-				.subscribe(
-					{
-						val decryptText = securityHelper?.decrypt(it.data ?: "")
-						decryptText?.toObjectData<ResponseData<ResponsePurchase>>()?.let {
-							if (it.code == Constants.CODE_SUCCESS && it.data != null) {
-								callBack.invoke(it.data!!)
-								MasterModel.getInstance().uuidOfOTP = it.data?.uuid
-							} else {
-								callBack.invoke("Đã có lỗi, vui lòng thử lại")
-							}
-						}
-					},
-					{
-						it.getErrorBody()?.let { requestModel ->
-							if (requestModel.code?.toInt() in (401..499)) onNeedLogin.postValue(requestModel)
-							requestModel.data?.apply {
-								callBack.invoke(securityHelper!!.decrypt(this))
-							}
-						} ?: kotlin.run {
-							callBack.invoke(it.message.toString())
-						}
-					}
-				)
-		}
-	}
-	
-	fun verifyOnboardOTP(request: RequestModel, callBack: (Any) -> Unit) {
+	fun verifyOnboardOTP(request: RequestModel) {
 		apiOther.apply {
 			this.verifyOnboardOTP(request = request)
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribeOn(Schedulers.io())
 				.subscribe(
-					{
-						val decryptText = securityHelper?.decrypt(it.data ?: "")
-						decryptText?.toObjectData<ResponseData<ResponseVerifyOnboardOTP>>()?.let {
-							if (it.code == Constants.CODE_SUCCESS && it.data != null) {
-								it.data?.token?.let {
-									Constants.TOKEN = "Bearer $it"
-								}
-								callBack.invoke(it.data!!)
-							} else {
-								callBack.invoke("Đã có lỗi, vui lòng thử lại")
-							}
-						}
-					},
-					{
-						val error = RequestModel()
-						it.getErrorBody()?.let { requestErrorBody ->
-							if (requestErrorBody.code?.toInt() in (401..499)) {
-								onNeedLogin.postValue(
-									requestErrorBody
-								)
-							} else {
-								if (requestErrorBody.data == null) {
-									callBack.invoke(error)
-								} else {
-									SecurityHelper.instance()
-										.cryptoBuild(type = SecurityHelper.AES)
-										?.decrypt(requestErrorBody.data)
-										?.toObjectData<ResponseData<ErrorModel>>()
-										?.let { modelError ->
-											error.code = modelError.code
-											error.message = modelError.message
-											callBack.invoke(error)
-										} ?: kotlin.run {
-										callBack.invoke(error)
-									}
-								}
-							}
-						} ?: kotlin.run {
-							error.message = it.message
-							callBack.invoke(error)
-						}
-					}
+					{ handlerSuccess<ResponseVerifyOnboardOTP>(this@AuthRepository, it, Constants.API_VERIFY_OTP) },
+					{ handlerError(it) }
 				)
 		}
 	}
 	
-	fun verifyOTP(request: RequestModel, callBack: (Any) -> Unit) {
-		apiOther.apply {
-			this.verifyOTP(request)
-				.observeOn(AndroidSchedulers.mainThread())
-				.subscribeOn(Schedulers.io())
-				.subscribe(
-					{
-						val decryptText = securityHelper?.decrypt(it.data ?: "")
-						decryptText?.toObjectData<ResponseData<ResponseVerifyOTP>>()?.let {
-							if (it.code == Constants.CODE_SUCCESS && it.data != null) {
-								callBack.invoke(it.data!!)
-							} else {
-								callBack.invoke("Đã có lỗi, vui lòng thử lại")
-							}
-						}
-					},
-					{
-						val error = RequestModel()
-						it.getErrorBody()?.let { requestErrorBody ->
-							if (requestErrorBody.code?.toInt() in (401..499)) {
-								onNeedLogin.postValue(
-									requestErrorBody
-								)
-							} else {
-								if (requestErrorBody.data == null) {
-									callBack.invoke(error)
-								} else {
-									SecurityHelper.instance()
-										.cryptoBuild(type = SecurityHelper.AES)
-										?.decrypt(requestErrorBody.data)
-										?.toObjectData<ResponseData<ErrorModel>>()
-										?.let { modelError ->
-											error.code = modelError.code
-											error.message = modelError.message
-											callBack.invoke(error)
-										} ?: kotlin.run {
-										callBack.invoke(error)
-									}
-								}
-							}
-						} ?: kotlin.run {
-							error.message = it.message
-							callBack.invoke(error)
-						}
-					}
+	override fun onDataSuccess(api: String, data: Any?) {
+		when (api) {
+			Constants.API_SEND_OTP -> {
+				observerSendOTPResponse.postValue(
+					Gson().toJson(data).toObjectData()
 				)
+			}
+			Constants.API_VERIFY_OTP -> {
+				observerVerifyOTP.postValue(
+					Gson().toJson(data).toObjectData()
+				)
+			}
+			Constants.API_REFRESH_TOKEN, Constants.API_GET_TOKEN -> {
+				(data as? GetAccessTokenModel)?.apply {
+					Constants.TOKEN = "$tokenType $accessToken"
+					Constants.TOKEN = "$tokenType $refreshToken"
+					observerGetToken.postValue(this)
+				}
+			}
 		}
+	}
+	
+	override fun clear() {
+		observerSendOTPResponse.postValue(null)
+		observerVerifyOTP.postValue(null)
+		observerGetToken.postValue(null)
+		error.postValue(null)
 	}
 }

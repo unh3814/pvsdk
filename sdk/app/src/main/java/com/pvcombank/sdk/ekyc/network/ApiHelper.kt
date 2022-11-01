@@ -13,7 +13,7 @@ import retrofit2.http.POST
 
 interface ApiHelper {
 	@FormUrlEncoded
-	@POST("auth/realms/pvcombank/protocol/openid-connect/token")
+	@POST(Constants.API_GET_TOKEN)
 	fun getAccessToken(
 		@Field("client_id") clientId: String,
 		@Field("grant_type") grantType: String? = Constants.GRANT_TYPE_CODE,
@@ -33,6 +33,6 @@ interface ApiHelper {
 	): Response<ResponseData<GetAccessTokenModel>>
 	
 	
-	@POST("realms/pvcombank/protocol/openid-connect/token/introspect")
+	@POST(Constants.API_REFRESH_TOKEN)
 	fun checkAccessToken(@Body request: AuthToken): Observable<Any>
 }

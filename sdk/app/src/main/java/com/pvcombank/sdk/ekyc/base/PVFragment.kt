@@ -83,4 +83,6 @@ abstract class PVFragment<VB : ViewBinding> : Fragment() {
 	fun showKeyboard(view: View) = (requireActivity() as? com.pvcombank.sdk.ekyc.base.PVActivity<*>)?.showSoftKeyboard(view)
 	
 	fun goBack() = (requireActivity() as? com.pvcombank.sdk.ekyc.base.PVActivity<*>)?.goBack()
+	fun goBack(fragmentId: Int) = (requireActivity() as? com.pvcombank.sdk.ekyc.base.PVActivity<*>)?.goBack(fragmentId)
+	
 }

@@ -2,7 +2,7 @@ package com.pvcombank.sdk.ekyc.model
 
 import com.pvcombank.sdk.ekyc.util.security.SecurityHelper
 import com.google.gson.Gson
-import com.pvcombank.sdk.BuildConfig
+import com.pvcombank.sdk.ekyc.BuildConfig
 import com.pvcombank.sdk.ekyc.model.response.ResponseOCR
 import com.trustingsocial.tvcoresdk.external.FrameBatch
 import io.reactivex.rxjava3.subjects.PublishSubject
@@ -11,9 +11,6 @@ import java.util.*
 class MasterModel {
 	var clientId: String? = "vietsens-sdk"
 	var clientSecret: String? = null
-	var orderCurrency: String? = null
-	var idOrder: String? = null
-	var orderDesc: String? = null
 	var appUnitID: String? = null
 	var uuidOfOTP: String? = null
 	var timeLogin: Long? = null

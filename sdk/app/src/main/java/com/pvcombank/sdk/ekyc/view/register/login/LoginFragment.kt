@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.pvcombank.sdk.ekyc.base.PVFragment
-import com.pvcombank.sdk.databinding.FragmentLoginBinding
+import com.pvcombank.sdk.ekyc.databinding.FragmentLoginBinding
 import com.pvcombank.sdk.ekyc.model.Constants
 import com.pvcombank.sdk.ekyc.view.register.after_create.AfterCreateFragment
 

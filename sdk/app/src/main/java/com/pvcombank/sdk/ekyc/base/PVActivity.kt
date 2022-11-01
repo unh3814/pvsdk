@@ -23,18 +23,13 @@ abstract class PVActivity<VB : ViewBinding> : FragmentActivity() {
 	
 	val handler = android.os.Handler(Looper.getMainLooper())
 	
-	override fun onCreate(savedInstanceState: Bundle?) {
-		super.onCreate(savedInstanceState)
-		MasterModel.getInstance().timeLogin = null
-	}
-	
 	override fun onStop() {
 		super.onStop()
 		handler.removeCallbacksAndMessages(null)
 	}
 	
-	override fun onResume() {
-		super.onResume()
+	override fun onStart() {
+		super.onStart()
 		if (Utils.checkOutOfTime()) {
 			AlertPopup.show(
 				fragmentManager = supportFragmentManager,
@@ -55,7 +50,13 @@ abstract class PVActivity<VB : ViewBinding> : FragmentActivity() {
 	
 	abstract fun onBack(): Boolean
 	
-	fun goBack() = onBackPressed()
+	fun goBack(fragmentId: Int? = null){
+		fragmentId?.let {
+			supportFragmentManager.popBackStack(fragmentId, 0)
+		} ?: kotlin.run {
+			onBackPressed()
+		}
+	}
 	
 	fun hideKeyboard() {
 		currentFocus?.let {

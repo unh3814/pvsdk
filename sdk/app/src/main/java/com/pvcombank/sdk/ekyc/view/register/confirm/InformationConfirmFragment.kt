@@ -6,14 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.FragmentManager
-import com.pvcombank.sdk.databinding.FragmentCardCaptureResultBinding
+import com.pvcombank.sdk.ekyc.databinding.FragmentCardCaptureResultBinding
 import com.pvcombank.sdk.ekyc.base.PVFragment
+import com.pvcombank.sdk.ekyc.model.Constants
 import com.pvcombank.sdk.ekyc.model.MasterModel
 import com.pvcombank.sdk.ekyc.util.Utils.toPVDate
+import com.pvcombank.sdk.ekyc.util.Utils.toSVDate
 import com.pvcombank.sdk.ekyc.view.popup.AlertPopup
 import com.pvcombank.sdk.ekyc.view.register.guide.card.GuideCardIdFragment
 import com.pvcombank.sdk.ekyc.view.register.home.HomeFragment
 import com.pvcombank.sdk.ekyc.view.register.information.InformationRegisterFragment
+import java.text.SimpleDateFormat
+import java.util.*
 
 class InformationConfirmFragment : PVFragment<FragmentCardCaptureResultBinding>() {
 	override fun onCreateView(
@@ -30,11 +34,7 @@ class InformationConfirmFragment : PVFragment<FragmentCardCaptureResultBinding>(
 		viewBinding.apply {
 			topBar.show()
 			topBar.setTitle("Xác nhận thông tin")
-			if (requireArguments().getBoolean("hide_back")){
-				topBar.hideButtonBack()
-			} else {
-				topBar.showButtonBack()
-			}
+			topBar.showButtonBack()
 			root.setOnClickListener {
 				hideKeyboard()
 			}
@@ -60,8 +60,17 @@ class InformationConfirmFragment : PVFragment<FragmentCardCaptureResultBinding>(
 			data.issueDate?.let {
 				dateOfRange.setText(it.toPVDate())
 			}
-			data.expDate?.let {
-				dateDuo.setText(it.toPVDate())
+			if (data.expDate.isNullOrEmpty()){
+				val tDate = SimpleDateFormat(Constants.TIME_FORMAT).parse(data.issueDate)
+				val calendar = Calendar.getInstance()
+				calendar.time = tDate
+				calendar.add(Calendar.YEAR, 15)
+				data.expDate = calendar.time.toSVDate()
+				dateDuo.setText(data.expDate!!.toPVDate())
+			} else {
+				data.expDate?.let {
+					dateDuo.setText(it.toPVDate())
+				}
 			}
 			issuedBy.setText(data.issuePlace)
 			liveIn.setText(data.permanentAddress)
@@ -81,7 +90,11 @@ class InformationConfirmFragment : PVFragment<FragmentCardCaptureResultBinding>(
 				}
 				validate()
 			}
-			if ((requireArguments().getString("type_card")?.contains("passport") == true)){
+			if (
+				(requireArguments().getString("type_card")?.contains("passport") == true)
+				|| data.nativePlace.isNullOrEmpty()
+				|| data.permanentAddress.isNullOrEmpty()
+			) {
 				village.visibility = View.VISIBLE
 				liveIn.visibility = View.VISIBLE
 				tvPrimaryIssue.visibility = View.GONE
@@ -117,27 +130,22 @@ class InformationConfirmFragment : PVFragment<FragmentCardCaptureResultBinding>(
 	}
 	
 	override fun onBack(): Boolean {
-		if(requireArguments().getBoolean("hide_back")){
-			AlertPopup.show(
-				fragmentManager = childFragmentManager,
-				message = "Bạn muốn dừng không",
-				primaryTitle = "OK",
-				primaryButtonListener = object : AlertPopup.PrimaryButtonListener{
-					override fun onClickListener(v: View) {
-						requireActivity().supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-						openFragment(HomeFragment::class.java, Bundle(), true)
-					}
-				},
-				secondTitle = "Không",
-				secondButtonListener = object : AlertPopup.SecondButtonListener{
-					override fun onClickListener(v: View) {
-					
-					}
+		AlertPopup.show(
+			fragmentManager = childFragmentManager,
+			message = "Bạn có muốn thực hiện lại xác nhận giấy tờ tuỳ thân không?",
+			primaryTitle = "Đồng ý",
+			primaryButtonListener = object : AlertPopup.PrimaryButtonListener{
+				override fun onClickListener(v: View) {
+					openFragment(GuideCardIdFragment::class.java, Bundle(), true)
 				}
-			)
-		} else {
-			openFragment(GuideCardIdFragment::class.java, Bundle(), true)
-		}
+			},
+			secondTitle = "Huỷ",
+			secondButtonListener = object : AlertPopup.SecondButtonListener{
+				override fun onClickListener(v: View) {
+				
+				}
+			}
+		)
 		return true
 	}
 }

@@ -2,7 +2,7 @@ package com.pvcombank.sdk.ekyc.base.model
 
 import android.graphics.drawable.Drawable
 import android.view.View
-import com.pvcombank.sdk.databinding.TopBarBinding
+import com.pvcombank.sdk.ekyc.databinding.TopBarBinding
 
 interface TopBarInterface {
 	fun show()

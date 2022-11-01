@@ -4,14 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import com.pvcombank.sdk.ekyc.base.PVFragment
-import com.pvcombank.sdk.databinding.FragmentCreateAccoutBinding
+import com.pvcombank.sdk.ekyc.databinding.FragmentCreateAccoutBinding
 import com.pvcombank.sdk.ekyc.model.Constants
 import com.pvcombank.sdk.ekyc.model.MasterModel
 import com.pvcombank.sdk.ekyc.repository.AuthRepository
 import com.pvcombank.sdk.ekyc.repository.OnBoardingRepository
 import com.pvcombank.sdk.ekyc.view.otp.confirm_otp.AuthOTPFragment
 import com.pvcombank.sdk.ekyc.view.popup.AlertPopup
+import com.pvcombank.sdk.ekyc.view.register.information.InformationRegisterFragment
 
 class AfterCreateFragment : PVFragment<FragmentCreateAccoutBinding>() {
 	private var repository: AuthRepository? = null
@@ -30,6 +32,7 @@ class AfterCreateFragment : PVFragment<FragmentCreateAccoutBinding>() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		viewBinding.apply {
+			MasterModel.getInstance().timeLogin = null
 			topBar.show()
 			topBar.setTitle("Điền thông tin cơ bản")
 			repository = AuthRepository()
@@ -101,29 +104,41 @@ class AfterCreateFragment : PVFragment<FragmentCreateAccoutBinding>() {
 					repository?.sendOTP(
 						phoneNumber = (cache["phone_number"] as? String) ?: "",
 						email = (cache["email"] as? String) ?: ""
-					) {
-						hideLoading()
-						if (it !is String) {
-							openFragment(
-								AuthOTPFragment::class.java,
-								requireArguments(),
-								false
-							)
-						} else {
-							AlertPopup.show(
-								fragmentManager = childFragmentManager,
-								message = "$it",
-								primaryTitle = "OK",
-								primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
-									override fun onClickListener(v: View) {
-									
-									}
-								}
-							)
-						}
-					}
+					)
 				}
 			}
+			repository?.observerSendOTPResponse?.observe(
+				viewLifecycleOwner,
+				Observer {
+					it?.let {
+						MasterModel.getInstance().uuidOfOTP = it.uuid
+						hideLoading()
+						openFragment(
+							AuthOTPFragment::class.java,
+							requireArguments(),
+							false
+						)
+					}
+				}
+			)
+			repository?.error?.observe(
+				viewLifecycleOwner,
+				Observer {
+					it?.let {
+						hideLoading()
+						AlertPopup.show(
+							fragmentManager = childFragmentManager,
+							message = "${it.second}",
+							primaryTitle = "OK",
+							primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
+								override fun onClickListener(v: View) {
+								
+								}
+							}
+						)
+					}
+				}
+			)
 		}
 	}
 	
@@ -136,5 +151,18 @@ class AfterCreateFragment : PVFragment<FragmentCreateAccoutBinding>() {
 		hideLoading()
 	}
 	
-	override fun onBack(): Boolean = false
+	override fun onStop() {
+		super.onStop()
+		repository?.clear()
+	}
+	
+	override fun onBack(): Boolean {
+//		openFragment(
+//			HomeFragment::class.java,
+//			Bundle(),
+//			false
+//		)
+		requireActivity().finish()
+		return true
+	}
 }

@@ -13,9 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.pvcombank.sdk.ekyc.model.BranchModel
-import com.pvcombank.sdk.ekyc.model.Constants
-import com.pvcombank.sdk.ekyc.model.MasterModel
+import com.pvcombank.sdk.ekyc.model.*
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -59,6 +57,11 @@ object Utils {
 		val f2 = SimpleDateFormat("dd/MM/yyyy")
 		val f1 = SimpleDateFormat("yyyy-MM-dd")
 		return f2.format(this)
+	}
+	
+	fun Date.toSVDate(): String{
+		val format = SimpleDateFormat("yyyy-MM-dd")
+		return format.format(this)
 	}
 	
 	fun onDrawableClick(rawView: TextView, position: Int, callback: () -> Unit) {
@@ -132,5 +135,20 @@ object Utils {
 			Constants.mockupBranch,
 			object : TypeToken<List<BranchModel>>() {}.type
 		)
+	}
+	
+	fun String.toTypeId(): String? {
+		return when (this) {
+			"vn.cmnd_old.front" -> CMND.OLD_FRONT.getData()
+			"vn.cmnd_old.back" -> CMND.OLD_BACK.getData()
+			"vn.cmnd_new.front" -> CMND.NEW_FRONT.getData()
+			"vn.cmnd_new.back" -> CMND.NEW_BACK.getData()
+			"vn.cccd.front" -> CCCD.OLD_FRONT.getData()
+			"vn.cccd.back" -> CCCD.OLD_BACK.getData()
+			"vn.cccd_new.front" -> CCCD.NEW_FRONT.getData()
+			"vn.cccd_new.back" -> CCCD.NEW_BACK.getData()
+			"vn.passport.front" -> PASSPORT.FRONT.getData()
+			else -> null
+		}
 	}
 }

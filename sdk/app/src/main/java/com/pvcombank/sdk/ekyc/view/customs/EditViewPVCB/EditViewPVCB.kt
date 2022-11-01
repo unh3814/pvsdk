@@ -12,8 +12,8 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.widget.addTextChangedListener
-import com.pvcombank.sdk.R
-import com.pvcombank.sdk.databinding.EditviewPvcombankBinding
+import com.pvcombank.sdk.ekyc.R
+import com.pvcombank.sdk.ekyc.databinding.EditviewPvcombankBinding
 
 class EditViewPVCB(context: Context, attributeSet: AttributeSet) : LinearLayoutCompat(
 	context,

@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import com.pvcombank.sdk.ekyc.base.PVFragment
-import com.pvcombank.sdk.databinding.FragmentGuideFaceCaptureBinding
+import com.pvcombank.sdk.ekyc.databinding.FragmentGuideFaceCaptureBinding
 import com.pvcombank.sdk.ekyc.model.Constants
 import com.pvcombank.sdk.ekyc.model.MasterModel
 import com.pvcombank.sdk.ekyc.model.request.Gesture
@@ -17,6 +17,7 @@ import com.pvcombank.sdk.ekyc.model.response.ResponseOCR
 import com.pvcombank.sdk.ekyc.repository.OnBoardingRepository
 import com.pvcombank.sdk.ekyc.util.execute.MyExecutor
 import com.pvcombank.sdk.ekyc.view.popup.AlertPopup
+import com.pvcombank.sdk.ekyc.view.register.after_create.AfterCreateFragment
 import com.pvcombank.sdk.ekyc.view.register.confirm.InformationConfirmFragment
 import com.pvcombank.sdk.ekyc.view.register.home.HomeFragment
 import com.trustingsocial.tvcoresdk.external.*
@@ -27,6 +28,7 @@ import java.util.*
 class GuideFaceIdFragment : PVFragment<FragmentGuideFaceCaptureBinding>() {
 	override fun onBack(): Boolean = false
 	private val repository = OnBoardingRepository()
+	private var count = 0
 	override fun onCreateView(
 		inflater: LayoutInflater,
 		container: ViewGroup?,
@@ -43,11 +45,29 @@ class GuideFaceIdFragment : PVFragment<FragmentGuideFaceCaptureBinding>() {
 			topBar.setTitle("Hướng dẫn quay video chân dung")
 			btnConfirm.setOnClickListener {
 				startFaceCapture()
+				count++
 			}
 		}
 	}
 	
 	private fun startFaceCapture() {
+		if (count>=5){
+			AlertPopup.show(
+				fragmentManager = childFragmentManager,
+				message = "Quý khách vui lòng thực hiện lại. Chi tiết liên hệ: 1900555592",
+				primaryButtonListener = object : AlertPopup.PrimaryButtonListener{
+					override fun onClickListener(v: View) {
+						openFragment(
+							AfterCreateFragment::class.java,
+							Bundle(),
+							false
+						)
+					}
+				},
+				primaryTitle = "OK"
+			)
+			return
+		}
 		val config = TVSelfieConfiguration.Builder()
 			.setCameraOption(TVSDKConfiguration.TVCameraOption.FRONT)
 			.setEnableSound(true)
@@ -75,6 +95,7 @@ class GuideFaceIdFragment : PVFragment<FragmentGuideFaceCaptureBinding>() {
 										primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
 											override fun onClickListener(v: View) {
 												startFaceCapture()
+												count++
 											}
 										}
 									)
@@ -197,6 +218,7 @@ class GuideFaceIdFragment : PVFragment<FragmentGuideFaceCaptureBinding>() {
 								primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
 									override fun onClickListener(v: View) {
 										startFaceCapture()
+										count++
 									}
 								}
 							)

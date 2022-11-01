@@ -7,19 +7,20 @@ import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentManager
-import com.pvcombank.sdk.R
+import com.pvcombank.sdk.ekyc.R
 import com.pvcombank.sdk.ekyc.base.PVActivity
 import com.pvcombank.sdk.ekyc.base.PVFragment
 import com.pvcombank.sdk.ekyc.base.model.AlertInline
 import com.pvcombank.sdk.ekyc.base.model.TopBar
 import com.pvcombank.sdk.ekyc.base.model.TopBarListener
-import com.pvcombank.sdk.databinding.ActivityRegisterBinding
+import com.pvcombank.sdk.ekyc.databinding.ActivityRegisterBinding
 import com.pvcombank.sdk.ekyc.model.Constants
 import com.pvcombank.sdk.ekyc.util.Utils.openFragment
+import com.pvcombank.sdk.ekyc.view.register.after_create.AfterCreateFragment
 import com.pvcombank.sdk.ekyc.view.register.home.HomeFragment
 import com.trustingsocial.tvsdk.TrustVisionSDK
 
-class RegisterActivity : com.pvcombank.sdk.ekyc.base.PVActivity<ActivityRegisterBinding>() {
+class RegisterActivity : PVActivity<ActivityRegisterBinding>() {
 	private val currentFragment get() = supportFragmentManager.findFragmentById(fragmentHostID)
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -33,7 +34,7 @@ class RegisterActivity : com.pvcombank.sdk.ekyc.base.PVActivity<ActivityRegister
 		viewBinding.apply {
 			supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
 			openFragment(
-				HomeFragment::class.java,
+				AfterCreateFragment::class.java,
 				Bundle(),
 				true
 			)

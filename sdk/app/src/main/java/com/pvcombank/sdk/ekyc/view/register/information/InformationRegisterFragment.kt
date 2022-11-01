@@ -7,20 +7,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
+import android.widget.EditText
 import android.widget.LinearLayout.LayoutParams
 import android.widget.PopupWindow
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.pvcombank.sdk.R
+import com.pvcombank.sdk.ekyc.R
 import com.pvcombank.sdk.ekyc.base.PVFragment
-import com.pvcombank.sdk.databinding.FragmentRegisterBinding
-import com.pvcombank.sdk.databinding.TooltipsCustomBinding
+import com.pvcombank.sdk.ekyc.databinding.FragmentRegisterBinding
+import com.pvcombank.sdk.ekyc.databinding.TooltipsCustomBinding
 import com.pvcombank.sdk.ekyc.model.BranchModel
 import com.pvcombank.sdk.ekyc.model.Constants
 import com.pvcombank.sdk.ekyc.model.MasterModel
 import com.pvcombank.sdk.ekyc.model.request.RequestFinish
+import com.pvcombank.sdk.ekyc.util.SearchUtil
 import com.pvcombank.sdk.ekyc.util.Utils.getListBranch
 import com.pvcombank.sdk.ekyc.util.Utils.handleUrlClicks
 import com.pvcombank.sdk.ekyc.util.Utils.onDrawableClick
@@ -34,6 +36,7 @@ class InformationRegisterFragment : PVFragment<FragmentRegisterBinding>() {
 	private var tooltips: Int? = null
 	private val requestFinish = RequestFinish()
 	private val cache get() = MasterModel.getInstance().cache
+	private var branchCurrent: BranchModel? = null
 	override fun onCreateView(
 		inflater: LayoutInflater,
 		container: ViewGroup?,
@@ -75,16 +78,21 @@ class InformationRegisterFragment : PVFragment<FragmentRegisterBinding>() {
 			phoneNumber.setText(
 				data.mobilePhone ?: (cache["phone_number"] as? String) ?: ""
 			)
-			edtContract.setText(data.permanentAddress)
+			if(data.permanentAddress?.isNotEmpty() == true){
+				edtContract.setText(data.permanentAddress)
+				autoUpdateBranch(data.permanentAddress ?: "")
+			}
 			edtContract.addTextChangedListener {
 				btnConfirm.isEnabled = validate()
 				requestFinish.currentAddress = it.toString()
-				autoUpdateBranch(it.toString())
+				if (it?.isNotEmpty() == true) {
+					autoUpdateBranch(it.toString())
+				}
 			}
 			permanentAddress.setText(data.permanentAddress)
 			titleCommonInformation.setViewExpend(containerCommonInformation)
 			edtBranch.setOnClickListener {
-				SelectBranchBottomSheet {
+				SelectBranchBottomSheet(branchCurrent) {
 					edtBranch.setText(it.bRANCHNAME)
 					requestFinish.branchCode = it.bRANCHCODE
 				}.show(
@@ -216,47 +224,45 @@ class InformationRegisterFragment : PVFragment<FragmentRegisterBinding>() {
 		popupWindow.showAsDropDown(anchorView, startX.toInt(), viewBinding.root.height)
 	}
 	
-	private fun filterBranchByString(address: String): LiveData<List<BranchModel>> {
-		val result = MutableLiveData<List<BranchModel>>()
-		handler.removeCallbacksAndMessages(null)
-		handler.postDelayed(
-			{
-				var listAddress = mutableListOf<BranchModel>().also { list ->
-					getListBranch()?.let {
-						list.addAll(it)
+	private fun filterBranchByString(address: String, edtBranch: EditText) {
+		getListBranch()?.let {
+			SearchUtil(
+				it.toMutableList(),
+				object : SearchUtil.SearchFunc<BranchModel> {
+					override fun filter(dataItem: BranchModel, stringItem: String): Boolean {
+						return dataItem.aDDRESS.toLowerCase(Locale.ROOT).contains(stringItem, true)
+					}
+					
+					override fun limit(dataItem: BranchModel, stringItem: String): Boolean {
+						return dataItem.aDDRESS.toLowerCase(Locale.ROOT).contains(stringItem, true)
 					}
 				}
-				val listSplitContactAddress = address.split(",")
-				for (i in listSplitContactAddress.size downTo 0) {
-					val item = listSplitContactAddress[i]
-					val itemConstantInAddress = listAddress.any {
-						it.aDDRESS.contains(item)
+			).apply {
+				search(address).observe(
+					viewLifecycleOwner,
+					androidx.lifecycle.Observer {
+						it.firstOrNull()?.let { branch ->
+							edtBranch.setText(branch.bRANCHNAME)
+							requestFinish.branchCode = branch.bRANCHCODE
+							branchCurrent = branch
+						} ?: kotlin.run {
+							edtBranch.setText("")
+							requestFinish.branchCode = ""
+							branchCurrent = null
+						}
+						
 					}
-					if (itemConstantInAddress) {
-						listAddress = listAddress.filter {
-							it.aDDRESS.contains(item)
-						}.toMutableList()
-					} else break
-				}
-				result.postValue(listAddress)
-			},
-			100L
-		)
-		return result
+				)
+			}
+		}
+		
 	}
 	
 	private fun FragmentRegisterBinding.autoUpdateBranch(address: String) {
 		handler.removeCallbacksAndMessages(null)
 		handler.postDelayed(
 			{
-				filterBranchByString(address).observe(
-					viewLifecycleOwner,
-					androidx.lifecycle.Observer {
-						it?.let {
-							edtBranch.setText(it.first().aDDRESS)
-						}
-					}
-				)
+				filterBranchByString(address, edtBranch)
 			},
 			500L
 		)

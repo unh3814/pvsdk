@@ -14,8 +14,7 @@
     <uses-feature android:name="android.hardware.camera" />
 
     <application
-        android:supportsRtl="true"
-        tools:targetApi="32" >
+        android:supportsRtl="true">
         <activity android:name=".view.RegisterActivity"
             android:windowSoftInputMode="adjustResize|stateAlwaysVisible"/>
     </application>

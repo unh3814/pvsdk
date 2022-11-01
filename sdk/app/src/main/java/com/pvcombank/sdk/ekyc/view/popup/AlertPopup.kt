@@ -10,8 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
-import com.pvcombank.sdk.R
-import com.pvcombank.sdk.databinding.FragmentPopupBinding
+import com.pvcombank.sdk.ekyc.R
+import com.pvcombank.sdk.ekyc.databinding.FragmentPopupBinding
 import com.pvcombank.sdk.ekyc.model.MasterModel
 
 class AlertPopup : DialogFragment() {

@@ -14,14 +14,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.pvcombank.sdk.R
-import com.pvcombank.sdk.databinding.BottomsheetSelectBranchBinding
-import com.pvcombank.sdk.databinding.ItemBranchBinding
+import com.pvcombank.sdk.ekyc.R
+import com.pvcombank.sdk.ekyc.databinding.BottomsheetSelectBranchBinding
+import com.pvcombank.sdk.ekyc.databinding.ItemBranchBinding
 import com.pvcombank.sdk.ekyc.model.BranchModel
 import com.pvcombank.sdk.ekyc.model.Constants
 import com.pvcombank.sdk.ekyc.model.MasterModel
+import com.pvcombank.sdk.ekyc.util.SearchUtil
 
-class SelectBranchBottomSheet(private val callBack: (item: BranchModel) -> Unit) : BottomSheetDialogFragment() {
+class SelectBranchBottomSheet(
+	private val currentBranch: BranchModel? = null,
+	private val callBack: (item: BranchModel) -> Unit
+) : BottomSheetDialogFragment() {
 	lateinit var viewBinding: BottomsheetSelectBranchBinding
 	private val data = mutableListOf<BranchModel>()
 	private val dataResult = mutableListOf<BranchModel>()
@@ -62,6 +66,15 @@ class SelectBranchBottomSheet(private val callBack: (item: BranchModel) -> Unit)
 					300L
 				)
 				
+			}
+			currentBranch?.let {
+				handler.removeCallbacksAndMessages(null)
+				handler.postDelayed(
+					{
+						val position = data.indexOf(it)
+						rcv.scrollToPosition(position)
+					}, 500L
+				)
 			}
 			rcv.adapter = adapter
 		}

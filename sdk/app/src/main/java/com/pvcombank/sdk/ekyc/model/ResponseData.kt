@@ -2,7 +2,7 @@ package com.pvcombank.sdk.ekyc.model
 
 import com.google.gson.annotations.SerializedName
 
-data class ResponseData<T : Any>(
+data class ResponseData<T>(
 	@SerializedName("code")
 	var code: String,
 	@SerializedName("message")

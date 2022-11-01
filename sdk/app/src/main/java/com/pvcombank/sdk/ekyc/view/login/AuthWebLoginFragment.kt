@@ -12,7 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.*
 import com.pvcombank.sdk.ekyc.base.PVFragment
-import com.pvcombank.sdk.databinding.FragmentWebLoginBinding
+import com.pvcombank.sdk.ekyc.databinding.FragmentWebLoginBinding
 import com.pvcombank.sdk.ekyc.model.Constants
 import com.pvcombank.sdk.ekyc.model.MasterModel
 import com.pvcombank.sdk.ekyc.repository.AuthRepository
@@ -22,6 +22,7 @@ import com.pvcombank.sdk.ekyc.view.register.guide.card.GuideCardIdFragment
 import java.util.*
 
 class AuthWebLoginFragment : PVFragment<FragmentWebLoginBinding>() {
+	private val repository = AuthRepository()
 	private val webClient = object : WebViewClient() {
 		override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
 			handlerUrl(url)
@@ -105,6 +106,20 @@ class AuthWebLoginFragment : PVFragment<FragmentWebLoginBinding>() {
 			webChromeClient = chromeClient
 			loadUrl(Constants.url_sanbox)
 		}
+		repository.observerGetToken
+			.observe(
+				viewLifecycleOwner,
+				androidx.lifecycle.Observer {
+					it?.let {
+						hideLoading()
+						openFragment(
+							GuideCardIdFragment::class.java,
+							Bundle(),
+							true
+						)
+					}
+				}
+			)
 	}
 	
 	private fun handlerUrl(url: String?) {
@@ -129,28 +144,31 @@ class AuthWebLoginFragment : PVFragment<FragmentWebLoginBinding>() {
 			Uri.parse(url)?.apply {
 				this.getQueryParameter("code")?.let {
 					val code = it
-					AuthRepository().apply {
-						Handler(Looper.getMainLooper()).post {
-							getTokenByCode(
-								code = code,
-								clientId = Constants.CLIENT_ID,
-								clientSecret = Constants.CLIENT_SECRET
-							) {
-								hideLoading()
-								Constants.TOKEN = "${it?.tokenType ?: ""} ${it?.accessToken ?: ""}"
-								openFragment(
-									GuideCardIdFragment::class.java,
-									Bundle(),
-									true
-								)
-							}
-						}
+					Handler(Looper.getMainLooper()).post {
+						repository.getTokenByCode(
+							code = code,
+							clientId = Constants.CLIENT_ID,
+							clientSecret = Constants.CLIENT_SECRET
+						)
+//							{
+//								hideLoading()
+//								Constants.TOKEN = "${it?.tokenType ?: ""} ${it?.accessToken ?: ""}"
+//								openFragment(
+//									GuideCardIdFragment::class.java,
+//									Bundle(),
+//									true
+//								)
+//							}
 					}
 				}
 			}
 		}
 	}
 	
+	override fun onStop() {
+		super.onStop()
+		repository.clear()
+	}
 	
 	override fun onBack(): Boolean {
 		AlertPopup.show(
