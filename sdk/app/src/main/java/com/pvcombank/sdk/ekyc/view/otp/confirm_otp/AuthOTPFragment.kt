@@ -57,7 +57,7 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 		super.onViewCreated(view, savedInstanceState)
 		repository = AuthRepository()
 		viewBinding.apply {
-			topBar.setTitle("Xác nhận OTP")
+			topBar.setTitle("Xác thực OTP")
 			topBar.show()
 			topBar.addButtonMore(title = "Huỷ", listener = object : TopBarListener.MoreListener {
 				override fun onMoreClick() {

@@ -194,7 +194,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="8"
-                    android:text="Cư trú" />
+                    android:text="Cư trú (Việt Nam)" />
 
                 <RadioGroup
                     android:id="@+id/check_cu_tru"

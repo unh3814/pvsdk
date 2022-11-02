@@ -15,6 +15,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:inputType="number"
         app:maxLengh="10"
+        app:errorEnabled="true"
         app:textHint="Nhập số điện thoại"
         app:textTitle="Số điện thoại" />
 

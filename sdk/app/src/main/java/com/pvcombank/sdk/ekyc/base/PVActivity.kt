@@ -1,7 +1,6 @@
 package com.pvcombank.sdk.ekyc.base
 
 import android.content.Context
-import android.os.Bundle
 import android.os.Looper
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -10,7 +9,6 @@ import androidx.viewbinding.ViewBinding
 import com.pvcombank.sdk.ekyc.base.model.AlertInline
 import com.pvcombank.sdk.ekyc.base.model.Loading
 import com.pvcombank.sdk.ekyc.base.model.TopBar
-import com.pvcombank.sdk.ekyc.model.MasterModel
 import com.pvcombank.sdk.ekyc.util.Utils
 import com.pvcombank.sdk.ekyc.view.popup.AlertPopup
 

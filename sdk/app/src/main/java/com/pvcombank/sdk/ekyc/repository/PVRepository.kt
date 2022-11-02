@@ -75,7 +75,7 @@ abstract class PVRepository {
 			error.postValue(
 				Pair(
 					1,
-					"Quá trình truy vấn dữ liệu sảy ra lỗi, vui lòng thử lại sau"
+					"Quá trình truy vấn dữ liệu sảy ra lỗi, vui lòng thử lại sau."
 				)
 			)
 		}
@@ -115,7 +115,7 @@ abstract class PVRepository {
 				error.postValue(
 					Pair(
 						2,
-						"Quá kết nối tới Internet sảy ra lỗi, vui lòng thử lại sau."
+						"Kết nối tới Internet đã sảy ra lỗi, vui lòng thử lại sau."
 					)
 				)
 			}
