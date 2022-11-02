@@ -13,8 +13,7 @@
 
     <uses-feature android:name="android.hardware.camera" />
 
-    <application
-        android:supportsRtl="true">
+    <application android:supportsRtl="true">
         <activity android:name=".view.RegisterActivity"
             android:windowSoftInputMode="adjustResize|stateAlwaysVisible"/>
     </application>

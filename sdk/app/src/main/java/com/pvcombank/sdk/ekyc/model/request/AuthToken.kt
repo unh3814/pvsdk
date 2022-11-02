@@ -1,14 +1,10 @@
 package com.pvcombank.sdk.ekyc.model.request
 
 import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
 import com.pvcombank.sdk.ekyc.model.Constants
 import com.pvcombank.sdk.ekyc.model.MasterModel
-import com.google.gson.Gson
-import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.toRequestBody
 
 @Parcelize
 data class AuthToken(
@@ -26,11 +22,4 @@ data class AuthToken(
 	var code: String? = null,
 	@SerializedName("redirect_uri")
 	var redirectUri: String? = null
-) : Parcelable {
-	fun getRequest(): RequestBody {
-		val gson = Gson()
-		val mediaType = "application/x-www-form-urlencoded".toMediaTypeOrNull()
-		val content = gson.toJson(this)
-		return content.toRequestBody(mediaType)
-	}
-}
+) : Parcelable

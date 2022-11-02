@@ -6,14 +6,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.FragmentManager
-import com.pvcombank.sdk.ekyc.R
 import com.pvcombank.sdk.ekyc.base.PVFragment
 import com.pvcombank.sdk.ekyc.databinding.FragmentGuideCardCaptureBinding
 import com.pvcombank.sdk.ekyc.model.Constants
 import com.pvcombank.sdk.ekyc.model.MasterModel
-import com.pvcombank.sdk.ekyc.model.TypeID
 import com.pvcombank.sdk.ekyc.model.request.CheckAccountRequest
 import com.pvcombank.sdk.ekyc.model.response.ResponseOCR
 import com.pvcombank.sdk.ekyc.repository.OnBoardingRepository
@@ -22,13 +19,12 @@ import com.pvcombank.sdk.ekyc.util.Utils.toTypeId
 import com.pvcombank.sdk.ekyc.util.execute.MyExecutor
 import com.pvcombank.sdk.ekyc.view.popup.AlertPopup
 import com.pvcombank.sdk.ekyc.view.register.after_create.AfterCreateFragment
-import com.pvcombank.sdk.ekyc.view.register.confirm.InformationConfirmFragment
 import com.pvcombank.sdk.ekyc.view.register.guide.face.GuideFaceIdFragment
 import com.pvcombank.sdk.ekyc.view.register.home.HomeFragment
 import com.trustingsocial.tvcoresdk.external.*
 import com.trustingsocial.tvcoresdk.external.TVSDKConfiguration.TVCardSide
 import com.trustingsocial.tvsdk.TrustVisionSDK
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
@@ -307,7 +303,7 @@ class GuideCardIdFragment : PVFragment<FragmentGuideCardCaptureBinding>() {
 	
 	private fun startVerify(file: File, type: String, callBack: (HashMap<String, Any>) -> Unit) {
 		showLoading()
-		val mediaBackType = "application/octet-stream".toMediaTypeOrNull()
+		val mediaBackType = MediaType.parse("application/octet-stream")
 		val body = MultipartBody.Builder()
 			.setType(MultipartBody.FORM)
 			.addFormDataPart(

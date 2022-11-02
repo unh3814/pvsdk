@@ -13,7 +13,6 @@ import com.pvcombank.sdk.ekyc.repository.AuthRepository
 import com.pvcombank.sdk.ekyc.repository.OnBoardingRepository
 import com.pvcombank.sdk.ekyc.view.otp.confirm_otp.AuthOTPFragment
 import com.pvcombank.sdk.ekyc.view.popup.AlertPopup
-import com.pvcombank.sdk.ekyc.view.register.information.InformationRegisterFragment
 
 class AfterCreateFragment : PVFragment<FragmentCreateAccoutBinding>() {
 	private var repository: AuthRepository? = null
