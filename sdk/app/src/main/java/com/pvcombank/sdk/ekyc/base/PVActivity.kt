@@ -48,7 +48,7 @@ abstract class PVActivity<VB : ViewBinding> : FragmentActivity() {
 	
 	abstract fun onBack(): Boolean
 	
-	fun goBack(fragmentId: Int? = null){
+	fun goBack(fragmentId: Int? = null) {
 		fragmentId?.let {
 			supportFragmentManager.popBackStack(fragmentId, 0)
 		} ?: kotlin.run {
