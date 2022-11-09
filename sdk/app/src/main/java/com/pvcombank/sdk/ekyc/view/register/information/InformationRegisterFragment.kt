@@ -12,8 +12,6 @@ import android.widget.LinearLayout.LayoutParams
 import android.widget.PopupWindow
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.pvcombank.sdk.ekyc.R
 import com.pvcombank.sdk.ekyc.base.PVFragment
 import com.pvcombank.sdk.ekyc.databinding.FragmentRegisterBinding
@@ -108,7 +106,7 @@ class InformationRegisterFragment : PVFragment<FragmentRegisterBinding>() {
 				if (checkedId == no.id) {
 					AlertPopup.show(
 						fragmentManager = childFragmentManager,
-						primaryTitle = "Đóng",
+						primaryTitle = getString(R.string.txt_close),
 						primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
 							override fun onClickListener(v: View) {
 							}
@@ -121,7 +119,7 @@ class InformationRegisterFragment : PVFragment<FragmentRegisterBinding>() {
 				if (checkedId == aYes.id) {
 					AlertPopup.show(
 						fragmentManager = childFragmentManager,
-						primaryTitle = "Đóng",
+						primaryTitle = getString(R.string.txt_close),
 						primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
 							override fun onClickListener(v: View) {
 							}
@@ -129,7 +127,7 @@ class InformationRegisterFragment : PVFragment<FragmentRegisterBinding>() {
 					)
 				}
 			}
-			val rulesChecked = CompoundButton.OnCheckedChangeListener { _, _ ->
+			val rulesChecked = CompoundButton.OnCheckedChangeListener { view, checked ->
 				btnConfirm.isEnabled = validate()
 				requestFinish.reside = yes.isChecked == true
 				requestFinish.fatca = aYes.isChecked == true
@@ -143,6 +141,12 @@ class InformationRegisterFragment : PVFragment<FragmentRegisterBinding>() {
 				}
 				startActivity(Intent.createChooser(target, "Select"))
 			}
+			cbCheckRules3.setOnCheckedChangeListener(rulesChecked)
+			if(MasterModel.getInstance().clientId == "vietsens-sdk"){
+				cbCheckRules3.visibility = View.VISIBLE
+			} else {
+				cbCheckRules3.visibility = View.GONE
+			}
 			pvcOnline.setOnCheckedChangeListener(rulesChecked)
 			yes.setOnCheckedChangeListener(rulesChecked)
 			aNo.setOnCheckedChangeListener(rulesChecked)
@@ -155,7 +159,7 @@ class InformationRegisterFragment : PVFragment<FragmentRegisterBinding>() {
 				requestFinish.introducer = it.toString()
 			}
 			btnConfirm.setOnClickListener {
-				var date = if (data.expDate.isNullOrEmpty()) {
+				val date = if (data.expDate.isNullOrEmpty()) {
 					val tDate = SimpleDateFormat(Constants.TIME_FORMAT).parse(data.issueDate)
 					val calendar = Calendar.getInstance()
 					calendar.time = tDate
@@ -194,6 +198,7 @@ class InformationRegisterFragment : PVFragment<FragmentRegisterBinding>() {
 	private fun FragmentRegisterBinding.validate(): Boolean {
 		return cbCheckRules1.isChecked
 				&& cbCheckRules2.isChecked
+				&& cbCheckRules3.isChecked
 				&& pvcOnline.isChecked
 				&& yes.isChecked
 				&& aNo.isChecked
@@ -230,11 +235,15 @@ class InformationRegisterFragment : PVFragment<FragmentRegisterBinding>() {
 				it.toMutableList(),
 				object : SearchUtil.SearchFunc<BranchModel> {
 					override fun filter(dataItem: BranchModel, stringItem: String): Boolean {
-						return dataItem.aDDRESS.toLowerCase(Locale.ROOT).contains(stringItem, true)
+						val rawItem = SearchUtil.convertNonSign(dataItem.aDDRESS.lowercase(Locale.ROOT))
+						val comparedStr = SearchUtil.convertNonSign(stringItem)!!
+						return rawItem?.contains(comparedStr, true) ?: false
 					}
 					
 					override fun limit(dataItem: BranchModel, stringItem: String): Boolean {
-						return dataItem.aDDRESS.toLowerCase(Locale.ROOT).contains(stringItem, true)
+						val rawItem = SearchUtil.convertNonSign(dataItem.aDDRESS.lowercase(Locale.ROOT))
+						val comparedStr = SearchUtil.convertNonSign(stringItem)!!
+						return rawItem?.contains(comparedStr, true) ?: false
 					}
 				}
 			).apply {
@@ -250,12 +259,10 @@ class InformationRegisterFragment : PVFragment<FragmentRegisterBinding>() {
 							requestFinish.branchCode = ""
 							branchCurrent = null
 						}
-						
 					}
 				)
 			}
 		}
-		
 	}
 	
 	private fun FragmentRegisterBinding.autoUpdateBranch(address: String) {

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.FragmentActivity
 import androidx.viewbinding.ViewBinding
+import com.pvcombank.sdk.ekyc.R
 import com.pvcombank.sdk.ekyc.base.model.AlertInline
 import com.pvcombank.sdk.ekyc.base.model.Loading
 import com.pvcombank.sdk.ekyc.base.model.TopBar
@@ -37,7 +38,7 @@ abstract class PVActivity<VB : ViewBinding> : FragmentActivity() {
 						recreate()
 					}
 				},
-				primaryTitle = "OK"
+				primaryTitle = getString(R.string.txt_close)
 			)
 		}
 	}

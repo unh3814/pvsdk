@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
+import com.pvcombank.sdk.ekyc.R
 import com.pvcombank.sdk.ekyc.util.Utils
 import com.pvcombank.sdk.ekyc.util.Utils.openFragment
 import com.pvcombank.sdk.ekyc.view.popup.AlertPopup
@@ -38,7 +39,7 @@ abstract class PVFragment<VB : ViewBinding> : Fragment() {
 						requireActivity().recreate()
 					}
 				},
-				primaryTitle = "OK"
+				primaryTitle = getString(R.string.txt_close)
 			)
 		}
 	}

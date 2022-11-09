@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.pvcombank.sdk.ekyc.R
 import com.pvcombank.sdk.ekyc.base.PVFragment
 import com.pvcombank.sdk.ekyc.databinding.FragmentHomeBinding
 import com.pvcombank.sdk.ekyc.model.MasterModel
@@ -90,7 +91,7 @@ class HomeFragment : PVFragment<FragmentHomeBinding>() {
 			AlertPopup.show(
 				fragmentManager = childFragmentManager,
 				message = "Bạn cần cấp quyền để sử dụng tính năng này",
-				primaryTitle = "Đóng",
+				primaryTitle = getString(R.string.txt_close),
 				primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
 					override fun onClickListener(v: View) {
 						requireActivity().finish()

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import com.pvcombank.sdk.ekyc.R
 import com.pvcombank.sdk.ekyc.base.PVFragment
 import com.pvcombank.sdk.ekyc.databinding.FragmentCreateAccoutBinding
 import com.pvcombank.sdk.ekyc.model.Constants
@@ -128,7 +129,7 @@ class AfterCreateFragment : PVFragment<FragmentCreateAccoutBinding>() {
 						AlertPopup.show(
 							fragmentManager = childFragmentManager,
 							message = "${it.second}",
-							primaryTitle = "OK",
+							primaryTitle = getString(R.string.txt_close),
 							primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
 								override fun onClickListener(v: View) {
 								

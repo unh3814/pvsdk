@@ -141,87 +141,6 @@ object Constants {
 	const val DRAWABLE_TOP = 1
 	const val DRAWABLE_RIGHT = 2
 	const val DRAWABLE_BOTTOM = 3
-	val RECAPTURE_CURRENT_STEP = listOf(
-		"nocard_or_multicard_image",
-		"image1_glare",
-		"image_too_bright",
-		"image_too_blur",
-		"face_too_bright",
-		"right",
-		"left",
-		"image1_blurry",
-		"image1_dirty",
-		"image1_too_bright",
-		"image1_glare_safe",
-		"image1_glare_unsafe",
-		"incomplete",
-		"covered",
-		"image2_blurry",
-		"image2_dirty",
-		"image2_too_dark",
-		"image2_glare",
-		"image2_glare_safe",
-		"image2_glare_unsafe",
-		"image_too_dark",
-		"id_unsure",
-		"image_has_cut",
-		"image1_too_dark",
-		"image2_too_bright"
-	)
-	val RECAPTURE_VIDEO = listOf(
-		"face_too_dark",
-		"image_has_multiple_faces",
-		"mage_has_no_face",
-		"closed_eye",
-		"face_too_big",
-		"unmatched",
-		"not_qualified",
-		"sunglasses",
-		"face_too_small",
-		"face_not_match",
-		"open_eye,closed_eye",
-		"closed_eye,open_eye",
-		"open_eye,sunglasses",
-		"sunglasses,open_eye",
-		"closed_eye,closed_eye",
-		"closed_eye,sunglasses",
-		"sunglasses,closed_eye",
-		"sunglasses,sunglasses"
-	)
-	val COUNT_DOWN_3_MINUTES = listOf(
-		"face_duplicated"
-	)
-	val RECAPTURE_FRONT_CARD = listOf(
-		"info_tampered",
-		"non_liveness",
-		"image_has_hole",
-		"image_has_hole_and_cut",
-		"no_card_or_incomplete_card",
-		"hole",
-		"photocopy",
-		"age_not_match",
-		"id_not_follow_rule",
-		"card_expired",
-		"invalid_expiry_date",
-		"incorrect_issue_date",
-		"abnormal_emblem",
-		"no_emblem",
-		"emblem_covered",
-		"wrong_font_in_residential_place",
-		"wrong_font",
-		"id_with_printed_fonts",
-		"id_with_typewriter_fonts",
-		"tax_name_unmatched",
-		"wrong_format_in_recognizable_feature_phrase",
-		"document_used",
-		"photo_tampered",
-		"photocopied",
-		"cut",
-		"non-liveness",
-		"incorrect_native_place",
-		"wrong_format_in_dob",
-		"not_in_same_card"
-	)
 	const val CAPTURE_NEXT = 0
 	const val CAPTURE_CURRENT_STEP = CAPTURE_NEXT + 1
 	const val CAPTURE_FIRST = CAPTURE_CURRENT_STEP + 1
@@ -316,6 +235,7 @@ object Constants {
 		"image_has_no_faces" to Pair(CAPTURE_FACE, "Bạn ơi khuôn mặt không nằm trong khung hình rồi, thử lại nào!"),
 		"invalid_face_movement" to Pair(CAPTURE_FACE, "Thực hiện thao tác quay như hướng dẫn bạn nhé"),
 		"is_live: false" to Pair(CAPTURE_FACE, "Hình selfie không từ thực thể sống"),
-		"is_live: true" to Pair(CAPTURE_NOTHING, "Hình selfie từ thực thể sống")
+		"is_live: true" to Pair(CAPTURE_NOTHING, "Hình selfie từ thực thể sống"),
+		"ekyc done" to Pair(null, "Quý khách đã có Tài khoản và dịch vụ NHĐT tại PVcomBank, vui lòng đăng nhập PV-Mobile banking để trải nghiệm dịch vụ. Chi tiết liên hệ 1900 5555 92")
 	)
 }

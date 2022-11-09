@@ -33,11 +33,7 @@ class AlertPopup : DialogFragment() {
 		super.onStart()
 		dialog?.let {
 			it.window?.apply {
-				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-					setBackgroundBlurRadius(8)
-				} else{
-					setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-				}
+				setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 				setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
 			}
 		}

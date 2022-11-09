@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Observer
+import com.pvcombank.sdk.ekyc.R
 import com.pvcombank.sdk.ekyc.base.PVFragment
 import com.pvcombank.sdk.ekyc.databinding.FragmentGuideCardCaptureBinding
 import com.pvcombank.sdk.ekyc.model.Constants
@@ -65,6 +67,28 @@ class GuideCardIdFragment : PVFragment<FragmentGuideCardCaptureBinding>() {
 				//Start Scan cardID
 				startCaptureCard(currentStep)
 			}
+			repository.error.observe(
+				viewLifecycleOwner,
+				Observer {
+					hideLoading()
+					AlertPopup.show(
+						fragmentManager = childFragmentManager,
+						message = it.second,
+						primaryTitle = getString(R.string.txt_close),
+						primaryButtonListener = object : AlertPopup.PrimaryButtonListener{
+							override fun onClickListener(v: View) {
+								if (it.first in 401..499){
+									openFragment(
+										AfterCreateFragment::class.java,
+										Bundle(),
+										false
+									)
+								}
+							}
+						}
+					)
+				}
+			)
 		}
 	}
 	
@@ -124,26 +148,9 @@ class GuideCardIdFragment : PVFragment<FragmentGuideCardCaptureBinding>() {
 			AlertPopup.show(
 				fragmentManager = childFragmentManager,
 				message = "Đã có lỗi trong quá trình xử lý hình ảnh, vui lòng thử lại sau",
-				primaryTitle = "OK"
+				primaryTitle = getString(R.string.txt_close)
 			)
 		}
-//
-//		if (typeCard.contains("front")) {
-//			tvDetectionResult.backCardImage.image?.apply {
-//				file = toFile(requireContext())
-//				type = "back"
-//			} ?: kotlin.run {
-//				type = "front"
-//			}
-//		} else {
-//			tvDetectionResult.frontCardImage.image?.apply {
-//				file = toFile(requireContext())
-//				type = "front"
-//			} ?: kotlin.run {
-//				type = "back"
-//			}
-//		}
-//		if (file == null) return
 		startVerify(file!!, type) { response ->
 			val responseSuccess = response["success"]
 			if (responseSuccess is ResponseOCR) {
@@ -170,7 +177,7 @@ class GuideCardIdFragment : PVFragment<FragmentGuideCardCaptureBinding>() {
 									)
 								}
 							},
-							primaryTitle = "OK"
+							primaryTitle = getString(R.string.txt_close)
 						)
 					} else {
 						handlerError(responseSuccess)
@@ -189,7 +196,7 @@ class GuideCardIdFragment : PVFragment<FragmentGuideCardCaptureBinding>() {
 				AlertPopup.show(
 					fragmentManager = childFragmentManager,
 					message = "$message",
-					primaryTitle = "OK",
+					primaryTitle = getString(R.string.txt_close),
 					primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
 						override fun onClickListener(v: View) {
 							if (isEndAuth) {
@@ -253,7 +260,7 @@ class GuideCardIdFragment : PVFragment<FragmentGuideCardCaptureBinding>() {
 			.execute {
 				var message = "" // Cái này không chắc là cần
 				var cardSide = TVCardSide.FRONT
-				Constants.errorCaptureMap[responseSuccess.error]?.apply {
+				Constants.errorCaptureMap[responseSuccess.error?.trim()]?.apply {
 					message = this.second
 					when (this.first) {
 						Constants.CAPTURE_CURRENT_STEP -> {
@@ -266,6 +273,18 @@ class GuideCardIdFragment : PVFragment<FragmentGuideCardCaptureBinding>() {
 						Constants.CAPTURE_FIRST, Constants.CAPTURE_CARD_NOT_MATCH -> {
 							cardSide = TVCardSide.FRONT
 						}
+						null -> {
+							AlertPopup.show(
+								fragmentManager = childFragmentManager,
+								message = this.second,
+								primaryTitle = getString(R.string.txt_close),
+								primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
+									override fun onClickListener(v: View) {
+										requireActivity().finish()
+									}
+								}
+							)
+						}
 						else -> {
 							requireArguments().putString("type_card", null)
 							cardSide = TVCardSide.FRONT
@@ -275,7 +294,7 @@ class GuideCardIdFragment : PVFragment<FragmentGuideCardCaptureBinding>() {
 						AlertPopup.show(
 							fragmentManager = childFragmentManager,
 							message = responseSuccess.errorMessage ?: message,
-							primaryTitle = "OK",
+							primaryTitle = getString(R.string.txt_close),
 							primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
 								override fun onClickListener(v: View) {
 									startCaptureCard(cardSide)
@@ -289,7 +308,7 @@ class GuideCardIdFragment : PVFragment<FragmentGuideCardCaptureBinding>() {
 					AlertPopup.show(
 						fragmentManager = childFragmentManager,
 						message = responseSuccess.errorMessage,
-						primaryTitle = "OK",
+						primaryTitle = getString(R.string.txt_close),
 						primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
 							override fun onClickListener(v: View) {
 								startCaptureCard(cardSide)
@@ -334,7 +353,7 @@ class GuideCardIdFragment : PVFragment<FragmentGuideCardCaptureBinding>() {
 				AlertPopup.show(
 					fragmentManager = childFragmentManager,
 					message = message,
-					primaryTitle = "OK",
+					primaryTitle = getString(R.string.txt_close),
 					primaryButtonListener = object : AlertPopup.PrimaryButtonListener{
 						override fun onClickListener(v: View) {
 						
@@ -346,10 +365,10 @@ class GuideCardIdFragment : PVFragment<FragmentGuideCardCaptureBinding>() {
 				AlertPopup.show(
 					fragmentManager = childFragmentManager,
 					message = message,
-					primaryTitle = "OK",
-					primaryButtonListener = object : AlertPopup.PrimaryButtonListener{
+					primaryTitle = getString(R.string.txt_close),
+					primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
 						override fun onClickListener(v: View) {
-						
+							requireActivity().finish()
 						}
 					}
 				)
@@ -362,7 +381,7 @@ class GuideCardIdFragment : PVFragment<FragmentGuideCardCaptureBinding>() {
 				AlertPopup.show(
 					fragmentManager = childFragmentManager,
 					message = message,
-					primaryTitle = "OK",
+					primaryTitle = getString(R.string.txt_close),
 					primaryButtonListener = object : AlertPopup.PrimaryButtonListener{
 						override fun onClickListener(v: View) {
 						

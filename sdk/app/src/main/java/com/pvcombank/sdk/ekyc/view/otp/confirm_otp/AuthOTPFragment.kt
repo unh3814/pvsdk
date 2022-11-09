@@ -1,6 +1,7 @@
 package com.pvcombank.sdk.ekyc.view.otp.confirm_otp
 
 import android.graphics.Color
+import android.net.ipsec.ike.ChildSaProposal
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.text.Editable
@@ -29,10 +30,12 @@ import com.pvcombank.sdk.ekyc.model.MasterModel
 import com.pvcombank.sdk.ekyc.model.request.RequestModel
 import com.pvcombank.sdk.ekyc.model.request.RequestVerifyOTP
 import com.pvcombank.sdk.ekyc.model.response.ResponsePurchase
+import com.pvcombank.sdk.ekyc.model.response.ResponseVerifyOnboardOTP
 import com.pvcombank.sdk.ekyc.repository.AuthRepository
 import com.pvcombank.sdk.ekyc.util.Utils.phoneHide
 import com.pvcombank.sdk.ekyc.util.security.SecurityHelper
 import com.pvcombank.sdk.ekyc.view.popup.AlertPopup
+import com.pvcombank.sdk.ekyc.view.register.after_create.AfterCreateFragment
 import com.pvcombank.sdk.ekyc.view.register.confirm.InformationConfirmFragment
 import com.pvcombank.sdk.ekyc.view.register.guide.card.GuideCardIdFragment
 import com.pvcombank.sdk.ekyc.view.register.guide.face.GuideFaceIdFragment
@@ -134,90 +137,34 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 				Observer {
 					it?.let {
 						hideLoading()
-						it.token?.let {
-							Constants.TOKEN = "Bearer $it"
+						if (it.token.isNullOrEmpty()){
+							AlertPopup.show(
+								fragmentManager = childFragmentManager,
+								message = "Mã định danh không tồn tại.",
+								primaryButtonListener = object : AlertPopup.PrimaryButtonListener{
+									override fun onClickListener(v: View) {
+										openFragment(
+											AfterCreateFragment::class.java,
+											Bundle(),
+											false
+										)
+									}
+								}
+							)
+						} else {
+							updateTokenAndDirectorScreen(it)
+							timeCountDownTimer?.cancel()
 						}
-						masterModel.ocrFromOTP = it.ekyc
-						masterModel.getDataOCR().mobilePhone = (cache["phone_number"] as? String) ?: ""
-						when (it.ekyc.step) {
-							0 -> {
-								AlertPopup.show(
-									fragmentManager = childFragmentManager,
-									message = getString(R.string.error_0),
-									primaryTitle = "Đồng ý",
-									primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
-										override fun onClickListener(v: View) {
-											openFragment(
-												HomeFragment::class.java,
-												Bundle(),
-												false
-											)
-										}
-									}
-								)
-							}
-							5, 6 -> {
-								AlertPopup.show(
-									fragmentManager = childFragmentManager,
-									message = getString(R.string.error_5),
-									primaryTitle = "Đồng ý",
-									primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
-										override fun onClickListener(v: View) {
-											openFragment(
-												HomeFragment::class.java,
-												Bundle(),
-												false
-											)
-										}
-									}
-								)
-							}
-							1 -> {
-								masterModel.timeLogin = Date().time
-								openFragment(
-									GuideCardIdFragment::class.java,
-									Bundle(),
-									true
-								)
-							}
-							2 -> {
-								masterModel.timeLogin = Date().time
-								openFragment(
-									GuideFaceIdFragment::class.java,
-									Bundle(),
-									true
-								)
-							}
-							3, 4 -> {
-								masterModel.timeLogin = Date().time
-								openFragment(
-									InformationConfirmFragment::class.java,
-									requireArguments(),
-									true
-								)
-							}
-							7 -> {
-								AlertPopup.show(
-									fragmentManager = childFragmentManager,
-									message = getString(R.string.error_7),
-									primaryTitle = "Đồng ý",
-									primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
-										override fun onClickListener(v: View) {
-										
-										}
-									}
-								)
-							}
-						}
-						timeCountDownTimer?.cancel()
 					}
 				}
 			)
 		repository?.observerSendOTPResponse?.observe(
 			viewLifecycleOwner,
 			Observer {
-				MasterModel.getInstance().uuidOfOTP = it.uuid
 				hideLoading()
+				it?.let {
+					MasterModel.getInstance().uuidOfOTP = it.uuid
+				}
 			}
 		)
 		repository?.error?.observe(
@@ -225,9 +172,92 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 			Observer {
 				clearOTP()
 				hideLoading()
-				showAlerError(it.second)
+				if (it.first == 117) {
+					showAlerError(it.second) {
+					}
+				} else {
+					showAlerError(it.second) {
+						goBack()
+					}
+				}
 			}
 		)
+	}
+	
+	private fun updateTokenAndDirectorScreen(it: ResponseVerifyOnboardOTP) {
+		Constants.TOKEN = "Bearer $it"
+		masterModel.ocrFromOTP = it.ekyc
+		masterModel.getDataOCR().mobilePhone = (cache["phone_number"] as? String) ?: ""
+		when (it.ekyc.step) {
+			0 -> {
+				AlertPopup.show(
+					fragmentManager = childFragmentManager,
+					message = getString(R.string.error_0),
+					primaryTitle = getString(R.string.txt_close),
+					primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
+						override fun onClickListener(v: View) {
+							openFragment(
+								HomeFragment::class.java,
+								Bundle(),
+								false
+							)
+						}
+					}
+				)
+			}
+			5, 6 -> {
+				AlertPopup.show(
+					fragmentManager = childFragmentManager,
+					message = getString(R.string.error_5),
+					primaryTitle = getString(R.string.txt_close),
+					primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
+						override fun onClickListener(v: View) {
+							openFragment(
+								HomeFragment::class.java,
+								Bundle(),
+								false
+							)
+						}
+					}
+				)
+			}
+			1 -> {
+				masterModel.timeLogin = Date().time
+				openFragment(
+					GuideCardIdFragment::class.java,
+					Bundle(),
+					true
+				)
+			}
+			2 -> {
+				masterModel.timeLogin = Date().time
+				openFragment(
+					GuideFaceIdFragment::class.java,
+					Bundle(),
+					true
+				)
+			}
+			3, 4 -> {
+				masterModel.timeLogin = Date().time
+				openFragment(
+					InformationConfirmFragment::class.java,
+					requireArguments(),
+					true
+				)
+			}
+			7 -> {
+				AlertPopup.show(
+					fragmentManager = childFragmentManager,
+					message = getString(R.string.error_7),
+					primaryTitle = getString(R.string.txt_close),
+					primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
+						override fun onClickListener(v: View) {
+						
+						}
+					}
+				)
+			}
+		}
 	}
 	
 	override fun onStop() {
@@ -289,17 +319,13 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 		}
 	}
 	
-	private fun showAlerError(message: String? = null) {
+	private fun showAlerError(message: String? = null, onAlertClick: (v: View) -> Unit) {
 		AlertPopup.show(
 			fragmentManager = childFragmentManager,
 			message = message ?: "Đã có lỗi, vui lòng thử lại sau.",
-			primaryTitle = "Thử lại",
+			primaryTitle = getString(R.string.txt_close),
 			primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
-				override fun onClickListener(v: View) {
-					if (masterModel.isCreateAccount) {
-						clearOTP()
-					}
-				}
+				override fun onClickListener(v: View) = onAlertClick(v)
 			}
 		)
 	}

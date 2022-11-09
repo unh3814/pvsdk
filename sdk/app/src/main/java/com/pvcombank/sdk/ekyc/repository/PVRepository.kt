@@ -57,7 +57,7 @@ abstract class PVRepository {
 							error.postValue(
 								Pair(
 									1,
-									"Quá trình biên dịch dữ liệu sảy ra lỗi, vui lòng thử lại sau."
+									"Quá trình biên dịch dữ liệu xảy ra lỗi, vui lòng thử lại sau."
 								)
 							)
 						}
@@ -66,7 +66,7 @@ abstract class PVRepository {
 					error.postValue(
 						Pair(
 							1,
-							"Quá trình biên dịch dữ liệu sảy ra lỗi, vui lòng thử lại sau."
+							"Quá trình biên dịch dữ liệu xảy ra lỗi, vui lòng thử lại sau."
 						)
 					)
 				}
@@ -75,7 +75,7 @@ abstract class PVRepository {
 			error.postValue(
 				Pair(
 					1,
-					"Quá trình truy vấn dữ liệu sảy ra lỗi, vui lòng thử lại sau."
+					"Quá trình truy vấn dữ liệu xảy ra lỗi, vui lòng thử lại sau."
 				)
 			)
 		}
@@ -115,47 +115,58 @@ abstract class PVRepository {
 				error.postValue(
 					Pair(
 						2,
-						"Kết nối tới Internet đã sảy ra lỗi, vui lòng thử lại sau."
+						"Kết nối tới Internet đã xảy ra lỗi, vui lòng thử lại sau."
 					)
 				)
 			}
 			else -> {
 				throwable.getErrorBody()?.let { requestErrorBody ->
-					if (requestErrorBody.code?.toInt() in (401..499)) {
-						error.postValue(
-							Pair(
-								1,
-								"Đã có lỗi sảy ra vui lòng thử lại sau."
-							)
-						)
-					} else {
-						if (requestErrorBody.data == null) {
+					when(requestErrorBody.code?.toInt()){
+						in 401 .. 499 -> {
 							error.postValue(
 								Pair(
-									1,
-									"Quá trình biên dịch dữ liệu sảy ra lỗi, vui lòng thử lại sau."
+									requestErrorBody.code?.toInt()!!,
+									"Đã có lỗi xảy ra vui lòng thử lại sau."
 								)
 							)
-						} else {
-							SecurityHelper.instance()
-								.cryptoBuild(type = SecurityHelper.AES)
-								?.decrypt(requestErrorBody.data)
-								?.toObjectData<ResponseData<ErrorModel>>()
-								?.let { modelError ->
-									error.postValue(
-										Pair(
-											modelError.code.toInt(),
-											modelError.message
-										)
-									)
-									
-								} ?: kotlin.run {
+						}
+						in 500 .. 599 -> {
+							error.postValue(
+								Pair(
+									requestErrorBody.code?.toInt()!!,
+									requestErrorBody.message ?: "Lỗi hệ thống."
+								)
+							)
+						}
+						else ->{
+							if (requestErrorBody.data == null) {
 								error.postValue(
 									Pair(
 										1,
-										"Quá trình biên dịch dữ liệu sảy ra lỗi, vui lòng thử lại sau."
+										"Quá trình biên dịch dữ liệu xảy ra lỗi, vui lòng thử lại sau."
 									)
 								)
+							} else {
+								SecurityHelper.instance()
+									.cryptoBuild(type = SecurityHelper.AES)
+									?.decrypt(requestErrorBody.data)
+									?.toObjectData<ResponseData<ErrorModel>>()
+									?.let { modelError ->
+										error.postValue(
+											Pair(
+												modelError.code.toInt(),
+												modelError.message
+											)
+										)
+										
+									} ?: kotlin.run {
+									error.postValue(
+										Pair(
+											1,
+											"Quá trình biên dịch dữ liệu xảy ra lỗi, vui lòng thử lại sau."
+										)
+									)
+								}
 							}
 						}
 					}
@@ -163,7 +174,7 @@ abstract class PVRepository {
 					error.postValue(
 						Pair(
 							1,
-							"Quá kết nối tới Internet sảy ra lỗi, vui lòng thử lại sau."
+							"Quá kết nối tới Internet xảy ra lỗi, vui lòng thử lại sau."
 						)
 					)
 				}

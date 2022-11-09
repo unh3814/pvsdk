@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
+import com.pvcombank.sdk.ekyc.R
 import com.pvcombank.sdk.ekyc.base.PVFragment
 import com.pvcombank.sdk.ekyc.databinding.FragmentGuideFaceCaptureBinding
 import com.pvcombank.sdk.ekyc.model.Constants
@@ -64,7 +65,7 @@ class GuideFaceIdFragment : PVFragment<FragmentGuideFaceCaptureBinding>() {
 						)
 					}
 				},
-				primaryTitle = "OK"
+				primaryTitle = getString(R.string.txt_close)
 			)
 			return
 		}
@@ -91,7 +92,7 @@ class GuideFaceIdFragment : PVFragment<FragmentGuideFaceCaptureBinding>() {
 									AlertPopup.show(
 										fragmentManager = childFragmentManager,
 										message = "Có lỗi xảy ra vui lòng thực hiện lại",
-										primaryTitle = "OK",
+										primaryTitle = getString(R.string.txt_close),
 										primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
 											override fun onClickListener(v: View) {
 												startFaceCapture()
@@ -167,7 +168,7 @@ class GuideFaceIdFragment : PVFragment<FragmentGuideFaceCaptureBinding>() {
 								AlertPopup.show(
 									fragmentManager = childFragmentManager,
 									message = "$message",
-									primaryTitle = "OK",
+									primaryTitle = getString(R.string.txt_close),
 									primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
 										override fun onClickListener(v: View) {
 											if (isEndAuth) {
@@ -214,7 +215,7 @@ class GuideFaceIdFragment : PVFragment<FragmentGuideFaceCaptureBinding>() {
 							AlertPopup.show(
 								fragmentManager = childFragmentManager,
 								message = responseSuccess.errorMessage ?: message,
-								primaryTitle = "OK",
+								primaryTitle = getString(R.string.txt_close),
 								primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
 									override fun onClickListener(v: View) {
 										startFaceCapture()
@@ -227,7 +228,7 @@ class GuideFaceIdFragment : PVFragment<FragmentGuideFaceCaptureBinding>() {
 							AlertPopup.show(
 								fragmentManager = childFragmentManager,
 								message = responseSuccess.errorMessage ?: message,
-								primaryTitle = "OK",
+								primaryTitle = getString(R.string.txt_close),
 								primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
 									override fun onClickListener(v: View) {
 									
@@ -240,7 +241,7 @@ class GuideFaceIdFragment : PVFragment<FragmentGuideFaceCaptureBinding>() {
 					AlertPopup.show(
 						fragmentManager = childFragmentManager,
 						message = responseSuccess.errorMessage,
-						primaryTitle = "OK",
+						primaryTitle = getString(R.string.txt_close),
 						primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
 							override fun onClickListener(v: View) {
 							}

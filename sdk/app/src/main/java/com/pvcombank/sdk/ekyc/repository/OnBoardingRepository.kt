@@ -41,10 +41,7 @@ class OnBoardingRepository : PVRepository(), HandlerData {
 					result["success"] = it
 					callBack.invoke(result)
 				},
-				{
-					result["fail"] = it.message.toString()
-					callBack.invoke(result)
-				}
+				{ handlerError(it) }
 			)
 	}
 	
@@ -63,12 +60,7 @@ class OnBoardingRepository : PVRepository(), HandlerData {
 						result
 					)
 				},
-				{
-					result["fail"] = it.message.toString()
-					callBack.invoke(
-						result
-					)
-				}
+				{ handlerError(it) }
 			)
 	}
 	
@@ -96,7 +88,7 @@ class OnBoardingRepository : PVRepository(), HandlerData {
 						}
 						if (it.E?.status == "2") {
 							//Đi tiếp
-							result["next"] = it.E.message ?: ""
+							result["next"] = "Quý khách đã có Tài khoản và dịch vụ NHĐT tại PVcomBank, vui lòng đăng nhập PV-Mobile banking để trải nghiệm dịch vụ. Chi tiết liên hệ 1900 5555 92"
 						}
 					} else if (it.C == "999") {
 						result["error_network"] = "Gọi thất bại"
@@ -105,10 +97,7 @@ class OnBoardingRepository : PVRepository(), HandlerData {
 					}
 					callBack.invoke(result)
 				},
-				{
-					result["error_network"] = "Đã có lỗi vui lòng thử lại."
-					callBack.invoke(result)
-				}
+				{ handlerError(it) }
 			)
 	}
 	

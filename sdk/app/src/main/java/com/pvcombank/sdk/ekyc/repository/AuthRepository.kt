@@ -44,7 +44,13 @@ class AuthRepository : PVRepository(), HandlerData {
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribeOn(Schedulers.io())
 				.subscribe(
-					{ handlerSuccess<GetAccessTokenModel>(this@AuthRepository, it, Constants.API_GET_TOKEN) },
+					{
+						handlerSuccess<GetAccessTokenModel>(
+							this@AuthRepository,
+							it,
+							Constants.API_GET_TOKEN
+						)
+					},
 					{ handlerError(it) }
 				)
 		}
@@ -56,7 +62,13 @@ class AuthRepository : PVRepository(), HandlerData {
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribeOn(Schedulers.io())
 				.subscribe(
-					{ handlerSuccess<GetAccessTokenModel>(this@AuthRepository, it, Constants.API_REFRESH_TOKEN) },
+					{
+						handlerSuccess<GetAccessTokenModel>(
+							this@AuthRepository,
+							it,
+							Constants.API_REFRESH_TOKEN
+						)
+					},
 					{ handlerError(it) }
 				)
 		}
@@ -71,7 +83,13 @@ class AuthRepository : PVRepository(), HandlerData {
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribeOn(Schedulers.io())
 				.subscribe(
-					{ handlerSuccess<ResponsePurchase>(this@AuthRepository, it, Constants.API_SEND_OTP) },
+					{
+						handlerSuccess<ResponsePurchase>(
+							this@AuthRepository,
+							it,
+							Constants.API_SEND_OTP
+						)
+					},
 					{ handlerError(it) }
 				)
 		}
@@ -83,7 +101,13 @@ class AuthRepository : PVRepository(), HandlerData {
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribeOn(Schedulers.io())
 				.subscribe(
-					{ handlerSuccess<ResponseVerifyOnboardOTP>(this@AuthRepository, it, Constants.API_VERIFY_OTP) },
+					{
+						handlerSuccess<ResponseVerifyOnboardOTP>(
+							this@AuthRepository,
+							it,
+							Constants.API_VERIFY_OTP
+						)
+					},
 					{ handlerError(it) }
 				)
 		}
@@ -92,14 +116,10 @@ class AuthRepository : PVRepository(), HandlerData {
 	override fun onDataSuccess(api: String, data: Any?) {
 		when (api) {
 			Constants.API_SEND_OTP -> {
-				observerSendOTPResponse.postValue(
-					Gson().toJson(data).toObjectData()
-				)
+				observerSendOTPResponse.postValue(gson.toJson(data).toObjectData())
 			}
 			Constants.API_VERIFY_OTP -> {
-				observerVerifyOTP.postValue(
-					Gson().toJson(data).toObjectData()
-				)
+				observerVerifyOTP.postValue(gson.toJson(data).toObjectData())
 			}
 			Constants.API_REFRESH_TOKEN, Constants.API_GET_TOKEN -> {
 				(data as? GetAccessTokenModel)?.apply {

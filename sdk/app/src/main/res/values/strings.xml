@@ -7,22 +7,22 @@
     <string name="number_payment">Số tiền cần thanh toán</string>
     <string name="number_paid">Số tiền thanh toán</string>
     <string name="content_order">Nội dung</string>
-    <string name="content_order_desc">TT DH %s tai %s</string>
+    <string name="content_order_desc" formatted="false">TT DH %s tai %s</string>
     <string name="account">Tài khoản</string>
     <string name="information_payment">Thông tin thanh toán</string>
     <string name="confirm_information_payment">Xác nhận thanh toán</string>
-    <string name="primary_account">Tài khoản nguồn</string>
+    <string name="primary_account" formatted="false">Tài khoản nguồn</string>
     <string name="current_balance">Số dư: %sđ</string>
     <string name="sended_otp_to_number_phone">Mã OTP đã được gửi tới số điện thoại <font color="blue">%s</font></string>
     <string name="resend_otp">Gửi lại OTP (%ss)</string>
     <string name="date_trading">Ngày giao dịch</string>
     <string name="confirm_otp">Xác thực OTP</string>
-    <string name="payment_success">Bạn sẽ được chuyển về %s để tiếp tục đơn hàng sau %s giây.</string>
+    <string name="payment_success" formatted="false">Bạn sẽ được chuyển về %s để tiếp tục đơn hàng sau %s giây.</string>
     <string name="alert_select_method_ocr">Nếu quý khách đã là khách hàng của PVcomBank, vui lòng sử dụng đúng giấy tờ tùy thân đã đăng ký với ngân hàng.</string>
     <string name="txt_continue">Tiếp tục</string>
     <string name="title_guide_capture_picture">Hướng dẫn chụp ảnh</string>
     <string name="accept_picture">Ảnh hợp lện</string>
-    <string name="denial_picture">Ảnh không hợp lệ</string>
+    <string name="denial_picture" formatted="false">Ảnh không hợp lệ</string>
     <string name="picture_blur">Không chụp mờ</string>
     <string name="picture_crop">Không mất góc</string>
     <string name="picture_dazzling">Không loá sáng</string>
@@ -70,5 +70,6 @@
     <string name="last_step_fail_message">Hệ thống tạm thời gián đoạn vui lòng thực hiện định danh lại sau 15 phút. Chi tiết liên hệ <a href="phone_hotline">1900555592</a> .</string>
     <string name="error_7">Ngân hàng chưa định danh được quý khách, vui lòng tới CN/PGD gần nhất để định danh và mở Tài khoản thanh toán. Chi tiết liên hệ: <a href="phone_hotline">1900555592</a></string>
     <string name="error_0">Quý khách đã có Tài khoản và dịch vụ NHĐT tại PVcomBank, vui lòng đăng nhập PV-Mobile banking để trải nghiệm dịch vụ. Chi tiết liên hệ <a href="phone_hotline">1900555592</a></string>
-    <string name="error_5">Quý khách đã có Tài khoản và dịch vụ NHĐT tại PVcomBank, vui lòng đăng nhập PV-Mobile banking để trải nghiệm dịch vụ. Chi tiết liên hệ <a href="phone_hotline">1900999952</a></string>
+    <string name="error_5">Quý khách đã có Tài khoản và dịch vụ NHĐT tại PVcomBank, vui lòng đăng nhập PV-Mobile banking để trải nghiệm dịch vụ. Chi tiết liên hệ <a href="phone_hotline">1900555592</a></string>
+    <string name="txt_close">Đóng</string>
 </resources>

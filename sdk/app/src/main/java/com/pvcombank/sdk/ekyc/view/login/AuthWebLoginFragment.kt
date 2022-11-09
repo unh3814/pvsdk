@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.*
+import com.pvcombank.sdk.ekyc.R
 import com.pvcombank.sdk.ekyc.base.PVFragment
 import com.pvcombank.sdk.ekyc.databinding.FragmentWebLoginBinding
 import com.pvcombank.sdk.ekyc.model.Constants
@@ -43,7 +44,7 @@ class AuthWebLoginFragment : PVFragment<FragmentWebLoginBinding>() {
 				AlertPopup.show(
 					fragmentManager = childFragmentManager,
 					message = "Có lỗi trong quá trình kết nối, vui lòng thử lại.",
-					primaryTitle = "OK",
+					primaryTitle = getString(R.string.txt_close),
 					primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
 						override fun onClickListener(v: View) {
 							requireActivity().finish()

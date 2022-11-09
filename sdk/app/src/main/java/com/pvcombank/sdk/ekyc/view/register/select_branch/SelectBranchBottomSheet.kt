@@ -21,6 +21,7 @@ import com.pvcombank.sdk.ekyc.model.BranchModel
 import com.pvcombank.sdk.ekyc.model.Constants
 import com.pvcombank.sdk.ekyc.model.MasterModel
 import com.pvcombank.sdk.ekyc.util.SearchUtil
+import java.util.*
 
 class SelectBranchBottomSheet(
 	private val currentBranch: BranchModel? = null,
@@ -30,6 +31,7 @@ class SelectBranchBottomSheet(
 	private val data = mutableListOf<BranchModel>()
 	private val dataResult = mutableListOf<BranchModel>()
 	private val handler = Handler(Looper.getMainLooper())
+	private var adapter: MyAdapter? = null
 	override fun onCreateView(
 		inflater: LayoutInflater,
 		container: ViewGroup?,
@@ -42,7 +44,7 @@ class SelectBranchBottomSheet(
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		viewBinding.apply {
-			val adapter = MyAdapter().apply {
+			adapter = MyAdapter().apply {
 				data.addAll(mockupData)
 				dataResult.addAll(data)
 				this.notifyDataSetChanged()
@@ -50,29 +52,24 @@ class SelectBranchBottomSheet(
 			btnBack.setOnClickListener {
 				dismissAllowingStateLoss()
 			}
-			edtSearch.addTextChangedListener {
+			val textWatch =  edtSearch.addTextChangedListener {
 				handler.removeCallbacksAndMessages(null)
 				handler.postDelayed(
 					{
-						dataResult.clear()
-						dataResult.addAll(
-							data.filter { model ->
-								model.bRANCHNAME.contains(it.toString(), true)
-										|| model.aDDRESS.contains(it.toString(), true)
-							}
-						)
-						adapter.notifyDataSetChanged()
+						startSearch(it.toString())
 					},
 					300L
 				)
 				
 			}
 			currentBranch?.let {
+				edtSearch.removeTextChangedListener(textWatch)
+				edtSearch.setText(it.aDDRESS)
+				edtSearch.addTextChangedListener(textWatch)
 				handler.removeCallbacksAndMessages(null)
 				handler.postDelayed(
 					{
-						val position = data.indexOf(it)
-						rcv.scrollToPosition(position)
+						startSearch(it.dISTRICTNAME)
 					}, 500L
 				)
 			}
@@ -119,10 +116,38 @@ class SelectBranchBottomSheet(
 		}
 	}
 	
-	val mockupData = Gson().fromJson<List<BranchModel>>(
+	private val mockupData = Gson().fromJson<List<BranchModel>>(
 		Constants.mockupBranch,
 		object : TypeToken<List<BranchModel>>() {}.type
 	)
+	
+	private fun startSearch(value: String){
+		dataResult.clear()
+		SearchUtil(
+			mockupData.toMutableList(),
+			object : SearchUtil.SearchFunc<BranchModel> {
+				override fun filter(dataItem: BranchModel, stringItem: String): Boolean {
+					val rawItem = SearchUtil.convertNonSign(dataItem.aDDRESS.lowercase(Locale.ROOT))
+					val comparedStr = SearchUtil.convertNonSign(stringItem)!!
+					return rawItem?.contains(comparedStr, true) ?: false
+				}
+				
+				override fun limit(dataItem: BranchModel, stringItem: String): Boolean {
+					val rawItem = SearchUtil.convertNonSign(dataItem.aDDRESS.lowercase(Locale.ROOT))
+					val comparedStr = SearchUtil.convertNonSign(stringItem)!!
+					return rawItem?.contains(comparedStr, true) ?: false
+				}
+			}
+		).apply {
+			search(value).observe(
+				viewLifecycleOwner,
+				androidx.lifecycle.Observer {
+					dataResult.addAll(it)
+					viewBinding.rcv.adapter = adapter
+				}
+			)
+		}
+	}
 	
 	override fun onDismiss(dialog: DialogInterface) {
 		super.onDismiss(dialog)

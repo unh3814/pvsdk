@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
+import com.pvcombank.sdk.ekyc.R
 import com.pvcombank.sdk.ekyc.base.PVFragment
 import com.pvcombank.sdk.ekyc.databinding.FragmentPasswordRegisterBinding
 import com.pvcombank.sdk.ekyc.model.Constants
@@ -82,13 +83,16 @@ class PasswordRegisterFragment : PVFragment<FragmentPasswordRegisterBinding>() {
 			repository.observerFinish.observe(
 				viewLifecycleOwner,
 				Observer {
-				
+					it?.let {
+						//Cập nhập xong
+					}
 				}
 			)
 			repository.error.observe(
 				viewLifecycleOwner,
 				Observer {
 					it?.let {
+						hideLoading()
 						if (it.first == 0) {
 							SuccessFragment(false).show(childFragmentManager, "FAIL")
 						} else {
@@ -98,10 +102,6 @@ class PasswordRegisterFragment : PVFragment<FragmentPasswordRegisterBinding>() {
 								primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
 									override fun onClickListener(v: View) {
 										if (it.first in (401..499)) {
-											requireActivity().supportFragmentManager.popBackStack(
-												null,
-												FragmentManager.POP_BACK_STACK_INCLUSIVE
-											)
 											openFragment(
 												AfterCreateFragment::class.java,
 												Bundle(),
@@ -110,7 +110,7 @@ class PasswordRegisterFragment : PVFragment<FragmentPasswordRegisterBinding>() {
 										}
 									}
 								},
-								primaryTitle = "OK"
+								primaryTitle = getString(R.string.txt_close)
 							)
 						}
 					}
@@ -120,22 +120,23 @@ class PasswordRegisterFragment : PVFragment<FragmentPasswordRegisterBinding>() {
 	}
 	
 	private fun startOpenCIF() {
+		hideLoading()
 		SuccessFragment(true).show(childFragmentManager, "SUCCESS")
 		requireArguments().getParcelable<RequestFinish>("request_data_finish")
 			?.let {
 				repository.finish(it)
-			} ?: kotlin.run {
-			hideLoading()
-			AlertPopup.show(
-				fragmentManager = childFragmentManager,
-				message = "Có lỗi vui lòng thử lại",
-				primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
-					override fun onClickListener(v: View) {
-					}
-				},
-				primaryTitle = "OK"
-			)
-		}
+			}
+			?: kotlin.run {
+				AlertPopup.show(
+					fragmentManager = childFragmentManager,
+					message = "Có lỗi vui lòng thử lại",
+					primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
+						override fun onClickListener(v: View) {
+						}
+					},
+					primaryTitle = getString(R.string.txt_close)
+				)
+			}
 	}
 	
 	override fun onBack(): Boolean = false

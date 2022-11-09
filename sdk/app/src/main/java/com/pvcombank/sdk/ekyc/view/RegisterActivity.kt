@@ -18,6 +18,7 @@ import com.pvcombank.sdk.ekyc.model.Constants
 import com.pvcombank.sdk.ekyc.util.Utils.openFragment
 import com.pvcombank.sdk.ekyc.view.register.after_create.AfterCreateFragment
 import com.pvcombank.sdk.ekyc.view.register.home.HomeFragment
+import com.pvcombank.sdk.ekyc.view.register.information.InformationRegisterFragment
 import com.trustingsocial.tvsdk.TrustVisionSDK
 
 class RegisterActivity : PVActivity<ActivityRegisterBinding>() {

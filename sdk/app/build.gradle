@@ -34,6 +34,7 @@ android {
             buildConfigField(STRING, ONBOARDING_URL, '"https://onboarding-udnb-staging.pvcombank.com.vn/api/"')
             buildConfigField(STRING, SERVER_URL, '"https://connect.apps.ocp4-dev03.pvcomtestocp.com/"')
             aarMetadata {
+                name
                 minSdk = 23
             }
         }
@@ -97,6 +98,7 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation deps.core_ktx
     implementation deps.app_compat
+//    implementation deps.app_compat_source
     implementation deps.material
     implementation deps.constrain_layout
     implementation deps.gson
@@ -107,15 +109,15 @@ dependencies {
     implementation deps.security.crypto
     implementation deps.okhttp.core
     implementation deps.okhttp.log
-    implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'androidx.recyclerview:recyclerview:1.2.1'
-    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
-    implementation 'io.reactivex.rxjava3:rxjava:3.0.0'
-    implementation "androidx.datastore:datastore-preferences:1.0.0"
-    implementation("androidx.datastore:datastore-preferences-rxjava3:1.0.0")
-    implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation deps.recyclerview
+    implementation deps.circle_img
+    implementation deps.rx.java
+    implementation deps.rx.android
+    implementation deps.data_store.core
+    implementation deps.data_store.rxjava
     implementation("com.trustvision:tv_sdk:2.1.0.4@aar") {
         transitive = true
     }
+//    implementation deps.appflyer
     testImplementation 'junit:junit:4.12'
 }
