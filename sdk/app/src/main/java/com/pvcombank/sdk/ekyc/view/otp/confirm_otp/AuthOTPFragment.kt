@@ -141,6 +141,7 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 							AlertPopup.show(
 								fragmentManager = childFragmentManager,
 								message = "Mã định danh không tồn tại.",
+								primaryTitle = getString(R.string.txt_close),
 								primaryButtonListener = object : AlertPopup.PrimaryButtonListener{
 									override fun onClickListener(v: View) {
 										openFragment(
@@ -185,7 +186,7 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 	}
 	
 	private fun updateTokenAndDirectorScreen(it: ResponseVerifyOnboardOTP) {
-		Constants.TOKEN = "Bearer $it"
+		Constants.TOKEN = "Bearer ${it.token}"
 		masterModel.ocrFromOTP = it.ekyc
 		masterModel.getDataOCR().mobilePhone = (cache["phone_number"] as? String) ?: ""
 		when (it.ekyc.step) {

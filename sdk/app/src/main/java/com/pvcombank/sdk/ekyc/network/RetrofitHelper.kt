@@ -1,6 +1,5 @@
 package com.pvcombank.sdk.ekyc.network
 
-import android.os.Build
 import com.pvcombank.sdk.ekyc.BuildConfig
 import com.pvcombank.sdk.ekyc.model.Constants
 import com.pvcombank.sdk.ekyc.model.MasterModel
@@ -38,7 +37,7 @@ class RetrofitHelper {
 					)
 					.addHeader("Content-Type", "application/json")
 					.addHeader("app_unit_id", MasterModel.getInstance().appUnitID ?: "")
-					.addHeader("app_id", MasterModel.getInstance().clientId ?: "")
+					.addHeader("app_id", Constants.VIETSENS_ID)
 					.addHeader("signature", MasterModel.getInstance().uniId)
 					.build()
 				chain.proceed(request)

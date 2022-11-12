@@ -1,14 +1,19 @@
 package com.pvcombank.sdk.ekyc.util
 
+import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.URLSpan
+import android.util.DisplayMetrics
 import android.view.MotionEvent
 import android.view.View
+import android.view.WindowManager
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.google.gson.Gson
@@ -150,5 +155,13 @@ object Utils {
 			"vn.passport.front" -> PASSPORT.FRONT.getData()
 			else -> null
 		}
+	}
+	
+	fun getDeviceMetric(context: Context): DisplayMetrics {
+		val metric = DisplayMetrics()
+		(context.getSystemService(Context.WINDOW_SERVICE) as? WindowManager)?.apply {
+			this.defaultDisplay.getMetrics(metric)
+		}
+		return metric
 	}
 }

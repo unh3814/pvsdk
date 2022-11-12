@@ -12,6 +12,7 @@ import com.pvcombank.sdk.ekyc.R
 import com.pvcombank.sdk.ekyc.base.PVFragment
 import com.pvcombank.sdk.ekyc.databinding.FragmentGuideCardCaptureBinding
 import com.pvcombank.sdk.ekyc.model.Constants
+import com.pvcombank.sdk.ekyc.model.Constants.EKYC_DONE
 import com.pvcombank.sdk.ekyc.model.MasterModel
 import com.pvcombank.sdk.ekyc.model.request.CheckAccountRequest
 import com.pvcombank.sdk.ekyc.model.response.ResponseOCR
@@ -26,7 +27,7 @@ import com.pvcombank.sdk.ekyc.view.register.home.HomeFragment
 import com.trustingsocial.tvcoresdk.external.*
 import com.trustingsocial.tvcoresdk.external.TVSDKConfiguration.TVCardSide
 import com.trustingsocial.tvsdk.TrustVisionSDK
-import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
@@ -71,22 +72,24 @@ class GuideCardIdFragment : PVFragment<FragmentGuideCardCaptureBinding>() {
 				viewLifecycleOwner,
 				Observer {
 					hideLoading()
-					AlertPopup.show(
-						fragmentManager = childFragmentManager,
-						message = it.second,
-						primaryTitle = getString(R.string.txt_close),
-						primaryButtonListener = object : AlertPopup.PrimaryButtonListener{
-							override fun onClickListener(v: View) {
-								if (it.first in 401..499){
-									openFragment(
-										AfterCreateFragment::class.java,
-										Bundle(),
-										false
-									)
+					it?.let {
+						AlertPopup.show(
+							fragmentManager = childFragmentManager,
+							message = it.second,
+							primaryTitle = getString(R.string.txt_close),
+							primaryButtonListener = object : AlertPopup.PrimaryButtonListener{
+								override fun onClickListener(v: View) {
+									if (it.first in 401..499){
+										openFragment(
+											AfterCreateFragment::class.java,
+											Bundle(),
+											false
+										)
+									}
 								}
 							}
-						}
-					)
+						)
+					}
 				}
 			)
 		}
@@ -273,7 +276,7 @@ class GuideCardIdFragment : PVFragment<FragmentGuideCardCaptureBinding>() {
 						Constants.CAPTURE_FIRST, Constants.CAPTURE_CARD_NOT_MATCH -> {
 							cardSide = TVCardSide.FRONT
 						}
-						null -> {
+						EKYC_DONE -> {
 							AlertPopup.show(
 								fragmentManager = childFragmentManager,
 								message = this.second,
@@ -322,7 +325,7 @@ class GuideCardIdFragment : PVFragment<FragmentGuideCardCaptureBinding>() {
 	
 	private fun startVerify(file: File, type: String, callBack: (HashMap<String, Any>) -> Unit) {
 		showLoading()
-		val mediaBackType = MediaType.parse("application/octet-stream")
+		val mediaBackType = "application/octet-stream".toMediaTypeOrNull()
 		val body = MultipartBody.Builder()
 			.setType(MultipartBody.FORM)
 			.addFormDataPart(

@@ -2,6 +2,8 @@ package com.pvcombank.demoapp
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.pvcombank.sdk.ekyc.PVCBAuthListener
+import com.pvcombank.sdk.ekyc.view.PVCBAuth
 
 class MainActivity : AppCompatActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -11,9 +13,8 @@ class MainActivity : AppCompatActivity() {
 	
 	override fun onStart() {
 		super.onStart()
-		
-		com.pvcombank.sdk.ekyc.view.PVCBAuth().apply {
-			build(this@MainActivity, object : com.pvcombank.sdk.ekyc.PVCBAuthListener{
+		PVCBAuth().apply {
+			build(this@MainActivity, object : PVCBAuthListener {
 				override fun onError(message: String) {
 				}
 				

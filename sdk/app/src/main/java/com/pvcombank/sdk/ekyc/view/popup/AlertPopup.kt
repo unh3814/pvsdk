@@ -2,17 +2,18 @@ package com.pvcombank.sdk.ekyc.view.popup
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import com.pvcombank.sdk.ekyc.R
 import com.pvcombank.sdk.ekyc.databinding.FragmentPopupBinding
 import com.pvcombank.sdk.ekyc.model.MasterModel
+import com.pvcombank.sdk.ekyc.util.Utils
 
 class AlertPopup : DialogFragment() {
 	private var secondButtonListener: SecondButtonListener? = null
@@ -33,8 +34,9 @@ class AlertPopup : DialogFragment() {
 		super.onStart()
 		dialog?.let {
 			it.window?.apply {
+				val width = (Utils.getDeviceMetric(requireContext()).widthPixels * 0.95)
 				setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-				setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+				setLayout(width.toInt(), LayoutParams.WRAP_CONTENT)
 			}
 		}
 	}
@@ -42,7 +44,7 @@ class AlertPopup : DialogFragment() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		viewBinding.apply {
-			root.setBackgroundResource(R.color.color_white)
+			root.setBackgroundColor(Color.TRANSPARENT)
 			val titleSecond = arguments?.getString(TITLE_SECOND)
 			val titlePrimary = arguments?.getString(TITLE_PRIMARY)
 			val icon = arguments?.getInt(ICON)

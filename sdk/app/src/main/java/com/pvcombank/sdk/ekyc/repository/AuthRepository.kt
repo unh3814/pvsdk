@@ -1,7 +1,6 @@
 package com.pvcombank.sdk.ekyc.repository
 
 import androidx.lifecycle.MutableLiveData
-import com.google.gson.Gson
 import com.pvcombank.sdk.ekyc.BuildConfig
 import com.pvcombank.sdk.ekyc.model.Constants
 import com.pvcombank.sdk.ekyc.model.GetAccessTokenModel

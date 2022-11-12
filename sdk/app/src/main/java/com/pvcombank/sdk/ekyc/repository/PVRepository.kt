@@ -1,5 +1,6 @@
 package com.pvcombank.sdk.ekyc.repository
 
+import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.GsonBuilder
 import com.pvcombank.sdk.ekyc.model.Constants
@@ -121,51 +122,60 @@ abstract class PVRepository {
 			}
 			else -> {
 				throwable.getErrorBody()?.let { requestErrorBody ->
-					when(requestErrorBody.code?.toInt()){
-						in 401 .. 499 -> {
-							error.postValue(
-								Pair(
-									requestErrorBody.code?.toInt()!!,
-									"Đã có lỗi xảy ra vui lòng thử lại sau."
-								)
+					if (requestErrorBody.code.isNullOrEmpty() || requestErrorBody.code?.isDigitsOnly() == false){
+						error.postValue(
+							Pair(
+								1,
+								"Đã có lỗi xảy ra vui lòng thử lại sau."
 							)
-						}
-						in 500 .. 599 -> {
-							error.postValue(
-								Pair(
-									requestErrorBody.code?.toInt()!!,
-									requestErrorBody.message ?: "Lỗi hệ thống."
-								)
-							)
-						}
-						else ->{
-							if (requestErrorBody.data == null) {
+						)
+					} else {
+						when(requestErrorBody.code?.toInt()){
+							in 401 .. 499 -> {
 								error.postValue(
 									Pair(
-										1,
-										"Quá trình biên dịch dữ liệu xảy ra lỗi, vui lòng thử lại sau."
+										requestErrorBody.code?.toInt()!!,
+										"Đã có lỗi xảy ra vui lòng thử lại sau."
 									)
 								)
-							} else {
-								SecurityHelper.instance()
-									.cryptoBuild(type = SecurityHelper.AES)
-									?.decrypt(requestErrorBody.data)
-									?.toObjectData<ResponseData<ErrorModel>>()
-									?.let { modelError ->
-										error.postValue(
-											Pair(
-												modelError.code.toInt(),
-												modelError.message
-											)
-										)
-										
-									} ?: kotlin.run {
+							}
+							in 500 .. 599 -> {
+								error.postValue(
+									Pair(
+										requestErrorBody.code?.toInt()!!,
+										requestErrorBody.message ?: "Lỗi hệ thống."
+									)
+								)
+							}
+							else ->{
+								if (requestErrorBody.data == null) {
 									error.postValue(
 										Pair(
 											1,
 											"Quá trình biên dịch dữ liệu xảy ra lỗi, vui lòng thử lại sau."
 										)
 									)
+								} else {
+									SecurityHelper.instance()
+										.cryptoBuild(type = SecurityHelper.AES)
+										?.decrypt(requestErrorBody.data)
+										?.toObjectData<ResponseData<ErrorModel>>()
+										?.let { modelError ->
+											error.postValue(
+												Pair(
+													10,
+													modelError.message
+												)
+											)
+											
+										} ?: kotlin.run {
+										error.postValue(
+											Pair(
+												1,
+												"Quá trình biên dịch dữ liệu xảy ra lỗi, vui lòng thử lại sau."
+											)
+										)
+									}
 								}
 							}
 						}
