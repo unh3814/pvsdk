@@ -137,25 +137,8 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 				Observer {
 					it?.let {
 						hideLoading()
-						if (it.token.isNullOrEmpty()){
-							AlertPopup.show(
-								fragmentManager = childFragmentManager,
-								message = "Mã định danh không tồn tại.",
-								primaryTitle = getString(R.string.txt_close),
-								primaryButtonListener = object : AlertPopup.PrimaryButtonListener{
-									override fun onClickListener(v: View) {
-										openFragment(
-											AfterCreateFragment::class.java,
-											Bundle(),
-											false
-										)
-									}
-								}
-							)
-						} else {
-							updateTokenAndDirectorScreen(it)
-							timeCountDownTimer?.cancel()
-						}
+						updateTokenAndDirectorScreen(it)
+						timeCountDownTimer?.cancel()
 					}
 				}
 			)
@@ -224,27 +207,33 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 			}
 			1 -> {
 				masterModel.timeLogin = Date().time
-				openFragment(
-					GuideCardIdFragment::class.java,
-					Bundle(),
-					true
-				)
+				checkAccessToken(it){
+					openFragment(
+						GuideCardIdFragment::class.java,
+						Bundle(),
+						true
+					)
+				}
 			}
 			2 -> {
 				masterModel.timeLogin = Date().time
-				openFragment(
-					GuideFaceIdFragment::class.java,
-					Bundle(),
-					true
-				)
+				checkAccessToken(it){
+					openFragment(
+						GuideFaceIdFragment::class.java,
+						Bundle(),
+						true
+					)
+				}
 			}
 			3, 4 -> {
 				masterModel.timeLogin = Date().time
-				openFragment(
-					InformationConfirmFragment::class.java,
-					requireArguments(),
-					true
-				)
+				checkAccessToken(it){
+					openFragment(
+						InformationConfirmFragment::class.java,
+						requireArguments(),
+						true
+					)
+				}
 			}
 			7 -> {
 				AlertPopup.show(
@@ -260,7 +249,26 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 			}
 		}
 	}
-	
+
+	private fun checkAccessToken(responseOtp: ResponseVerifyOnboardOTP, onHadToken: () -> Unit){
+		if (responseOtp.token.isNullOrEmpty()){
+			AlertPopup.show(
+				fragmentManager = childFragmentManager,
+				message = "Mã định danh không tồn tại.",
+				primaryTitle = getString(R.string.txt_close),
+				primaryButtonListener = object : AlertPopup.PrimaryButtonListener{
+					override fun onClickListener(v: View) {
+						openFragment(
+							AfterCreateFragment::class.java,
+							Bundle(),
+							false
+						)
+					}
+				}
+			)
+		} else onHadToken.invoke()
+	}
+
 	override fun onStop() {
 		super.onStop()
 		handler.removeCallbacksAndMessages(null)

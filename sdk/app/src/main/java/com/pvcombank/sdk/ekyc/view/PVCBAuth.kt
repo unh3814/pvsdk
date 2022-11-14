@@ -3,6 +3,7 @@ package com.pvcombank.sdk.ekyc.view
 import android.content.Intent
 import androidx.fragment.app.FragmentActivity
 import com.pvcombank.sdk.ekyc.PVCBAuthListener
+import com.pvcombank.sdk.ekyc.model.Constants
 import com.pvcombank.sdk.ekyc.model.MasterModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -16,9 +17,16 @@ class PVCBAuth() {
 	
 	fun build(
 		activity: FragmentActivity,
+		isProduction: Boolean,
 		listener: PVCBAuthListener
 	) {
 		this.activity = activity
+		this.listener = listener
+		if (isProduction){
+			Constants.ONBOARDING_URL = "https://onboarding-api.pvcombank.com.vn//api/"
+			Constants.CHECK_ACC_URL = "https://mbanking255.pvcombank.com.vn/api"
+		}
+
 		masterModel.errorString
 			.observeOn(AndroidSchedulers.mainThread())
 			.subscribeOn(Schedulers.io())
@@ -31,7 +39,6 @@ class PVCBAuth() {
 			.subscribe {
 				listener?.onSuccess(it)
 			}
-		this.listener = listener
 	}
 	
 	fun startRegister() {

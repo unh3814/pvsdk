@@ -146,20 +146,11 @@ class AuthWebLoginFragment : PVFragment<FragmentWebLoginBinding>() {
 				this.getQueryParameter("code")?.let {
 					val code = it
 					Handler(Looper.getMainLooper()).post {
-						repository.getTokenByCode(
-							code = code,
-							clientId = Constants.CLIENT_ID,
-							clientSecret = Constants.CLIENT_SECRET
-						)
-//							{
-//								hideLoading()
-//								Constants.TOKEN = "${it?.tokenType ?: ""} ${it?.accessToken ?: ""}"
-//								openFragment(
-//									GuideCardIdFragment::class.java,
-//									Bundle(),
-//									true
-//								)
-//							}
+//						repository.getTokenByCode(
+//							code = code,
+//							clientId = Constants.CLIENT_ID,
+//							clientSecret = Constants.CLIENT_SECRET
+//						)
 					}
 				}
 			}

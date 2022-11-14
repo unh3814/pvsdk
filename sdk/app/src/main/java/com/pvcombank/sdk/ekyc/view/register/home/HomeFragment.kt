@@ -46,11 +46,11 @@ class HomeFragment : PVFragment<FragmentHomeBinding>() {
 			}
 			hideLoading()
 			btnToLogin.setOnClickListener {
-				openFragment(
-					AuthWebLoginFragment::class.java,
-					arguments ?: Bundle(),
-					true
-				)
+//				openFragment(
+//					AuthWebLoginFragment::class.java,
+//					arguments ?: Bundle(),
+//					true
+//				)
 			}
 			
 			btnToRegister.setOnClickListener {
