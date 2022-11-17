@@ -115,8 +115,7 @@ class AuthWebLoginFragment : PVFragment<FragmentWebLoginBinding>() {
 						hideLoading()
 						openFragment(
 							GuideCardIdFragment::class.java,
-							Bundle(),
-							true
+							Bundle()
 						)
 					}
 				}
@@ -133,8 +132,7 @@ class AuthWebLoginFragment : PVFragment<FragmentWebLoginBinding>() {
 		if (uri.pathSegments.last() == "registration") {
 			openFragment(
 				AfterCreateFragment::class.java,
-				Bundle(),
-				true
+				Bundle()
 			)
 		}
 	}

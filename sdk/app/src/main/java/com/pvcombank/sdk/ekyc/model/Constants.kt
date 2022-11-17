@@ -1,6 +1,8 @@
 package com.pvcombank.sdk.ekyc.model
 
 object Constants {
+	var ID_PARTNER: String? = null
+
 	const val TIME_FORMAT = "yyyy-MM-DD"
 	const val DATE_FORMAT = "DD/MM/yyyy"
 	
@@ -14,7 +16,7 @@ object Constants {
 	const val SERVER_URL = "https://connect.apps.ocp4-dev03.pvcomtestocp.com/"
 	var ONBOARDING_URL = "https://onboarding-udnb-staging.pvcombank.com.vn/api/"
 	var CHECK_ACC_URL = "https://mobile25uat.pvcombank.com.vn/api/"
-	const val BASE_URL_OTHER = "https://iuhfhsds3h.execute-api.ap-southeast-1.amazonaws.com/"
+	var BASE_URL_OTP = "https://iuhfhsds3h.execute-api.ap-southeast-1.amazonaws.com/"
 	const val REDIRECT_URL = "https://10.0.15.60/connect"
 	const val REDIRECT_SANBOX_URL = "https://awsapi.pvcombank.com.vn/connect"
 	const val CLIENT_ID = "430434b7"
@@ -31,8 +33,8 @@ object Constants {
 	const val API_FINISH = "ekyc/finish"
 	const val API_VERIFY_SELFIE = "verify-selfie"
 	const val API_VERIFY = "verify"
-	const val API_SEND_OTP = "staging/v1/onboarding/send-otp"
-	const val API_VERIFY_OTP = "staging/v1/onboarding/verify-otp"
+	const val API_SEND_OTP = "send-otp"
+	const val API_VERIFY_OTP = "verify-otp"
 	const val API_GET_TOKEN = "auth/realms/pvcombank/protocol/openid-connect/token"
 	const val API_REFRESH_TOKEN = "realms/pvcombank/protocol/openid-connect/token/introspect"
 	const val CODE_SUCCESS = "200"

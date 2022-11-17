@@ -36,8 +36,7 @@ class GuideCardIdFragment : PVFragment<FragmentGuideCardCaptureBinding>() {
 	override fun onBack(): Boolean {
 		openFragment(
 			AfterCreateFragment::class.java,
-			Bundle(),
-			true
+			Bundle()
 		)
 		return true
 	}
@@ -82,8 +81,7 @@ class GuideCardIdFragment : PVFragment<FragmentGuideCardCaptureBinding>() {
 									if (it.first in 401..499){
 										openFragment(
 											AfterCreateFragment::class.java,
-											Bundle(),
-											false
+											Bundle()
 										)
 									}
 								}
@@ -175,8 +173,7 @@ class GuideCardIdFragment : PVFragment<FragmentGuideCardCaptureBinding>() {
 								override fun onClickListener(v: View) {
 									openFragment(
 										AfterCreateFragment::class.java,
-										Bundle(),
-										false
+										Bundle()
 									)
 								}
 							},
@@ -207,7 +204,7 @@ class GuideCardIdFragment : PVFragment<FragmentGuideCardCaptureBinding>() {
 									null,
 									FragmentManager.POP_BACK_STACK_INCLUSIVE
 								)
-								openFragment(HomeFragment::class.java, arguments ?: Bundle(), true)
+								openFragment(HomeFragment::class.java, arguments ?: Bundle())
 							}
 						}
 					}
@@ -231,8 +228,7 @@ class GuideCardIdFragment : PVFragment<FragmentGuideCardCaptureBinding>() {
 				MasterModel.getInstance().updateDataOCR()
 				openFragment(
 					GuideFaceIdFragment::class.java,
-					requireArguments(),
-					false
+					requireArguments()
 				)
 			}
 			if (typeCard.contains("cccd") || typeCard.contains("cmnd")) {
@@ -248,8 +244,7 @@ class GuideCardIdFragment : PVFragment<FragmentGuideCardCaptureBinding>() {
 					count--
 					openFragment(
 						GuideFaceIdFragment::class.java,
-						requireArguments(),
-						false
+						requireArguments()
 					)
 				}
 			}

@@ -104,8 +104,7 @@ class PasswordRegisterFragment : PVFragment<FragmentPasswordRegisterBinding>() {
 										if (it.first in (401..499)) {
 											openFragment(
 												AfterCreateFragment::class.java,
-												Bundle(),
-												true
+												Bundle()
 											)
 										}
 									}

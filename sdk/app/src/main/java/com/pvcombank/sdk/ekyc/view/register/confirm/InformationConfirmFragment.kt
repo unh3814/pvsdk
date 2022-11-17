@@ -108,8 +108,7 @@ class InformationConfirmFragment : PVFragment<FragmentCardCaptureResultBinding>(
 			btnConfirm.setOnClickListener {
 				openFragment(
 					InformationRegisterFragment::class.java,
-					requireArguments(),
-					true
+					requireArguments()
 				)
 			}
 			validate()
@@ -136,7 +135,7 @@ class InformationConfirmFragment : PVFragment<FragmentCardCaptureResultBinding>(
 			primaryTitle = "Đồng ý",
 			primaryButtonListener = object : AlertPopup.PrimaryButtonListener{
 				override fun onClickListener(v: View) {
-					openFragment(GuideCardIdFragment::class.java, Bundle(), true)
+					openFragment(GuideCardIdFragment::class.java, Bundle())
 				}
 			},
 			secondTitle = "Huỷ",

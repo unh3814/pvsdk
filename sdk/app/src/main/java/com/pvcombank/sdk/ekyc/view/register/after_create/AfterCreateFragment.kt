@@ -115,8 +115,7 @@ class AfterCreateFragment : PVFragment<FragmentCreateAccoutBinding>() {
 						hideLoading()
 						openFragment(
 							AuthOTPFragment::class.java,
-							requireArguments(),
-							false
+							requireArguments()
 						)
 					}
 				}

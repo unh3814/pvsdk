@@ -172,8 +172,7 @@ class InformationRegisterFragment : PVFragment<FragmentRegisterBinding>() {
 				requireArguments().putParcelable("request_data_finish", requestFinish)
 				openFragment(
 					PasswordRegisterFragment::class.java,
-					requireArguments(),
-					true
+					requireArguments()
 				)
 
 //				repository.finish(requestFinish) {

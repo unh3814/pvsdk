@@ -17,8 +17,6 @@ import com.pvcombank.sdk.ekyc.databinding.ActivityRegisterBinding
 import com.pvcombank.sdk.ekyc.model.Constants
 import com.pvcombank.sdk.ekyc.util.Utils.openFragment
 import com.pvcombank.sdk.ekyc.view.register.after_create.AfterCreateFragment
-import com.pvcombank.sdk.ekyc.view.register.home.HomeFragment
-import com.pvcombank.sdk.ekyc.view.register.information.InformationRegisterFragment
 import com.trustingsocial.tvsdk.TrustVisionSDK
 
 class RegisterActivity : PVActivity<ActivityRegisterBinding>() {
@@ -36,8 +34,7 @@ class RegisterActivity : PVActivity<ActivityRegisterBinding>() {
 			supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
 			openFragment(
 				AfterCreateFragment::class.java,
-				Bundle(),
-				true
+				Bundle()
 			)
 		}
 	}

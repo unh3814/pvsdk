@@ -7,5 +7,6 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class RequestVerifyOTP(
 	@SerializedName("uuid") var uuid: String? = null,
-	@SerializedName("otp") var otp: String? = null
-) : Parcelable
+	@SerializedName("otp") var otp: String? = null,
+	@SerializedName("userIdPartner") var userIdPartner: String? = null
+	) : Parcelable

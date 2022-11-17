@@ -32,13 +32,13 @@ object Utils {
 	fun FragmentActivity.openFragment(
 		clazz: Class<out Fragment>,
 		arg: Bundle,
-		addBackStack: Boolean
+		addBackStack: Boolean? = true
 	) {
 		val hostFragmentID = (this as com.pvcombank.sdk.ekyc.base.PVActivity<*>).fragmentHostID
 		supportFragmentManager.beginTransaction()
 			.replace(hostFragmentID, clazz, arg)
 			.addToBackStack(clazz.simpleName)
-			.setReorderingAllowed(addBackStack)
+			.setReorderingAllowed(addBackStack!!)
 			.commit()
 	}
 	

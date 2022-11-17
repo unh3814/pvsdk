@@ -18,7 +18,7 @@ class OnBoardingRepository : PVRepository(), HandlerData {
         .createServices(Constants.ONBOARDING_URL)
         .create(ApiEKYC::class.java)
     private val retrofitUpdatePassword = RetrofitHelper.instance()
-        .createServices(Constants.BASE_URL_OTHER)
+        .createServices(Constants.BASE_URL_OTP)
         .create(ApiEKYC::class.java)
     private val retrofitCheckAccount = RetrofitHelper.instance()
         .createServices(Constants.CHECK_ACC_URL)

@@ -56,8 +56,7 @@ class HomeFragment : PVFragment<FragmentHomeBinding>() {
 			btnToRegister.setOnClickListener {
 				openFragment(
 					AfterCreateFragment::class.java,
-					arguments ?: Bundle(),
-					true
+					arguments ?: Bundle()
 				)
 			}
 		}

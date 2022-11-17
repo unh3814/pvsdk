@@ -154,14 +154,16 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 		repository?.error?.observe(
 			viewLifecycleOwner,
 			Observer {
-				clearOTP()
-				hideLoading()
-				if (it.first == 117) {
-					showAlerError(it.second) {
-					}
-				} else {
-					showAlerError(it.second) {
-						goBack()
+				it?.let {
+					clearOTP()
+					hideLoading()
+					if (it.first == 117) {
+						showAlerError(it.second) {
+						}
+					} else {
+						showAlerError(it.second) {
+							goBack()
+						}
 					}
 				}
 			}
@@ -182,8 +184,7 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 						override fun onClickListener(v: View) {
 							openFragment(
 								HomeFragment::class.java,
-								Bundle(),
-								false
+								Bundle()
 							)
 						}
 					}
@@ -198,8 +199,7 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 						override fun onClickListener(v: View) {
 							openFragment(
 								HomeFragment::class.java,
-								Bundle(),
-								false
+								Bundle()
 							)
 						}
 					}
@@ -210,8 +210,7 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 				checkAccessToken(it){
 					openFragment(
 						GuideCardIdFragment::class.java,
-						Bundle(),
-						true
+						Bundle()
 					)
 				}
 			}
@@ -220,8 +219,7 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 				checkAccessToken(it){
 					openFragment(
 						GuideFaceIdFragment::class.java,
-						Bundle(),
-						true
+						Bundle()
 					)
 				}
 			}
@@ -230,8 +228,7 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 				checkAccessToken(it){
 					openFragment(
 						InformationConfirmFragment::class.java,
-						requireArguments(),
-						true
+						requireArguments()
 					)
 				}
 			}
@@ -260,8 +257,7 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 					override fun onClickListener(v: View) {
 						openFragment(
 							AfterCreateFragment::class.java,
-							Bundle(),
-							false
+							Bundle()
 						)
 					}
 				}
@@ -317,7 +313,8 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 		hideKeyboard()
 		val request = RequestVerifyOTP(
 			uuid = masterModel.uuidOfOTP,
-			otp = getOTP()
+			otp = getOTP(),
+			userIdPartner = Constants.ID_PARTNER
 		)
 		
 		val stringEncrypt = SecurityHelper.instance()

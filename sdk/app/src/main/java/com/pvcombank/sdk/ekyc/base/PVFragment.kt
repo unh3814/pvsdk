@@ -47,8 +47,8 @@ abstract class PVFragment<VB : ViewBinding> : Fragment() {
 	fun openFragment(
 		clazz: Class<out Fragment>,
 		arg: Bundle,
-		addBackStack: Boolean
-	) = requireActivity().openFragment(clazz, arg, addBackStack)
+		addBackStack: Boolean? = true
+	) = requireActivity().openFragment(clazz, arg, addBackStack!!)
 	
 	fun showLoading() {
 		hideKeyboard()

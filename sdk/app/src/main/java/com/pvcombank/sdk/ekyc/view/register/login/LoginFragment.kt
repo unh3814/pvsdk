@@ -38,8 +38,7 @@ class LoginFragment : PVFragment<FragmentLoginBinding>(){
 			btnRegister.setOnClickListener {
 				openFragment(
 					AfterCreateFragment::class.java,
-					arguments ?: Bundle(),
-					true
+					arguments ?: Bundle()
 				)
 			}
 		}

@@ -60,8 +60,7 @@ class GuideFaceIdFragment : PVFragment<FragmentGuideFaceCaptureBinding>() {
 					override fun onClickListener(v: View) {
 						openFragment(
 							AfterCreateFragment::class.java,
-							Bundle(),
-							false
+							Bundle()
 						)
 					}
 				},
@@ -149,8 +148,7 @@ class GuideFaceIdFragment : PVFragment<FragmentGuideFaceCaptureBinding>() {
 									requireArguments().putBoolean("hide_back", false)
 									openFragment(
 										InformationConfirmFragment::class.java,
-										requireArguments(),
-										true
+										requireArguments()
 									)
 								} else {
 									handlerError(responseSuccess)
@@ -178,8 +176,7 @@ class GuideFaceIdFragment : PVFragment<FragmentGuideFaceCaptureBinding>() {
 												)
 												openFragment(
 													HomeFragment::class.java,
-													arguments ?: Bundle(),
-													true
+													arguments ?: Bundle()
 												)
 											}
 										}
