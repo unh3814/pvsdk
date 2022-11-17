@@ -16,7 +16,7 @@ object Constants {
 	const val SERVER_URL = "https://connect.apps.ocp4-dev03.pvcomtestocp.com/"
 	var ONBOARDING_URL = "https://onboarding-udnb-staging.pvcombank.com.vn/api/"
 	var CHECK_ACC_URL = "https://mobile25uat.pvcombank.com.vn/api/"
-	var BASE_URL_OTP = "https://iuhfhsds3h.execute-api.ap-southeast-1.amazonaws.com/"
+	var BASE_URL_OTP = "https://iuhfhsds3h.execute-api.ap-southeast-1.amazonaws.com/staging/v1/onboarding/"
 	const val REDIRECT_URL = "https://10.0.15.60/connect"
 	const val REDIRECT_SANBOX_URL = "https://awsapi.pvcombank.com.vn/connect"
 	const val CLIENT_ID = "430434b7"

@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity(), PVCBAuthListener {
 		PVCBAuth().apply {
 			build(
 				this@MainActivity,
-				true,
+				false,
 				null,
 				this@MainActivity
 			)
