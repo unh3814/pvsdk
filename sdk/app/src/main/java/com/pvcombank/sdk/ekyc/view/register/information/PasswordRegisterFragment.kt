@@ -93,6 +93,7 @@ class PasswordRegisterFragment : PVFragment<FragmentPasswordRegisterBinding>() {
 				Observer {
 					it?.let {
 						hideLoading()
+						MasterModel.getInstance().errorString.onNext("Error")
 						if (it.first == 0) {
 							SuccessFragment(false).show(childFragmentManager, "FAIL")
 						} else {
@@ -122,21 +123,6 @@ class PasswordRegisterFragment : PVFragment<FragmentPasswordRegisterBinding>() {
 		hideLoading()
 		SuccessFragment(true).show(childFragmentManager, "SUCCESS")
 		repository.finish((cache["data_finish"] as RequestFinish))
-//		requireArguments().getParcelable<RequestFinish>("request_data_finish")
-//			?.let {
-//				repository.finish(it)
-//			}
-//			?: kotlin.run {
-//				AlertPopup.show(
-//					fragmentManager = childFragmentManager,
-//					message = "Có lỗi vui lòng thử lại",
-//					primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
-//						override fun onClickListener(v: View) {
-//						}
-//					},
-//					primaryTitle = getString(R.string.txt_close)
-//				)
-//			}
 	}
 	
 	override fun onBack(): Boolean = false

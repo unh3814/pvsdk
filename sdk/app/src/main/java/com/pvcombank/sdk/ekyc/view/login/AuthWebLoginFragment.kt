@@ -48,6 +48,7 @@ class AuthWebLoginFragment : PVFragment<FragmentWebLoginBinding>() {
 					primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
 						override fun onClickListener(v: View) {
 							requireActivity().finish()
+							MasterModel.getInstance().errorString.onNext("Cancel")
 						}
 					}
 				)
@@ -168,6 +169,7 @@ class AuthWebLoginFragment : PVFragment<FragmentWebLoginBinding>() {
 			primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
 				override fun onClickListener(v: View) {
 					requireActivity().finish()
+					MasterModel.getInstance().errorString.onNext("Cancel")
 				}
 			},
 			secondTitle = "Cancel",

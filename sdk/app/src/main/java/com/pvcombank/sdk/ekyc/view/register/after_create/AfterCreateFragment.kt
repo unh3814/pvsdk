@@ -162,6 +162,7 @@ class AfterCreateFragment : PVFragment<FragmentCreateAccoutBinding>() {
 //			false
 //		)
 		requireActivity().finish()
+		MasterModel.getInstance().errorString.onNext("Cancel")
 		return true
 	}
 }

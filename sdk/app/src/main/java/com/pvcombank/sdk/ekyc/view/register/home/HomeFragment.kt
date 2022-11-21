@@ -77,6 +77,7 @@ class HomeFragment : PVFragment<FragmentHomeBinding>() {
 	
 	override fun onBack(): Boolean {
 		requireActivity().finish()
+		MasterModel.getInstance().errorString.onNext("Cancel")
 		return true
 	}
 	
@@ -94,6 +95,7 @@ class HomeFragment : PVFragment<FragmentHomeBinding>() {
 				primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
 					override fun onClickListener(v: View) {
 						requireActivity().finish()
+						MasterModel.getInstance().errorString.onNext("Cancel")
 					}
 				}
 			)

@@ -279,6 +279,7 @@ class GuideCardIdFragment : PVFragment<FragmentGuideCardCaptureBinding>() {
 								primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
 									override fun onClickListener(v: View) {
 										requireActivity().finish()
+										MasterModel.getInstance().errorString.onNext("Cancel")
 									}
 								}
 							)
@@ -367,6 +368,7 @@ class GuideCardIdFragment : PVFragment<FragmentGuideCardCaptureBinding>() {
 					primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
 						override fun onClickListener(v: View) {
 							requireActivity().finish()
+							MasterModel.getInstance().errorString.onNext("Cancel")
 						}
 					}
 				)

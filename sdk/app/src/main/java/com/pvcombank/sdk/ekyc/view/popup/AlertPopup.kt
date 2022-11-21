@@ -103,6 +103,7 @@ class AlertPopup : DialogFragment() {
 					override fun onFinish() {
 						try {
 							requireActivity().finish()
+							MasterModel.getInstance().errorString.onNext("Cancel")
 						} catch (e: Exception){
 						
 						}

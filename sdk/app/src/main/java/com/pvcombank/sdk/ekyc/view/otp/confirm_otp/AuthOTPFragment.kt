@@ -71,6 +71,7 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 						primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
 							override fun onClickListener(v: View) {
 								requireActivity().finish()
+								MasterModel.getInstance().errorString.onNext("Cancel")
 							}
 						},
 						secondTitle = "Cancel"
