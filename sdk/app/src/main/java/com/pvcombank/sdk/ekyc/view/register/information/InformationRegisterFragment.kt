@@ -169,6 +169,7 @@ class InformationRegisterFragment : PVFragment<FragmentRegisterBinding>() {
 					SimpleDateFormat(Constants.TIME_FORMAT).parse(data.expDate)
 				}
 				requestFinish.expiredDate = date.toPVDate()
+				cache["data_finish"] = requestFinish
 				requireArguments().putParcelable("request_data_finish", requestFinish)
 				openFragment(
 					PasswordRegisterFragment::class.java,

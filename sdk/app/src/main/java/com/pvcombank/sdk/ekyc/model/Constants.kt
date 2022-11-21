@@ -28,7 +28,7 @@ object Constants {
 	var TOKEN: String = ""
 	var TOKEN_REFRESH = ""
 	//region http code
-	const val API_UPDATE_PASSWORD = "staging/v1/onboarding/update-password"
+	const val API_UPDATE_PASSWORD = "update-password"
 	const val API_CHECK_ACC_BANKING = "common/accounts/check_acc_banking"
 	const val API_FINISH = "ekyc/finish"
 	const val API_VERIFY_SELFIE = "verify-selfie"

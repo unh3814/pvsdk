@@ -121,21 +121,22 @@ class PasswordRegisterFragment : PVFragment<FragmentPasswordRegisterBinding>() {
 	private fun startOpenCIF() {
 		hideLoading()
 		SuccessFragment(true).show(childFragmentManager, "SUCCESS")
-		requireArguments().getParcelable<RequestFinish>("request_data_finish")
-			?.let {
-				repository.finish(it)
-			}
-			?: kotlin.run {
-				AlertPopup.show(
-					fragmentManager = childFragmentManager,
-					message = "Có lỗi vui lòng thử lại",
-					primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
-						override fun onClickListener(v: View) {
-						}
-					},
-					primaryTitle = getString(R.string.txt_close)
-				)
-			}
+		repository.finish((cache["data_finish"] as RequestFinish))
+//		requireArguments().getParcelable<RequestFinish>("request_data_finish")
+//			?.let {
+//				repository.finish(it)
+//			}
+//			?: kotlin.run {
+//				AlertPopup.show(
+//					fragmentManager = childFragmentManager,
+//					message = "Có lỗi vui lòng thử lại",
+//					primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
+//						override fun onClickListener(v: View) {
+//						}
+//					},
+//					primaryTitle = getString(R.string.txt_close)
+//				)
+//			}
 	}
 	
 	override fun onBack(): Boolean = false

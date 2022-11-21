@@ -13,6 +13,8 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/pvcombank/demoapp/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/pvcombank/demoapp/MainActivity.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/model/Constants.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/model/Constants.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/view/register/information/InformationRegisterFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/view/register/information/InformationRegisterFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/view/register/information/PasswordRegisterFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/view/register/information/PasswordRegisterFragment.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,7 +24,7 @@
   <component name="DockDockBuild.Settings">
     <option name="codePath" value="$PROJECT_DIR$" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[50f5869d]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[/Users/hungtran/.android/avd/Pixel_3a_API_33_x86_64.avd]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
