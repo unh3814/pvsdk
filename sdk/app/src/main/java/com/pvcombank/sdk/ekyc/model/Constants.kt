@@ -2,7 +2,7 @@ package com.pvcombank.sdk.ekyc.model
 
 object Constants {
 	var ID_PARTNER: String? = null
-
+	var APP_CODE: String? = null
 	const val TIME_FORMAT = "yyyy-MM-DD"
 	const val DATE_FORMAT = "DD/MM/yyyy"
 	
@@ -13,18 +13,19 @@ object Constants {
 	const val VIETSENS_ID = "vietsens-sdk"
 	//endregion Auth
 
-	const val SERVER_URL = "https://connect.apps.ocp4-dev03.pvcomtestocp.com/"
-	var ONBOARDING_URL = "https://onboarding-udnb-staging.pvcombank.com.vn/api/"
-	var CHECK_ACC_URL = "https://mobile25uat.pvcombank.com.vn/api/"
-	var BASE_URL_OTP = "https://iuhfhsds3h.execute-api.ap-southeast-1.amazonaws.com/staging/v1/onboarding/"
+	//region URL
+	const val ONBOARDING_URL = "https://onboarding-udnb-staging.pvcombank.com.vn/api/"
+	const val CHECK_ACC_URL = "https://mobile25uat.pvcombank.com.vn/api/"
+	const val BASE_URL_OTP = "https://iuhfhsds3h.execute-api.ap-southeast-1.amazonaws.com/staging/v1/onboarding/"
+
+	const val ONBOARDING_URL_PRODUCT = "https://onboarding-api.pvcombank.com.vn/api/"
+	const val CHECK_ACC_URL_PRODUCT = "https://mbanking255.pvcombank.com.vn/api/"
+	const val BASE_URL_OTP_PRODUCT = "https://awsapi.pvcombank.com.vn/v1/onboarding/"
+	//endregion
+
 	const val REDIRECT_URL = "https://10.0.15.60/connect"
 	const val REDIRECT_SANBOX_URL = "https://awsapi.pvcombank.com.vn/connect"
-	const val CLIENT_ID = "430434b7"
-//	const val CLIENT_SECRET = "4e22f497-4f20-4a3e-a950-4e29e6df6729"
-//	const val url = "https://connect.apps.ocp4-dev03.pvcomtestocp.com/auth/realms/pvcombank/protocol/openid-connect/auth?client_id=vietsens-sdk&state=589i2mgvijs&redirect_uri=$REDIRECT_URL&scope=openid&response_type=code"
-	const val url_sanbox = "https://sandbox-connect.pvcombank.com.vn/auth/realms/pvcombank/protocol/openid-connect/auth?client_id=$CLIENT_ID&state=589i2mgvijs&redirect_uri=$REDIRECT_SANBOX_URL&response_type=code&scope=openid"
-	//https://sandbox-connect.pvcombank.com.vn/auth/realms/pvcombank/protocol/openid-connect/auth?client_id=430434b7&state=589i2mgvijs&redirect_uri=https://awsapi.pvcombank.com.vn/connect&response_type=code&scope=openid
-	//https://connect.apps.ocp4-dev03.pvcomtestocp.com/auth/realms/pvcombank/protocol/openid-connect/auth?client_id=vietsens-sdk&state=589i2mgvijs&redirect_uri=https://10.0.15.60/connect&scope=openid&response_type=code
+	const val CLIENT_ID = "vietsens-sdk"
 	var TOKEN: String = ""
 	var TOKEN_REFRESH = ""
 	//region http code

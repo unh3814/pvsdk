@@ -12,6 +12,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import com.pvcombank.sdk.ekyc.R
 import com.pvcombank.sdk.ekyc.databinding.FragmentPopupBinding
+import com.pvcombank.sdk.ekyc.model.Constants
 import com.pvcombank.sdk.ekyc.model.MasterModel
 import com.pvcombank.sdk.ekyc.util.Utils
 
@@ -91,10 +92,10 @@ class AlertPopup : DialogFragment() {
 						try {
 							tvMessage.text = getString(
 								R.string.payment_success,
-								MasterModel.getInstance().clientId,
+								Constants.CLIENT_ID,
 								(millisUntilFinished / 1000).toString()
 							)
-							btnPrimary.text = "Quay về ${MasterModel.getInstance().clientId}"
+							btnPrimary.text = "Quay về ${Constants.CLIENT_ID}"
 						} catch (e: Exception){
 						
 						}
@@ -102,8 +103,8 @@ class AlertPopup : DialogFragment() {
 					
 					override fun onFinish() {
 						try {
-							requireActivity().finish()
 							MasterModel.getInstance().errorString.onNext("Cancel")
+							requireActivity().finish()
 						} catch (e: Exception){
 						
 						}

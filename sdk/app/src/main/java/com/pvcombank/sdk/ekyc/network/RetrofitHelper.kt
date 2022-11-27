@@ -3,6 +3,7 @@ package com.pvcombank.sdk.ekyc.network
 import com.pvcombank.sdk.ekyc.BuildConfig
 import com.pvcombank.sdk.ekyc.model.Constants
 import com.pvcombank.sdk.ekyc.model.MasterModel
+import com.pvcombank.sdk.ekyc.util.Utils
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -23,6 +24,14 @@ class RetrofitHelper {
 	}
 	
 	fun createServices(baseURL: String): Retrofit {
+		val url = if (MasterModel.getInstance().isProduction){
+			when(baseURL){
+				Constants.ONBOARDING_URL -> Constants.ONBOARDING_URL_PRODUCT
+				Constants.CHECK_ACC_URL -> Constants.CHECK_ACC_URL_PRODUCT
+				Constants.BASE_URL_OTP -> Constants.BASE_URL_OTP_PRODUCT
+				else -> baseURL
+			}
+		} else baseURL
 		val client = OkHttpClient.Builder()
 			.readTimeout(60, TimeUnit.SECONDS)
 			.connectTimeout(90, TimeUnit.SECONDS)
@@ -38,7 +47,7 @@ class RetrofitHelper {
 					.addHeader("Content-Type", "application/json")
 					.addHeader("app_unit_id", MasterModel.getInstance().appUnitID ?: "")
 					.addHeader("app_id", Constants.VIETSENS_ID)
-					.addHeader("signature", MasterModel.getInstance().uniId)
+					.addHeader("signature", Utils.randomUniID())
 					.build()
 				chain.proceed(request)
 			})
@@ -54,7 +63,7 @@ class RetrofitHelper {
 			})
 			.build()
 		return Retrofit.Builder()
-			.baseUrl(baseURL)
+			.baseUrl(url)
 			.addCallAdapterFactory(RxJava3CallAdapterFactory.create())
 			.addConverterFactory(GsonConverterFactory.create())
 			.client(client)

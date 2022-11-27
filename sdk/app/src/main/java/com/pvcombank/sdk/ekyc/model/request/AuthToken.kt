@@ -9,7 +9,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class AuthToken(
 	@SerializedName("client_id")
-	var clientId: String? = MasterModel.getInstance().clientId,
+	var clientId: String? = Constants.CLIENT_ID,
 	var username: String? = null,
 	var password: String? = null,
 	@SerializedName("grant_type")

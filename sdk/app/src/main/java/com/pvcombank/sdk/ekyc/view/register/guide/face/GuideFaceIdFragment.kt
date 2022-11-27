@@ -20,7 +20,6 @@ import com.pvcombank.sdk.ekyc.util.execute.MyExecutor
 import com.pvcombank.sdk.ekyc.view.popup.AlertPopup
 import com.pvcombank.sdk.ekyc.view.register.after_create.AfterCreateFragment
 import com.pvcombank.sdk.ekyc.view.register.confirm.InformationConfirmFragment
-import com.pvcombank.sdk.ekyc.view.register.home.HomeFragment
 import com.trustingsocial.tvcoresdk.external.*
 import com.trustingsocial.tvsdk.TrustVisionSDK
 import java.io.ByteArrayOutputStream
@@ -175,8 +174,8 @@ class GuideFaceIdFragment : PVFragment<FragmentGuideFaceCaptureBinding>() {
 													FragmentManager.POP_BACK_STACK_INCLUSIVE
 												)
 												openFragment(
-													HomeFragment::class.java,
-													arguments ?: Bundle()
+													AfterCreateFragment::class.java,
+													Bundle()
 												)
 											}
 										}

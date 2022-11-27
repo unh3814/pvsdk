@@ -46,8 +46,8 @@ class SuccessFragment(private val isSuccess: Boolean = false) : DialogFragment()
 			}
 			btnConfirm.setOnClickListener {
 				MasterModel.getInstance().cleanOCR()
-				requireActivity().finish()
 				MasterModel.getInstance().errorString.onNext("Cancel")
+				requireActivity().finish()
 			}
 		}
 	}

@@ -1,7 +1,6 @@
 package com.pvcombank.sdk.ekyc.view.otp.confirm_otp
 
 import android.graphics.Color
-import android.net.ipsec.ike.ChildSaProposal
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.text.Editable
@@ -14,7 +13,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.Toast
 import androidx.core.view.forEach
 import androidx.core.view.forEachIndexed
 import androidx.lifecycle.Observer
@@ -25,7 +23,6 @@ import com.pvcombank.sdk.ekyc.base.model.TopBarListener
 import com.pvcombank.sdk.ekyc.databinding.OtpViewBinding
 import com.pvcombank.sdk.ekyc.model.CardModel
 import com.pvcombank.sdk.ekyc.model.Constants
-import com.pvcombank.sdk.ekyc.model.ErrorBody
 import com.pvcombank.sdk.ekyc.model.MasterModel
 import com.pvcombank.sdk.ekyc.model.request.RequestModel
 import com.pvcombank.sdk.ekyc.model.request.RequestVerifyOTP
@@ -39,7 +36,6 @@ import com.pvcombank.sdk.ekyc.view.register.after_create.AfterCreateFragment
 import com.pvcombank.sdk.ekyc.view.register.confirm.InformationConfirmFragment
 import com.pvcombank.sdk.ekyc.view.register.guide.card.GuideCardIdFragment
 import com.pvcombank.sdk.ekyc.view.register.guide.face.GuideFaceIdFragment
-import com.pvcombank.sdk.ekyc.view.register.home.HomeFragment
 import java.util.*
 
 class AuthOTPFragment : PVFragment<OtpViewBinding>() {
@@ -70,8 +66,8 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 						primaryTitle = "OK",
 						primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
 							override fun onClickListener(v: View) {
-								requireActivity().finish()
 								MasterModel.getInstance().errorString.onNext("Cancel")
+								requireActivity().finish()
 							}
 						},
 						secondTitle = "Cancel"
@@ -184,7 +180,7 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 					primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
 						override fun onClickListener(v: View) {
 							openFragment(
-								HomeFragment::class.java,
+								AfterCreateFragment::class.java,
 								Bundle()
 							)
 						}
@@ -199,7 +195,7 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 					primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
 						override fun onClickListener(v: View) {
 							openFragment(
-								HomeFragment::class.java,
+								AfterCreateFragment::class.java,
 								Bundle()
 							)
 						}
@@ -276,14 +272,10 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 	private fun getNewOtp() {
 		viewBinding.tvGetOtp.isEnabled = false
 		viewBinding.tvGetOtp.setTextColor(Color.parseColor("#82869E"))
-		val card = requireArguments().getParcelable<CardModel>("card")
 		showLoading()
-		if (masterModel.isCreateAccount) {
-			val mail = (cache["email"] as? String) ?: ""
-			val phone = (cache["phone_number"] as? String) ?: ""
-			
-			repository?.sendOTP(phone, mail)
-		}
+		val mail = (cache["email"] as? String) ?: ""
+		val phone = (cache["phone_number"] as? String) ?: ""
+		repository?.sendOTP(phone, mail)
 	}
 	
 	private fun EditText.validateOtpView() {
@@ -321,9 +313,7 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 		val stringEncrypt = SecurityHelper.instance()
 			.cryptoBuild(type = SecurityHelper.AES)
 			?.encrypt(Gson().toJson(request))
-		if (masterModel.isCreateAccount) {
-			repository?.verifyOnboardOTP(RequestModel(data = stringEncrypt))
-		}
+		repository?.verifyOnboardOTP(RequestModel(data = stringEncrypt))
 	}
 	
 	private fun showAlerError(message: String? = null, onAlertClick: (v: View) -> Unit) {

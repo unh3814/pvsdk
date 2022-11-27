@@ -142,7 +142,7 @@ class InformationRegisterFragment : PVFragment<FragmentRegisterBinding>() {
 				startActivity(Intent.createChooser(target, "Select"))
 			}
 			cbCheckRules3.setOnCheckedChangeListener(rulesChecked)
-			if(MasterModel.getInstance().clientId == "vietsens-sdk"){
+			if(Constants.CLIENT_ID == "vietsens-sdk"){
 				cbCheckRules3.visibility = View.VISIBLE
 			} else {
 				cbCheckRules3.visibility = View.GONE

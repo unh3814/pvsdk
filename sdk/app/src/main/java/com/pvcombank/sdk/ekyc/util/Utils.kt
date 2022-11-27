@@ -18,7 +18,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.pvcombank.sdk.ekyc.BuildConfig
 import com.pvcombank.sdk.ekyc.model.*
+import com.pvcombank.sdk.ekyc.util.security.SecurityHelper
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -163,5 +165,17 @@ object Utils {
 			this.defaultDisplay.getMetrics(metric)
 		}
 		return metric
+	}
+
+	fun randomUniID(): String {
+		val obj = Gson().toJson(
+			hashMapOf(
+				"app_id" to BuildConfig.LIBRARY_PACKAGE_NAME,
+				"time_stamp" to Date().time.toString()
+			)
+		)
+		return SecurityHelper.instance()
+			.cryptoBuild(type = SecurityHelper.AES)
+			?.encrypt(obj) ?: ""
 	}
 }

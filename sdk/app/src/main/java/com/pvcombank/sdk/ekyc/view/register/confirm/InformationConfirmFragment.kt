@@ -14,7 +14,6 @@ import com.pvcombank.sdk.ekyc.util.Utils.toPVDate
 import com.pvcombank.sdk.ekyc.util.Utils.toSVDate
 import com.pvcombank.sdk.ekyc.view.popup.AlertPopup
 import com.pvcombank.sdk.ekyc.view.register.guide.card.GuideCardIdFragment
-import com.pvcombank.sdk.ekyc.view.register.home.HomeFragment
 import com.pvcombank.sdk.ekyc.view.register.information.InformationRegisterFragment
 import java.text.SimpleDateFormat
 import java.util.*

@@ -403,7 +403,7 @@
             android:layout_marginBottom="8dp"
             android:gravity="top|start"
             android:paddingLeft="16dp"
-            android:text="Tôi đồng ý gửi thông tin định danh tại PVcombank cho CTCP Công nghệ Onelink Việt Nam để định danh" />
+            android:text="Tôi đồng ý gửi thông tin định danh tại PVcomBank cho CTCP Công nghệ Onelink Việt Nam để định danh" />
 
         <CheckBox
             android:id="@+id/cb_check_rules_1"

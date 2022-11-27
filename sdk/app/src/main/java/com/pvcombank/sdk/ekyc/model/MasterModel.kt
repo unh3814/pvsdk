@@ -1,40 +1,23 @@
 package com.pvcombank.sdk.ekyc.model
 
-import com.pvcombank.sdk.ekyc.util.security.SecurityHelper
-import com.google.gson.Gson
-import com.pvcombank.sdk.ekyc.BuildConfig
 import com.pvcombank.sdk.ekyc.model.response.ResponseOCR
 import com.trustingsocial.tvcoresdk.external.FrameBatch
 import io.reactivex.rxjava3.subjects.PublishSubject
-import java.util.*
 
 class MasterModel {
-	var clientId: String? = "vietsens-sdk"
 	var clientSecret: String? = null
 	var appUnitID: String? = null
 	var uuidOfOTP: String? = null
 	var timeLogin: Long? = null
-	var uniId: String = ""
-		get() {
-			val obj = Gson().toJson(
-				hashMapOf(
-					"app_id" to BuildConfig.LIBRARY_PACKAGE_NAME,
-					"time_stamp" to Date().time.toString()
-				)
-			)
-			return SecurityHelper.instance()
-				.cryptoBuild(type = SecurityHelper.AES)
-				?.encrypt(obj) ?: ""
-		}
-	val ocrApiKey = "KFxtLjFTavCDmNFE7dqZiCowhyM02ZWO"
-	val errorString: PublishSubject<String> = PublishSubject.create()
-	val successString: PublishSubject<String> = PublishSubject.create()
-	var isCreateAccount = false
+
+	lateinit var errorString: PublishSubject<String>
+	lateinit var successString: PublishSubject<String>
 	val frameBatch = mutableListOf<FrameBatch>()
 	val dataOCR = hashMapOf<String, ResponseOCR?>()
 	var selectBranch: BranchModel? = null
 	var ocrFromOTP: ResponseOCR = ResponseOCR()
 	val cache = hashMapOf<String, Any>()
+	var isProduction = false
 	companion object {
 		@JvmStatic
 		private var INSTANCE: MasterModel? = null

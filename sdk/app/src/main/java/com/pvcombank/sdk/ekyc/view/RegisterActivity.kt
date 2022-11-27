@@ -15,9 +15,11 @@ import com.pvcombank.sdk.ekyc.base.model.TopBar
 import com.pvcombank.sdk.ekyc.base.model.TopBarListener
 import com.pvcombank.sdk.ekyc.databinding.ActivityRegisterBinding
 import com.pvcombank.sdk.ekyc.model.Constants
+import com.pvcombank.sdk.ekyc.model.MasterModel
 import com.pvcombank.sdk.ekyc.util.Utils.openFragment
 import com.pvcombank.sdk.ekyc.view.register.after_create.AfterCreateFragment
 import com.trustingsocial.tvsdk.TrustVisionSDK
+import io.reactivex.rxjava3.subjects.PublishSubject
 
 class RegisterActivity : PVActivity<ActivityRegisterBinding>() {
 	private val currentFragment get() = supportFragmentManager.findFragmentById(fragmentHostID)
@@ -100,5 +102,9 @@ class RegisterActivity : PVActivity<ActivityRegisterBinding>() {
 	override fun onBack(): Boolean {
 		val currentFragment = supportFragmentManager.findFragmentById(fragmentHostID) as? PVFragment<*>
 		return currentFragment?.onBack() ?: false
+	}
+
+	override fun onDestroy() {
+		super.onDestroy()
 	}
 }

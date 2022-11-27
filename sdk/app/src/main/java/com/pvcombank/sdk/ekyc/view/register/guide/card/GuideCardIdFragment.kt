@@ -23,7 +23,6 @@ import com.pvcombank.sdk.ekyc.util.execute.MyExecutor
 import com.pvcombank.sdk.ekyc.view.popup.AlertPopup
 import com.pvcombank.sdk.ekyc.view.register.after_create.AfterCreateFragment
 import com.pvcombank.sdk.ekyc.view.register.guide.face.GuideFaceIdFragment
-import com.pvcombank.sdk.ekyc.view.register.home.HomeFragment
 import com.trustingsocial.tvcoresdk.external.*
 import com.trustingsocial.tvcoresdk.external.TVSDKConfiguration.TVCardSide
 import com.trustingsocial.tvsdk.TrustVisionSDK
@@ -204,7 +203,10 @@ class GuideCardIdFragment : PVFragment<FragmentGuideCardCaptureBinding>() {
 									null,
 									FragmentManager.POP_BACK_STACK_INCLUSIVE
 								)
-								openFragment(HomeFragment::class.java, arguments ?: Bundle())
+								openFragment(
+									AfterCreateFragment::class.java,
+									Bundle()
+								)
 							}
 						}
 					}
@@ -278,8 +280,8 @@ class GuideCardIdFragment : PVFragment<FragmentGuideCardCaptureBinding>() {
 								primaryTitle = getString(R.string.txt_close),
 								primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
 									override fun onClickListener(v: View) {
-										requireActivity().finish()
 										MasterModel.getInstance().errorString.onNext("Cancel")
+										requireActivity().finish()
 									}
 								}
 							)
@@ -367,8 +369,8 @@ class GuideCardIdFragment : PVFragment<FragmentGuideCardCaptureBinding>() {
 					primaryTitle = getString(R.string.txt_close),
 					primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
 						override fun onClickListener(v: View) {
-							requireActivity().finish()
 							MasterModel.getInstance().errorString.onNext("Cancel")
+							requireActivity().finish()
 						}
 					}
 				)
