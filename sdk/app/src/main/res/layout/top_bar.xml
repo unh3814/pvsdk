@@ -7,11 +7,16 @@
     app:cardCornerRadius="0dp"
     app:cardElevation="8dp">
 
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </androidx.cardview.widget.CardView>
     <LinearLayout
         android:id="@+id/ll_root_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white"
+        android:background="@color/color_white"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -21,7 +26,7 @@
             android:layout_height="wrap_content"
             android:padding="8dp"
             android:src="@drawable/ic_round_arrow_back_ios_new_24"
-            app:tint="@android:color/black" />
+            app:tint="@color/color_black" />
 
         <TextView
             android:id="@+id/tv_title"
@@ -30,7 +35,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:paddingVertical="12dp"
-            android:textColor="@android:color/black"
+            android:textColor="@color/color_black"
             android:textSize="15sp"
             android:textStyle="bold"
             tools:text="Tiêu đề " />
@@ -42,7 +47,7 @@
             android:gravity="center"
             android:padding="8dp"
             tools:text="Huỷ"
-            android:textColor="@android:color/holo_blue_light"
+            android:textColor="@color/color_blue"
             android:textSize="13sp" />
 
         <ImageView

@@ -1,63 +1,36 @@
 package com.pvcombank.demoapp
 
-import android.content.Context
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
-import android.view.inputmethod.InputMethodManager
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import com.pvcombank.sdk.PVCBAuthListener
-import com.pvcombank.sdk.view.PVCBAuth
+import androidx.appcompat.app.AppCompatActivity
+import com.pvcombank.sdk.ekyc.PVCBAuthListener
+import com.pvcombank.sdk.ekyc.view.PVCBAuth
 
-class MainActivity : AppCompatActivity() {
-	private var textThanhToan: TextView? = null
-	private var btnThanhToan: Button? = null
-	private var edtCurrency: EditText? = null
+class MainActivity : AppCompatActivity(), PVCBAuthListener {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_main)
-		btnThanhToan = findViewById(R.id.btn_thanh_toan)
-		textThanhToan = findViewById(R.id.tv_thanh_toan)
-		edtCurrency = findViewById(R.id.edt_currency)
-		textThanhToan?.text = "Mã đơn hàng: #005002\nNội dung: Thanh toan vien phi tai BV"
-		btnThanhToan?.setOnClickListener {
-			if (edtCurrency?.text?.isNotEmpty() == true) {
-				startPayment()
-			}
-		}
 	}
 	
-	fun startPayment() {
+	override fun onStart() {
+		super.onStart()
 		PVCBAuth().apply {
-			hideKeyboard()
-			setClient(
-				clientId = "vietsens-sdk",
-				clientSecret = "97392180-9aeb-4fe4-9c24-0676d35b4505",
-				currency = edtCurrency?.text.toString(),
-				idOrder = "005002",
-				appUnitId = "GEBIuX+mVEJzPZG/QuVkVQ=="
+			build(
+				this@MainActivity,
+				false,
+				null,
+				this@MainActivity
 			)
-			setListener(object : PVCBAuthListener {
-				override fun onError(message: String) {
-					Log.d("ERROR", message)
-				}
-				
-				override fun onSuccess(message: String) {
-					Log.d("SUCCESS", message)
-				}
-			})
-			build(this@MainActivity)
-			show()
+			startRegister()
 		}
 	}
-	
-	fun hideKeyboard() {
-		this.currentFocus?.let {
-			(getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)?.apply {
-				hideSoftInputFromWindow(it.windowToken, 0)
-			}
-		}
+
+	override fun onError(message: String) {
+		Log.e("ERROR", message)
 	}
+
+	override fun onSuccess(message: String) {
+		Log.d("SUCCESS", message)
+	}
+
 }

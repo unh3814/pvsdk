@@ -6,79 +6,80 @@
     android:layout_height="match_parent"
     android:padding="16dp">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/title_guide_face_capture"
-        android:textColor="#313442"
-        android:textSize="18sp"
-        android:textStyle="bold"
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="12dp"
+        android:src="@drawable/ic_face_blur"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView3"
+    <TextView
+        android:id="@+id/textView9"
+        style="@style/PVTextView.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:src="@drawable/ic_frame_face"
+        android:gravity="center"
+        android:maxWidth="200dp"
+        android:text="Đảm bảo hình ảnh đủ sáng, không bị mờ, lóa"
+        android:textColor="@color/color_grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView7" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="64dp"
+        android:src="@drawable/ic_face_glass"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+    <TextView
+        android:id="@+id/textView10"
+        style="@style/PVTextView.Title"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:orientation="vertical"
+        android:gravity="center"
+        android:maxWidth="200dp"
+        android:text="Không đeo kính và đội mũ"
+        android:textColor="@color/color_grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3">
+        app:layout_constraintTop_toBottomOf="@+id/imageView5" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_round_check_circle_24"
-            android:drawablePadding="8dp"
-            android:drawableTint="@color/color_checked"
-            android:gravity="center_vertical"
-            android:padding="4dp"
-            android:text="@string/txt_guide_face_rule_1"
-            android:textColor="@android:color/black" />
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="64dp"
+        android:src="@drawable/ic_face_mark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_round_check_circle_24"
-            android:drawablePadding="8dp"
-            android:drawableTint="@color/color_checked"
-            android:gravity="center_vertical"
-            android:padding="4dp"
-            android:text="@string/txt_guide_face_rule_2"
-            android:textColor="@android:color/black" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_untrushed"
-            android:drawablePadding="8dp"
-            android:drawableTint="@android:color/holo_red_light"
-            android:gravity="center_vertical"
-            android:padding="4dp"
-            android:text="@string/txt_guide_face_rule_3"
-            android:textColor="@android:color/black" />
-    </LinearLayout>
+    <TextView
+        style="@style/PVTextView.Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:maxWidth="200dp"
+        android:text="Không đeo khẩu trang hoặc che khuôn mặt "
+        android:textColor="@color/color_grey"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView6" />
 
     <Button
         android:id="@+id/btn_confirm"
+        style="@style/PVButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_primary"
         android:text="@string/i_understand"
-        android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/name"
+        style="@style/PVTextView.Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="false"
+        android:paddingVertical="8dp"
+        android:textColor="@color/color_black"
+        android:textStyle="bold"
+        tools:text="PVComBank hà Nội" />
+
+    <TextView
+        android:id="@+id/direct"
+        style="@style/PVTextView.Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        tools:text="@tools:sample/lorem" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_grey_light_1" />
+</LinearLayout>

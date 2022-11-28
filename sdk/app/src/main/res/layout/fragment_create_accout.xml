@@ -6,19 +6,24 @@
     android:layout_height="match_parent"
     android:padding="16dp">
 
-    <com.pvcombank.sdk.view.customs.TextViewPVCB.TextViewPVCB
+    <com.pvcombank.sdk.ekyc.view.customs.EditViewPVCB.EditViewPVCB
         android:id="@+id/phone_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:textHint="Nhập nội dung số điện thoại"
+        app:inputType="number"
+        app:maxLengh="10"
+        app:errorEnabled="true"
+        app:textHint="Nhập số điện thoại"
         app:textTitle="Số điện thoại" />
 
-    <com.pvcombank.sdk.view.customs.TextViewPVCB.TextViewPVCB
+    <com.pvcombank.sdk.ekyc.view.customs.EditViewPVCB.EditViewPVCB
         android:id="@+id/email_address"
         android:layout_width="match_parent"
+        tools:note="Abcd"
+        app:errorEnabled="true"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,38 +31,14 @@
         app:textHint="Nhập địa chỉ email"
         app:textTitle="Địa chỉ email" />
 
-    <TextView
-        android:id="@+id/txt_had_account"
-        style="@style/PVTextView.Title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Bạn đã có tài khoản PVComBank Connect?"
-        app:layout_constraintBottom_toTopOf="@id/txt_to_login"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/txt_to_login"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:gravity="center"
-        android:text="Đăng nhập ngay"
-        android:textColor="#3A9EFC"
-        android:textSize="13sp"
-        app:layout_constraintBottom_toTopOf="@id/btn_create_account"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <Button
+        android:enabled="true"
         android:id="@+id/btn_create_account"
         style="@style/PVButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/txt_create_account"
+        android:text="Tiếp tục"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:enabled="true" />
+        app:layout_constraintStart_toStartOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

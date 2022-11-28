@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.pvcombank.sdk">
+    package="com.pvcombank.sdk.ekyc">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
@@ -13,10 +13,15 @@
 
     <uses-feature android:name="android.hardware.camera" />
 
-    <application
-        android:supportsRtl="true"
-        tools:targetApi="32" >
-        <activity android:name=".view.PVCBActivity"
-            android:windowSoftInputMode="adjustPan|stateVisible"/>
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID"
+        tools:node="remove"/>
+
+    <application android:supportsRtl="true"
+        android:networkSecurityConfig="@xml/tv_network_security_config"
+        android:usesCleartextTraffic="true"
+        tools:targetApi="31">
+        <activity android:name=".view.RegisterActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateAlwaysVisible"/>
     </application>
 </manifest>

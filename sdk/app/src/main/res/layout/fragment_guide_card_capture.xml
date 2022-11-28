@@ -8,41 +8,27 @@
 
     <TextView
         android:id="@+id/textView2"
+        style="@style/PVTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="@string/title_guide_capture_picture"
-        android:textColor="#313442"
-        android:textSize="18sp"
-        android:textStyle="bold"
+        android:text="Chuẩn bị sẵn CCCD/CMND hoặc hộ chiếu để bắt đầu nhé"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/accept_picture"
-        android:textColor="@android:color/black"
-        android:textSize="13sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="190dp"
         android:layout_height="120dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/bg_success"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/bg_card_success"
+        android:clipToOutline="true"
         android:padding="1dp"
         android:src="@drawable/identity_1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <ImageView
         android:layout_width="28dp"
@@ -205,20 +191,39 @@
 
     </LinearLayout>
 
-    <TextView
-        style="@style/PVTextView.Note"
-        android:drawablePadding="12dp"
+    <ImageView
+        android:id="@+id/imageView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:drawableStart="@drawable/ic_note"
-        android:text="Khách hàng từ đủ 18 tuổi trở lên, sử dụng GTTT bản GỐC chính chủ Khách hàng chịu hoàn toàn trách nhiệm trước pháp luật về thông tin đã cung cấp"
+        android:src="@drawable/ic_note"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView7" />
+
+    <TextView
+        android:id="@+id/textView7"
+        style="@style/PVTextView.Note"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="12dp"
+        android:drawablePadding="12dp"
+        android:text="Khách hàng từ đủ 18 tuổi trở lên, sử dụng GTTT bản GỐC chính chủ "
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView4"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
+    <TextView
+        style="@style/PVTextError"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Khách hàng chịu hoàn toàn trách nhiệm trước pháp luật về thông tin đã cung cấp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textView7"
+        app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
     <Button
-        style="@style/PVButton"
         android:id="@+id/btn_confirm"
+        style="@style/PVButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/i_understand"
