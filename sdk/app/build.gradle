@@ -15,9 +15,56 @@ android {
         targetSdkVersion build_version.target_sdk
         versionCode 1
         versionName "1.0"
-        multiDexEnabled true
+        multiDexEnabled = true
+        aarMetadata {
+            minSdk = 23
+        }
     }
-
+    flavorDimensions ''
+    productFlavors {
+        def SERVER_URL = "SERVER_URL"
+        def STRING = "String"
+        sdk_debug {
+            dimension ''
+            buildConfigField(STRING, SERVER_URL, '"https://connect.apps.ocp4-dev03.pvcomtestocp.com/"')
+            aarMetadata {
+                minSdk = 23
+            }
+        }
+        sdk_release {
+            dimension ''
+            buildConfigField(STRING, SERVER_URL, '"https://connect.apps.ocp4-dev03.pvcomtestocp.com/"')
+            aarMetadata {
+                minSdk = 23
+            }
+        }
+    }
+    publishing {
+        publications {
+            release(MavenPublication) {
+                groupId = 'com.pvcombank.sdk'
+                artifactId = 'pvsdk'
+                version = '1.0'
+                pom.withXml {
+                    def dependenciesNode = asNode().appendNode('dependencies')
+                    configurations.implementation.allDependencies.each { dependency ->
+                        if (dependency.name != 'unspecified') {
+                            def dependencyNode = dependenciesNode.appendNode('dependency')
+                            dependencyNode.appendNode('groupId', dependency.group)
+                            dependencyNode.appendNode('artifactId', dependency.name)
+                            dependencyNode.appendNode('version', dependency.version)
+                        }
+                    }
+                }
+            }
+        }
+        repositories {
+            maven {
+                name = 'myrepo'
+                url = "${project.buildDir}/repo"
+            }
+        }
+    }
     buildTypes {
         debug {
             minifyEnabled false
@@ -86,6 +133,10 @@ android {
     }
     aaptOptions {
         noCompress "tflite"
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
     }
     buildFeatures {
         viewBinding true
