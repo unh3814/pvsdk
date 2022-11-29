@@ -41,10 +41,10 @@ android {
     }
     publishing {
         publications {
-            release(MavenPublication) {
+            debug(MavenPublication) {
                 groupId = 'com.pvcombank.sdk'
-                artifactId = 'pvsdk'
-                version = '1.0'
+                artifactId = 'ekyc'
+                version = '0.1.1'
                 pom.withXml {
                     def dependenciesNode = asNode().appendNode('dependencies')
                     configurations.implementation.allDependencies.each { dependency ->
@@ -103,7 +103,7 @@ android {
             release(MavenPublication) {
                 groupId = 'com.pvcombank.sdk'
                 artifactId = 'ekyc'
-                version = '0.1.0'
+                version = '0.1.1'
                 pom.withXml {
                     def dependenciesNode = asNode().appendNode('dependencies')
                     configurations.implementation.allDependencies.each { dependency ->

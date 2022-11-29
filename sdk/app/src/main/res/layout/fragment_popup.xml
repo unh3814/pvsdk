@@ -32,6 +32,15 @@
                 tools:visibility="gone" />
 
             <TextView
+                android:gravity="center_horizontal"
+                android:text="Thông báo"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/color_blue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
                 android:id="@+id/tv_message"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"

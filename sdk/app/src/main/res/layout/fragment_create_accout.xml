@@ -29,7 +29,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/phone_number"
         app:textHint="Nhập địa chỉ email"
-        app:textTitle="Địa chỉ email" />
+        app:textTitle="Địa chỉ email (Không bắt buộc)" />
 
     <Button
         android:enabled="true"

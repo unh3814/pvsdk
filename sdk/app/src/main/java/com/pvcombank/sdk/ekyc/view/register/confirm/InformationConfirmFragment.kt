@@ -72,38 +72,45 @@ class InformationConfirmFragment : PVFragment<FragmentCardCaptureResultBinding>(
 				}
 			}
 			issuedBy.setText(data.issuePlace)
-			liveIn.setText(data.permanentAddress)
-			tvIssuedPlace.text = data.permanentAddress
-			liveIn.addTextChangedListener {
-				it?.let {
-					data.permanentAddress = it.toString()
-				}
+			liveInNow.setText(data.permanentAddress)
+//			liveIn.setText(data.permanentAddress)
+//			tvIssuedPlace.text = data.permanentAddress
+//			liveIn.addTextChangedListener {
+//				it?.let {
+//					data.permanentAddress = it.toString()
+//				}
+//				validate()
+//			}
+
+
+			primaryIssue.setText(data.nativePlace)
+			editAddressCurrent.addTextChangeListener {
+				data.permanentAddress = it.toString()
 				validate()
 			}
-			
-			village.setText(data.nativePlace)
-			tvPrimaryIssue.text = data.nativePlace
-			village.addTextChangedListener {
-				it?.let {
-					data.nativePlace = it.toString()
-				}
-				validate()
-			}
-			if (
-				(requireArguments().getString("type_card")?.contains("passport") == true)
-				|| data.nativePlace.isNullOrEmpty()
-				|| data.permanentAddress.isNullOrEmpty()
-			) {
-				village.visibility = View.VISIBLE
-				liveIn.visibility = View.VISIBLE
-				tvPrimaryIssue.visibility = View.GONE
-				tvIssuedPlace.visibility = View.GONE
-			} else {
-				village.visibility = View.GONE
-				liveIn.visibility = View.GONE
-				tvPrimaryIssue.visibility = View.VISIBLE
-				tvIssuedPlace.visibility = View.VISIBLE
-			}
+//			village.setText(data.nativePlace)
+//			tvPrimaryIssue.text = data.nativePlace
+//			village.addTextChangedListener {
+//				it?.let {
+//					data.nativePlace = it.toString()
+//				}
+//				validate()
+//			}
+//			if (
+//				(requireArguments().getString("type_card")?.contains("passport") == true)
+//				|| data.nativePlace.isNullOrEmpty()
+//				|| data.permanentAddress.isNullOrEmpty()
+//			) {
+//				village.visibility = View.VISIBLE
+//				liveIn.visibility = View.VISIBLE
+//				tvPrimaryIssue.visibility = View.GONE
+//				tvIssuedPlace.visibility = View.GONE
+//			} else {
+//				village.visibility = View.GONE
+//				liveIn.visibility = View.GONE
+//				tvPrimaryIssue.visibility = View.VISIBLE
+//				tvIssuedPlace.visibility = View.VISIBLE
+//			}
 			btnConfirm.setOnClickListener {
 				openFragment(
 					InformationRegisterFragment::class.java,

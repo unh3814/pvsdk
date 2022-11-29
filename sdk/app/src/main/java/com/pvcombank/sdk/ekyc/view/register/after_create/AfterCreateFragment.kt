@@ -125,10 +125,11 @@ class AfterCreateFragment : PVFragment<FragmentCreateAccoutBinding>() {
                         AlertPopup.show(
                             fragmentManager = childFragmentManager,
                             message = "${it.second}",
-                            primaryTitle = getString(R.string.txt_close),
+                            primaryTitle = getString(R.string.txt_back_to_login),
                             primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
                                 override fun onClickListener(v: View) {
-
+                                    requireActivity().finish()
+                                    MasterModel.getInstance().errorString.onNext("Cancel")
                                 }
                             }
                         )
@@ -139,7 +140,8 @@ class AfterCreateFragment : PVFragment<FragmentCreateAccoutBinding>() {
     }
 
 	private fun validateData(email: String?, phone: String?): Boolean{
-		return email?.matches(Constants.regexEmail) == true && phone?.matches(Constants.regexPhone) == true
+//		return email?.matches(Constants.regexEmail) == true && phone?.matches(Constants.regexPhone) == true
+        return phone?.matches(Constants.regexPhone) == true
 	}
 
     override fun onStart() {

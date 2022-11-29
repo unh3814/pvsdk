@@ -44,7 +44,7 @@ class RegisterActivity : PVActivity<ActivityRegisterBinding>() {
 	private fun initTopBar() {
 		topBar = TopBar.build()
 		topBar.setContentView(viewBinding.topBar)
-		topBar.setColor(R.color.color_primary)
+//		topBar.setColor(R.color.color_primary)
 		topBar.apply {
 			addBackListener(object : TopBarListener.BackListener {
 				override fun onBackClick() {

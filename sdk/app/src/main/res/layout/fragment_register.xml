@@ -11,16 +11,77 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.pvcombank.sdk.ekyc.view.customs.TextCheck
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="1"
+                app:stateView="checked" />
+
+            <View
+                android:layout_width="40dp"
+                android:layout_height="1dp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/color_grey" />
+
+            <com.pvcombank.sdk.ekyc.view.customs.TextCheck
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="2"
+                app:stateView="checked" />
+
+            <View
+                android:layout_width="40dp"
+                android:layout_height="1dp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/color_grey" />
+
+            <com.pvcombank.sdk.ekyc.view.customs.TextCheck
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="3"
+                app:stateView="check" />
+
+            <View
+                android:layout_width="40dp"
+                android:layout_height="1dp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/color_grey" />
+
+            <com.pvcombank.sdk.ekyc.view.customs.TextCheck
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="4"
+                app:stateView="uncheck" />
+        </LinearLayout>
+
         <com.pvcombank.sdk.ekyc.view.customs.TextViewPVCB.TextViewPVCB
             android:id="@+id/title_common_information"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:layout_marginBottom="8dp"
+            android:padding="8dp"
+            android:background="@drawable/bg_title_primary"
             app:isHeader="true"
             app:showExpend="true"
             app:titleText="Thông tin cơ bản" />
 
         <LinearLayout
+            android:paddingHorizontal="8dp"
             android:id="@+id/container_common_information"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -32,20 +93,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="14dp"
                 app:titleText="Họ và tên" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginBottom="14dp"
-                android:background="@color/color_grey_light_1" />
-
-            <com.pvcombank.sdk.ekyc.view.customs.TextViewPVCB.TextViewPVCB
-                android:id="@+id/sex"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="14dp"
-                app:titleText="Giới tính" />
-
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -66,11 +113,24 @@
                 android:background="@color/color_grey_light_1" />
 
             <com.pvcombank.sdk.ekyc.view.customs.TextViewPVCB.TextViewPVCB
-                android:id="@+id/country"
+                android:id="@+id/sex"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="14dp"
-                app:titleText="Quốc tịch" />
+                app:titleText="Giới tính" />
+
+<!--            <View-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="1dp"-->
+<!--                android:layout_marginBottom="14dp"-->
+<!--                android:background="@color/color_grey_light_1" />-->
+
+<!--            <com.pvcombank.sdk.ekyc.view.customs.TextViewPVCB.TextViewPVCB-->
+<!--                android:id="@+id/country"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginBottom="14dp"-->
+<!--                app:titleText="Quốc tịch" />-->
 
             <View
                 android:layout_width="match_parent"
@@ -124,6 +184,19 @@
                 android:layout_marginBottom="14dp"
                 app:titleText="Ngày đến hạn" />
 
+<!--            <View-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="1dp"-->
+<!--                android:layout_marginBottom="14dp"-->
+<!--                android:background="@color/color_grey_light_1" />-->
+
+<!--            <com.pvcombank.sdk.ekyc.view.customs.TextViewPVCB.TextViewPVCB-->
+<!--                android:id="@+id/phone_number"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginBottom="12dp"-->
+<!--                app:titleText="Số điện thoại" />-->
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -131,11 +204,11 @@
                 android:background="@color/color_grey_light_1" />
 
             <com.pvcombank.sdk.ekyc.view.customs.TextViewPVCB.TextViewPVCB
-                android:id="@+id/phone_number"
+                android:id="@+id/primary_issue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
-                app:titleText="Số điện thoại" />
+                app:titleText="Địa chỉ thường trú" />
 
             <View
                 android:layout_width="match_parent"
@@ -150,36 +223,87 @@
                 android:layout_marginBottom="12dp"
                 app:titleText="Địa chỉ thường trú" />
 
+<!--            <View-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="1dp"-->
+<!--                android:layout_marginBottom="12dp"-->
+<!--                android:background="@color/color_grey_light_1" />-->
+
+<!--            <TextView-->
+<!--                style="@style/PVTextHint"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Địa chỉ liên hệ" />-->
+
+<!--            <EditText-->
+<!--                android:id="@+id/edt_contract"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="4dp"-->
+<!--                android:layout_marginBottom="12dp"-->
+<!--                android:background="@drawable/bg_edit"-->
+<!--                android:hint="Nhập địa chỉ liên hệ"-->
+<!--                android:padding="8dp"-->
+<!--                android:textColor="@color/color_black"-->
+<!--                android:textColorHint="@color/color_grey_light_1"-->
+<!--                android:textSize="13sp" />-->
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="14dp"
+                android:background="@color/color_grey_light_1" />
+
+            <com.pvcombank.sdk.ekyc.view.customs.TextViewPVCB.TextViewPVCB
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="14dp"
+                app:contentText="Khác"
+                app:titleText="Nghề nghiệp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="14dp"
                 android:background="@color/color_grey_light_1" />
 
             <TextView
                 style="@style/PVTextHint"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Địa chỉ liên hệ" />
+                android:text="Mã số thuế (Không bắt buộc)" />
 
             <EditText
-                android:id="@+id/edt_contract"
+                android:id="@+id/edt_tax_code"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:layout_marginBottom="12dp"
                 android:background="@drawable/bg_edit"
-                android:hint="Nhập địa chỉ liên hệ"
+                android:hint="Nhập mã số thuế"
                 android:padding="8dp"
                 android:textColor="@color/color_black"
                 android:textColorHint="@color/color_grey_light_1"
                 android:textSize="13sp" />
+        </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginBottom="8dp"
-                android:background="@color/color_grey_light_1" />
+        <com.pvcombank.sdk.ekyc.view.customs.TextViewPVCB.TextViewPVCB
+            android:id="@+id/title_live_information"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:padding="8dp"
+            android:background="@drawable/bg_title_primary"
+            app:isHeader="true"
+            app:showExpend="true"
+            app:titleText="Thông tin cư trú" />
+
+        <LinearLayout
+            android:paddingHorizontal="8dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -267,43 +391,6 @@
                 </RadioGroup>
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginBottom="14dp"
-                android:background="@color/color_grey_light_1" />
-
-            <com.pvcombank.sdk.ekyc.view.customs.TextViewPVCB.TextViewPVCB
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="14dp"
-                app:contentText="Khác"
-                app:titleText="Nghề nghiệp" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginBottom="14dp"
-                android:background="@color/color_grey_light_1" />
-
-            <TextView
-                style="@style/PVTextHint"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Mã số thuế (Không bắt buộc)" />
-
-            <EditText
-                android:id="@+id/edt_tax_code"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="12dp"
-                android:background="@drawable/bg_edit"
-                android:hint="Nhập mã số thuế"
-                android:padding="8dp"
-                android:textColor="@color/color_black"
-                android:textColorHint="@color/color_grey_light_1"
-                android:textSize="13sp" />
         </LinearLayout>
 
         <com.pvcombank.sdk.ekyc.view.customs.TextViewPVCB.TextViewPVCB
@@ -312,6 +399,8 @@
             android:layout_marginVertical="12dp"
             android:layout_marginTop="12dp"
             app:isHeader="true"
+            android:background="@drawable/bg_title_primary"
+            android:padding="8dp"
             app:titleText="Đăng ký dịch vụ ngân hàng điện tử" />
 
         <CheckBox
@@ -343,52 +432,33 @@
             android:paddingVertical="8dp"
             android:text="@string/txt_sms_banking" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:lineSpacingExtra="8sp"
-            android:paddingVertical="8dp"
-            android:text="@string/txt_user_introduce"
-            android:textColor="#1B1D29"
-            android:textSize="13sp" />
-
-        <EditText
-            android:id="@+id/edt_user"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/bg_edit"
-            android:hint="Nhập mã người giới thiệu"
-            android:inputType="text"
-            android:paddingHorizontal="12dp"
-            android:paddingVertical="10dp"
-            android:textColor="@color/color_black"
-            android:textColorHint="@color/color_grey"
-            android:textSize="13sp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:lineSpacingExtra="8sp"
-            android:paddingVertical="8dp"
-            android:text="Chi nhánh"
-            android:textColor="#1B1D29"
-            android:textSize="13sp" />
-
         <EditText
             android:id="@+id/edt_branch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="40dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="8dp"
             android:background="@drawable/bg_edit"
             android:drawableEnd="@drawable/ic_round_keyboard_arrow_right_24"
             android:drawableTint="@color/color_grey_light"
             android:focusable="false"
             android:hint="Chọn chi nhánh"
             android:inputType="none"
+            android:minHeight="44dp"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="10dp"
+            android:textColor="@color/color_black"
+            android:textColorHint="@color/color_grey"
+            android:textSize="13sp" />
+
+        <EditText
+            android:id="@+id/edt_user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="44dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/bg_edit"
+            android:hint="Nhập mã người giới thiệu"
+            android:inputType="text"
             android:paddingHorizontal="12dp"
             android:paddingVertical="10dp"
             android:textColor="@color/color_black"
@@ -410,25 +480,25 @@
             style="@style/PVCheckBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:gravity="top|start"
             android:paddingLeft="16dp"
-            android:layout_marginBottom="8dp"
             android:text="@string/txt_register_rule_1" />
 
         <CheckBox
-            style="@style/PVCheckBox"
-            android:layout_marginVertical="8dp"
             android:id="@+id/cb_check_rules_2"
+            style="@style/PVCheckBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginVertical="8dp"
             android:gravity="top|start"
             android:paddingLeft="16dp"
-            android:textColorLink="@color/color_blue"
-            android:text="@string/txt_register_rule_2" />
+            android:text="@string/txt_register_rule_2"
+            android:textColorLink="@color/color_blue" />
 
         <Button
-            style="@style/PVButton"
             android:id="@+id/btn_confirm"
+            style="@style/PVButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"

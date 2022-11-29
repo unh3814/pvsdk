@@ -117,10 +117,11 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 				phoneStr.phoneHide()
 			)
 			val spanText = SpannableString(text)
+			val index = spanText.indexOf('.')
 			spanText.setSpan(
 				ForegroundColorSpan(Color.parseColor("#0072BC")),
-				text.length - 10,
-				text.length,
+				index - 11,
+				index - 1,
 				Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
 			)
 			tvShowNumberPhone.text = spanText

@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity(), PVCBAuthListener {
 				this@MainActivity,
 				false,
 				null,
+				"VIETSENS",
 				this@MainActivity
 			)
 			startRegister()
