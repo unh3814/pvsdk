@@ -33,5 +33,4 @@ class MainActivity : AppCompatActivity(), PVCBAuthListener {
 	override fun onSuccess(message: String) {
 		Log.d("SUCCESS", message)
 	}
-
 }

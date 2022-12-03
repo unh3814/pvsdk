@@ -7,6 +7,8 @@ import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentManager
+import com.appsflyer.AppsFlyerLib
+import com.appsflyer.attribution.AppsFlyerRequestListener
 import com.pvcombank.sdk.ekyc.R
 import com.pvcombank.sdk.ekyc.base.PVActivity
 import com.pvcombank.sdk.ekyc.base.PVFragment
@@ -32,6 +34,7 @@ class RegisterActivity : PVActivity<ActivityRegisterBinding>() {
 		initAlertInline()
 		initTopBar()
 		initTrustVision()
+		initAppsFlyer(getString(R.string.apps_flyer_key))
 		viewBinding.apply {
 			supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
 			openFragment(
@@ -40,7 +43,23 @@ class RegisterActivity : PVActivity<ActivityRegisterBinding>() {
 			)
 		}
 	}
-	
+
+	private fun initAppsFlyer(key: String) {
+		AppsFlyerLib.getInstance().init(key, null, this)
+		AppsFlyerLib.getInstance()
+			.start(this, key, object : AppsFlyerRequestListener {
+				override fun onSuccess() {
+					Log.d("AppsFlyer", "Lunch success")
+				}
+
+				override fun onError(p0: Int, p1: String) {
+					Log.d("AppsFlyerError", "[$p0] - $p1")
+				}
+
+			})
+		AppsFlyerLib.getInstance().setDebugLog(true)
+	}
+
 	private fun initTopBar() {
 		topBar = TopBar.build()
 		topBar.setContentView(viewBinding.topBar)
@@ -102,9 +121,5 @@ class RegisterActivity : PVActivity<ActivityRegisterBinding>() {
 	override fun onBack(): Boolean {
 		val currentFragment = supportFragmentManager.findFragmentById(fragmentHostID) as? PVFragment<*>
 		return currentFragment?.onBack() ?: false
-	}
-
-	override fun onDestroy() {
-		super.onDestroy()
 	}
 }

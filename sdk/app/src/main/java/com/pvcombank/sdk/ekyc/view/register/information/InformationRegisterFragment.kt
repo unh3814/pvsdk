@@ -25,7 +25,6 @@ import com.pvcombank.sdk.ekyc.util.Utils.getListBranch
 import com.pvcombank.sdk.ekyc.util.Utils.handleUrlClicks
 import com.pvcombank.sdk.ekyc.util.Utils.onDrawableClick
 import com.pvcombank.sdk.ekyc.util.Utils.toPVDate
-import com.pvcombank.sdk.ekyc.view.popup.AlertPopup
 import com.pvcombank.sdk.ekyc.view.register.select_branch.SelectBranchBottomSheet
 import java.text.SimpleDateFormat
 import java.util.*
@@ -64,7 +63,7 @@ class InformationRegisterFragment : PVFragment<FragmentRegisterBinding>() {
 			data.dob?.let {
 				dob.setText(it.toPVDate())
 			}
-			country.setText("Việt Nam")
+//			country.setText("Việt Nam")
 			identity.setText(data.idNumber)
 			issuedBy.setText(data.issuePlace)
 			data.issueDate?.let {
@@ -73,19 +72,9 @@ class InformationRegisterFragment : PVFragment<FragmentRegisterBinding>() {
 			data.expDate?.let {
 				expDate.setText(it.toPVDate())
 			}
-			phoneNumber.setText(
-				data.mobilePhone ?: (cache["phone_number"] as? String) ?: ""
-			)
 			if(data.permanentAddress?.isNotEmpty() == true){
-				edtContract.setText(data.permanentAddress)
+//				edtContract.setText(data.permanentAddress)
 				autoUpdateBranch(data.permanentAddress ?: "")
-			}
-			edtContract.addTextChangedListener {
-				btnConfirm.isEnabled = validate()
-				requestFinish.currentAddress = it.toString()
-				if (it?.isNotEmpty() == true) {
-					autoUpdateBranch(it.toString())
-				}
 			}
 			permanentAddress.setText(data.permanentAddress)
 			titleCommonInformation.setViewExpend(containerCommonInformation)
@@ -101,36 +90,14 @@ class InformationRegisterFragment : PVFragment<FragmentRegisterBinding>() {
 			edtBranch.addTextChangedListener {
 				btnConfirm.isEnabled = validate()
 			}
-			checkCuTru.check(yes.id)
-			checkCuTru.setOnCheckedChangeListener { group, checkedId ->
-				if (checkedId == no.id) {
-					AlertPopup.show(
-						fragmentManager = childFragmentManager,
-						primaryTitle = getString(R.string.txt_close),
-						primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
-							override fun onClickListener(v: View) {
-							}
-						}
-					)
-				}
+			residencyVietnam.setOnCheckedChangeListener { buttonView, isChecked ->
+				requestFinish.reside = isChecked
 			}
-			checkAmerica.check(aNo.id)
-			checkAmerica.setOnCheckedChangeListener { group, checkedId ->
-				if (checkedId == aYes.id) {
-					AlertPopup.show(
-						fragmentManager = childFragmentManager,
-						primaryTitle = getString(R.string.txt_close),
-						primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
-							override fun onClickListener(v: View) {
-							}
-						}
-					)
-				}
+			fatca.setOnCheckedChangeListener { buttonView, isChecked ->
+				requestFinish.fatca = isChecked
 			}
 			val rulesChecked = CompoundButton.OnCheckedChangeListener { view, checked ->
 				btnConfirm.isEnabled = validate()
-				requestFinish.reside = yes.isChecked == true
-				requestFinish.fatca = aYes.isChecked == true
 			}
 			cbCheckRules1.setOnCheckedChangeListener(rulesChecked)
 			cbCheckRules2.setOnCheckedChangeListener(rulesChecked)
@@ -141,19 +108,19 @@ class InformationRegisterFragment : PVFragment<FragmentRegisterBinding>() {
 				}
 				startActivity(Intent.createChooser(target, "Select"))
 			}
-			cbCheckRules3.setOnCheckedChangeListener(rulesChecked)
-			if(Constants.CLIENT_ID == "vietsens-sdk"){
-				cbCheckRules3.visibility = View.VISIBLE
-			} else {
-				cbCheckRules3.visibility = View.GONE
+//			cbCheckRules3.setOnCheckedChangeListener(rulesChecked)
+//			if(Constants.CLIENT_ID == "vietsens-sdk"){
+//				cbCheckRules3.visibility = View.VISIBLE
+//			} else {
+//				cbCheckRules3.visibility = View.GONE
+//			}
+			onDrawableClick(pvcbSms, Constants.DRAWABLE_RIGHT) {
 			}
-			pvcOnline.setOnCheckedChangeListener(rulesChecked)
-			yes.setOnCheckedChangeListener(rulesChecked)
-			aNo.setOnCheckedChangeListener(rulesChecked)
-			onDrawableClick(pvSms, Constants.DRAWABLE_RIGHT) {
+			onDrawableClick(pvcbOnline, Constants.DRAWABLE_RIGHT) {
+				showTooltips(pvcbOnline, getString(R.string.tooltips_pvcb_internet_banking))
 			}
-			onDrawableClick(pvcOnline, Constants.DRAWABLE_RIGHT) {
-				showTooltips(pvcOnline, getString(R.string.tooltips_pvcb_internet_banking))
+			fatcaTooltips.setOnClickListener{
+				showTooltips(fatcaTooltips, getString(R.string.tooltips_pvcb_internet_banking))
 			}
 			edtUser.addTextChangedListener {
 				requestFinish.introducer = it.toString()
@@ -188,8 +155,8 @@ class InformationRegisterFragment : PVFragment<FragmentRegisterBinding>() {
 			requestFinish.currentAddress = data.permanentAddress ?: ""
 			requestFinish.permanentAddr = data.permanentAddress ?: ""
 			requestFinish.nativePlace = data.nativePlace ?: ""
-			requestFinish.reside = yes.isChecked == true
-			requestFinish.fatca = aYes.isChecked == true
+			requestFinish.reside = residencyVietnam.isChecked
+			requestFinish.fatca = fatca.isChecked
 			requestFinish.signature = data.signature ?: ""
 			requestFinish.expiredDate = data.expDate ?: ""
 		}
@@ -198,12 +165,11 @@ class InformationRegisterFragment : PVFragment<FragmentRegisterBinding>() {
 	private fun FragmentRegisterBinding.validate(): Boolean {
 		return cbCheckRules1.isChecked
 				&& cbCheckRules2.isChecked
-				&& cbCheckRules3.isChecked
-				&& pvcOnline.isChecked
-				&& yes.isChecked
-				&& aNo.isChecked
+//				&& cbCheckRules3.isChecked
+				&& residencyVietnam.isChecked
+				&& fatca.isChecked
 				&& edtBranch.text.isNotEmpty()
-				&& edtContract.text.isNotEmpty()
+//				&& edtContract.text.isNotEmpty()
 	}
 	
 	private fun showTooltips(anchorView: View, message: String) {

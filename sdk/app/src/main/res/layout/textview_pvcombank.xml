@@ -2,12 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
     <TextView
+        android:textFontWeight="400"
+        android:textSize="13sp"
         android:id="@+id/title"
-        style="@style/PVTextHint"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
@@ -17,8 +19,10 @@
         tools:text="@tools:sample/lorem/random" />
 
     <TextView
+        android:textSize="13sp"
+        android:textFontWeight="600"
         android:id="@+id/content"
-        style="@style/PVTextView.Title"
+        android:textColor="#313442"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
@@ -33,5 +37,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:src="@drawable/ic_round_keyboard_arrow_down_24"
-        android:tint="@color/color_blue" />
+        android:tint="@color/color_blue"
+        app:tint="@color/color_blue" />
 </LinearLayout>

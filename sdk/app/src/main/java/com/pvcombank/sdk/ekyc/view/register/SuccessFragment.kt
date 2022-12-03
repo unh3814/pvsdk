@@ -28,7 +28,7 @@ class SuccessFragment(private val isSuccess: Boolean = false) : DialogFragment()
 		viewBinding.apply {
 			if (isSuccess) {
 				MasterModel.getInstance().successString.onNext("success")
-				tvSuccess.text = getString(R.string.last_step_success_title)
+//				tvSuccess.text = getString(R.string.last_step_success_title)
 				tvMessageSuccess.text = getString(R.string.last_step_success_message)
 				imgIcon.setImageResource(R.drawable.success)
 				tvMessageSuccess.handleUrlClicks{
@@ -40,7 +40,7 @@ class SuccessFragment(private val isSuccess: Boolean = false) : DialogFragment()
 				}
 			} else {
 				MasterModel.getInstance().errorString.onNext("error system")
-				tvSuccess.text = getString(R.string.last_step_fail_title)
+//				tvSuccess.text = getString(R.string.last_step_fail_title)
 				tvMessageSuccess.text = getString(R.string.last_step_fail_message)
 				imgIcon.setImageResource(R.drawable.frame_last_fail)
 			}

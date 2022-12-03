@@ -1,6 +1,7 @@
 package com.pvcombank.sdk.ekyc.view.customs.TextViewPVCB
 
 import android.content.Context
+import android.graphics.Typeface
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -41,10 +42,13 @@ class TextViewPVCB(
 				
 				}
 				if(isHeader){
-					viewBinding.content.visibility = View.GONE
-					viewBinding.title.isAllCaps = true
-					viewBinding.title.setTextColor(ContextCompat.getColor(context, R.color.color_blue))
-					viewBinding.title.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13f)
+					with(viewBinding){
+						content.visibility = View.GONE
+						title.isAllCaps = true
+						title.setTextColor(ContextCompat.getColor(context, R.color.color_black))
+						title.setTypeface(null, Typeface.BOLD)
+						title.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13f)
+					}
 				} else {
 					viewBinding.title.isAllCaps = false
 					viewBinding.content.visibility = View.VISIBLE

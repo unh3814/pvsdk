@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="apps_flyer_key">g6WqiTUWuaQ6hKTF4W9ouG</string>
     <string name="confirm">Xác nhận</string>
     <string name="cancel_order">Huỷ đơn hàng</string>
     <string name="number_order">Mã đơn hàng</string>
@@ -63,9 +64,13 @@
     <string name="txt_email_address">Địa chỉ email</string>
     <string name="txt_create_account">Đăng ký</string>
     <string name="tooltips_pvcb_internet_banking">Miễn phí toàn bộ giao dịch chuyển tiền trên InternetBanking và phí duy trì dịch vụ khi: Khách hàng duy trì số dư bình quân tối thiểu 1.000.000đ/tháng hoặc phát sinh 3 giao dịch ghi có trong 1 tháng từ 1.000.000đ/giao dịch trở lên.</string>
+    <string name="tooltips_fatca">Khách hàng là công dân Hoa Kỳ hoặc cư trú tại Hoa Kỳ.
+Khách hàng hiện đang nhận uỷ quyền/uỷ thác của tổ chức hoặc cá nhân khác.</string>
+
     <!--    alert last step  -->
     <string name="last_step_success_title">Hoàn tất</string>
-    <string name="last_step_success_message">Bạn đã hoàn tất đăng ký dịch vụ. Kết quả sẽ được gửi tới bạn sau tối đa 02 phút qua email và số điện thoại đã đăng ký </string>
+    <string name="last_step_success_message">Cảm ơn bạn đã đăng ký dịch vụ của PVcomBank.
+Kết quả sẽ được gửi đến bạn sau ít phút qua email và số điện thoại.</string>
     <string name="last_step_fail_title">Đăng ký thất bại</string>
     <string name="last_step_fail_message">Hệ thống tạm thời gián đoạn vui lòng thực hiện định danh lại sau 15 phút. Chi tiết liên hệ <a href="phone_hotline">1900555592</a> .</string>
     <string name="error_7">Ngân hàng chưa định danh được quý khách, vui lòng tới CN/PGD gần nhất để định danh và mở Tài khoản thanh toán. Chi tiết liên hệ: <a href="phone_hotline">1900555592</a></string>

@@ -39,3 +39,6 @@
 -dontnote okhttp3.**, okio.**, retrofit2.**
 -dontwarn retrofit2.**
 -keep class retrofit2.** { *; }
+
+-keep class com.appsflyer.** { *; }
+-keep public class com.android.installreferrer.** { *; }

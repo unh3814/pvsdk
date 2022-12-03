@@ -5,6 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import com.appsflyer.AFInAppEventParameterName
+import com.appsflyer.AFInAppEventType
+import com.appsflyer.AppsFlyerLib
 import com.pvcombank.sdk.ekyc.R
 import com.pvcombank.sdk.ekyc.base.PVFragment
 import com.pvcombank.sdk.ekyc.databinding.FragmentCreateAccoutBinding
@@ -14,6 +17,7 @@ import com.pvcombank.sdk.ekyc.repository.AuthRepository
 import com.pvcombank.sdk.ekyc.repository.OnBoardingRepository
 import com.pvcombank.sdk.ekyc.view.otp.confirm_otp.AuthOTPFragment
 import com.pvcombank.sdk.ekyc.view.popup.AlertPopup
+import java.util.Objects
 
 class AfterCreateFragment : PVFragment<FragmentCreateAccoutBinding>() {
     private var repository: AuthRepository? = null
@@ -98,6 +102,16 @@ class AfterCreateFragment : PVFragment<FragmentCreateAccoutBinding>() {
                     phoneNumber.setError("Số điện thoại không hợp lệ, vui lòng thử lại")
                 } else {
                     showLoading()
+                    handler.post {
+                        AppsFlyerLib.getInstance().logEvent(
+                            requireContext(),
+                            "EKYC_REGISTER_COMMON_INFORMATION",
+                            hashMapOf(
+                                "SDT" to cache["phone_number"],
+                                "email" to cache["email"]
+                            )
+                        )
+                    }
                     repository?.sendOTP(
                         phoneNumber = (cache["phone_number"] as? String) ?: "",
                         email = (cache["email"] as? String) ?: ""

@@ -1,32 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingTop="12dp"
+    android:paddingBottom="16dp">
 
     <TextView
         android:id="@+id/name"
-        style="@style/PVTextView.Title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:baselineAligned="false"
         android:paddingVertical="8dp"
-        android:textColor="@color/color_black"
+        android:textColor="#1B1D29"
+        android:textSize="13sp"
         android:textStyle="bold"
         tools:text="PVComBank hà Nội" />
 
     <TextView
         android:id="@+id/direct"
-        style="@style/PVTextView.Title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:singleLine="true"
+        android:textSize="13sp"
         tools:text="@tools:sample/lorem" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/color_grey_light_1" />
 </LinearLayout>

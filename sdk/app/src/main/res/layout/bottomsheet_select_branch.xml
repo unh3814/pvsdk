@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_white"
+    android:background="#ffffff"
     android:orientation="vertical"
     android:padding="16dp">
 
@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            android:src="@drawable/ic_round_arrow_back_ios_new_24"
+            android:src="@drawable/ic_round_arrow_back_new_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -30,7 +30,8 @@
             android:clickable="false"
             android:gravity="center"
             android:text="Chọn chi nhánh"
-            android:textColor="@color/color_black"
+            android:textColor="#0072BC"
+            android:textFontWeight="700"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -44,11 +45,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:background="@drawable/bg_edit"
-        android:textColor="@color/color_black"
+        android:background="@drawable/bg_edit_search"
+        android:drawableStart="@drawable/ic_baseline_search_24"
+        android:drawablePadding="12dp"
+        android:drawableTint="#A7ABC3"
         android:focusable="true"
         android:hint="Tìm kiếm chi nhánh"
-        android:padding="8dp" />
+        android:padding="12dp"
+        android:textColor="@color/color_black"
+        android:textSize="13sp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcv"
