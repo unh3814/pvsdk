@@ -10,19 +10,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="56717764-574b-4463-9248-57df47e30dc1" name="Changes" comment="fix bug">
-      <change afterPath="$PROJECT_DIR$/../sdk/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../sdk/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../sdk/app/src/main/res/drawable-xxhdpi/artboard_1_copy_4.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../sdk/app/src/main/res/drawable/bg_button_switch.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../sdk/app/src/main/res/drawable/bg_edit_search.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../sdk/app/src/main/res/drawable/ic_baseline_check_24.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../sdk/app/src/main/res/drawable/ic_baseline_search_24.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../sdk/app/src/main/res/drawable/ic_round_arrow_back_new_24.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../sdk/app/src/main/res/drawable/ic_switch_off.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../sdk/app/src/main/res/drawable/ic_switch_on.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/repo/com/trustvision/tv_api_sdk/2.1.0.4/tv_api_sdk-2.1.0.4.aar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/repo/com/trustvision/tv_core_sdk/2.1.0.4/tv_core_sdk-2.1.0.4.aar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/repo/com/trustvision/tv_sdk/2.1.0.4/tv_sdk-2.1.0.4.aar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../sdk/repo/com/trustvision/tv_api_sdk/2.1.0.4/tv_api_sdk-2.1.0.4.aar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../sdk/repo/com/trustvision/tv_core_sdk/2.1.0.4/tv_core_sdk-2.1.0.4.aar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../sdk/repo/com/trustvision/tv_sdk/2.1.0.4/tv_sdk-2.1.0.4.aar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/pvcombank/demoapp/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/pvcombank/demoapp/MainActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/repo/com/pvcombank/sdk/ekyc/0.1.0/ekyc-0.1.0.pom" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/repo/com/pvcombank/sdk/ekyc/0.1.0/ekyc-0.1.0.pom.md5" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/repo/com/pvcombank/sdk/ekyc/0.1.0/ekyc-0.1.0.pom.sha1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/repo/com/pvcombank/sdk/ekyc/0.1.0/ekyc-0.1.0.pom.sha256" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/repo/com/pvcombank/sdk/ekyc/0.1.0/ekyc-0.1.0.pom.sha512" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/repo/com/pvcombank/sdk/ekyc/0.1.1/ekyc-0.1.1.pom" beforeDir="false" afterPath="$PROJECT_DIR$/repo/com/pvcombank/sdk/ekyc/0.1.1/ekyc-0.1.1.pom" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/repo/com/pvcombank/sdk/ekyc/0.1.1/ekyc-0.1.1.pom.md5" beforeDir="false" afterPath="$PROJECT_DIR$/repo/com/pvcombank/sdk/ekyc/0.1.1/ekyc-0.1.1.pom.md5" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/repo/com/pvcombank/sdk/ekyc/0.1.1/ekyc-0.1.1.pom.sha1" beforeDir="false" afterPath="$PROJECT_DIR$/repo/com/pvcombank/sdk/ekyc/0.1.1/ekyc-0.1.1.pom.sha1" afterDir="false" />
@@ -33,28 +32,12 @@
       <change beforePath="$PROJECT_DIR$/repo/com/pvcombank/sdk/ekyc/maven-metadata.xml.sha1" beforeDir="false" afterPath="$PROJECT_DIR$/repo/com/pvcombank/sdk/ekyc/maven-metadata.xml.sha1" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/repo/com/pvcombank/sdk/ekyc/maven-metadata.xml.sha256" beforeDir="false" afterPath="$PROJECT_DIR$/repo/com/pvcombank/sdk/ekyc/maven-metadata.xml.sha256" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/repo/com/pvcombank/sdk/ekyc/maven-metadata.xml.sha512" beforeDir="false" afterPath="$PROJECT_DIR$/repo/com/pvcombank/sdk/ekyc/maven-metadata.xml.sha512" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../sdk/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/proguard-rules.pro" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/proguard-rules.pro" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/view/RegisterActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/view/RegisterActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/view/customs/TextViewPVCB/TextViewPVCB.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/view/customs/TextViewPVCB/TextViewPVCB.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/view/register/SuccessFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/view/register/SuccessFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/base/PVFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/base/PVFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/view/otp/confirm_otp/AuthOTPFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/view/otp/confirm_otp/AuthOTPFragment.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/view/register/after_create/AfterCreateFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/view/register/after_create/AfterCreateFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/view/register/confirm/InformationConfirmFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/view/register/confirm/InformationConfirmFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/view/register/information/InformationRegisterFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/view/register/information/InformationRegisterFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/res/drawable/ic_round_info_24.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/res/drawable/ic_round_info_24.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/res/drawable/marcom_blur.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/res/layout/bottomsheet_select_branch.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/res/layout/bottomsheet_select_branch.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/res/layout/fragment_card_capture_result.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/res/layout/fragment_card_capture_result.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/view/register/guide/card/GuideCardIdFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/java/com/pvcombank/sdk/ekyc/view/register/guide/card/GuideCardIdFragment.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/res/layout/fragment_guide_card_capture.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/res/layout/fragment_guide_card_capture.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/res/layout/fragment_guide_face_capture.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/res/layout/fragment_guide_face_capture.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/res/layout/fragment_password_register.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/res/layout/fragment_password_register.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/res/layout/fragment_register.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/res/layout/fragment_register.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/res/layout/fragment_register_success.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/res/layout/fragment_register_success.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/res/layout/item_branch.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/res/layout/item_branch.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/res/layout/textview_pvcombank.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/res/layout/textview_pvcombank.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/res/layout/top_bar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/res/layout/top_bar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sdk/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../sdk/app/src/main/res/values/strings.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -177,9 +160,9 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/repo/com/pvcombank/sdk/ekyc/0.1.1" />
       <recent name="$PROJECT_DIR$/repo/com/pvcombank/sdk" />
+      <recent name="$PROJECT_DIR$/repo/com" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/repo/com/pvcombank/sdk/ekyc/0.1.0" />
-      <recent name="$PROJECT_DIR$/app/libs" />
     </key>
   </component>
   <component name="RunManager">

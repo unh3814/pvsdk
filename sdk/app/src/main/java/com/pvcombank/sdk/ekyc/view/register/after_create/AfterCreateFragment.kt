@@ -139,7 +139,7 @@ class AfterCreateFragment : PVFragment<FragmentCreateAccoutBinding>() {
                         AlertPopup.show(
                             fragmentManager = childFragmentManager,
                             message = "${it.second}",
-                            primaryTitle = getString(R.string.txt_back_to_login),
+                            primaryTitle = "Đồng ý",
                             primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
                                 override fun onClickListener(v: View) {
                                     requireActivity().finish()

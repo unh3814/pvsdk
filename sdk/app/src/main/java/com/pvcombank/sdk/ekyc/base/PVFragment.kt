@@ -8,10 +8,13 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
+import com.appsflyer.AppsFlyerLib
+import com.appsflyer.attribution.AppsFlyerRequestListener
 import com.pvcombank.sdk.ekyc.R
 import com.pvcombank.sdk.ekyc.util.Utils
 import com.pvcombank.sdk.ekyc.util.Utils.openFragment
 import com.pvcombank.sdk.ekyc.view.popup.AlertPopup
+import com.trustingsocial.apisdk.utils.Log
 
 abstract class PVFragment<VB : ViewBinding> : Fragment() {
 	lateinit var viewBinding: VB
@@ -85,5 +88,21 @@ abstract class PVFragment<VB : ViewBinding> : Fragment() {
 	
 	fun goBack() = (requireActivity() as? com.pvcombank.sdk.ekyc.base.PVActivity<*>)?.goBack()
 	fun goBack(fragmentId: Int) = (requireActivity() as? com.pvcombank.sdk.ekyc.base.PVActivity<*>)?.goBack(fragmentId)
-	
+
+	fun logEvent(event: String, data: Map<String, Any>){
+		AppsFlyerLib.getInstance().logEvent(
+			requireContext(),
+			event,
+			data,
+			object : AppsFlyerRequestListener{
+				override fun onSuccess() {
+					Log.d("AppFlyer Log", "Success")
+				}
+
+				override fun onError(p0: Int, p1: String) {
+					Log.d("AppFlyer Log", "error [$p0] $p1")
+				}
+			}
+		)
+	}
 }

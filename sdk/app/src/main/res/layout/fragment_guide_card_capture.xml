@@ -270,7 +270,6 @@
                 android:background="@drawable/bg_color_noti"
                 android:orientation="horizontal"
                 android:padding="14dp"
-                app:layout_constraintBottom_toTopOf="@+id/btn_confirm"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
@@ -281,7 +280,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:src="@drawable/ic_round_info_24"
-                    android:tint="#D9821A" />
+                    app:tint="#D9821A" />
 
                 <TextView
                     android:id="@+id/textView7"
