@@ -23,6 +23,7 @@ import com.pvcombank.sdk.ekyc.base.model.TopBarListener
 import com.pvcombank.sdk.ekyc.databinding.OtpViewBinding
 import com.pvcombank.sdk.ekyc.model.CardModel
 import com.pvcombank.sdk.ekyc.model.Constants
+import com.pvcombank.sdk.ekyc.model.MarcomEvent
 import com.pvcombank.sdk.ekyc.model.MasterModel
 import com.pvcombank.sdk.ekyc.model.request.RequestModel
 import com.pvcombank.sdk.ekyc.model.request.RequestVerifyOTP
@@ -30,6 +31,7 @@ import com.pvcombank.sdk.ekyc.model.response.ResponsePurchase
 import com.pvcombank.sdk.ekyc.model.response.ResponseVerifyOnboardOTP
 import com.pvcombank.sdk.ekyc.repository.AuthRepository
 import com.pvcombank.sdk.ekyc.util.Utils.phoneHide
+import com.pvcombank.sdk.ekyc.util.Utils.timeToString
 import com.pvcombank.sdk.ekyc.util.security.SecurityHelper
 import com.pvcombank.sdk.ekyc.view.popup.AlertPopup
 import com.pvcombank.sdk.ekyc.view.register.after_create.AfterCreateFragment
@@ -145,6 +147,14 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 				hideLoading()
 				it?.let {
 					MasterModel.getInstance().uuidOfOTP = it.uuid
+					logEvent(
+						this@AuthOTPFragment::class.java.simpleName,
+						MarcomEvent.OPEN_OTP_FORM,
+						mutableMapOf(
+							Pair("af_sent_otp_status", true),
+							Pair("af_sent_otp_time", Date().time.timeToString(Constants.MARCOM_DATE_TIME))
+						)
+					)
 				}
 			}
 		)
@@ -153,6 +163,14 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 			Observer {
 				it?.let {
 					clearOTP()
+					logEvent(
+						this@AuthOTPFragment::class.java.simpleName,
+						MarcomEvent.OTP_NEXT_FORM,
+						mutableMapOf(
+							Pair("af_verify_otp_status", "fail"),
+							Pair("af_phone", (cache["phone_number"] as? String) ?: "")
+						)
+					)
 					hideLoading()
 					if (it.first == 117) {
 						showAlerError(it.second) {
@@ -171,6 +189,14 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 		Constants.TOKEN = "Bearer ${it.token}"
 		masterModel.ocrFromOTP = it.ekyc
 		masterModel.getDataOCR().mobilePhone = (cache["phone_number"] as? String) ?: ""
+		logEvent(
+			this@AuthOTPFragment::class.java.simpleName,
+			MarcomEvent.OTP_NEXT_FORM,
+			mutableMapOf(
+				Pair("af_verify_otp_status", "success"),
+				Pair("af_phone", (cache["phone_number"] as? String) ?: "")
+			)
+		)
 		when (it.ekyc.step) {
 			0 -> {
 				AlertPopup.show(

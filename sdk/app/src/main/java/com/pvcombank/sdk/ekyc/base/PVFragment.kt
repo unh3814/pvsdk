@@ -1,6 +1,7 @@
 package com.pvcombank.sdk.ekyc.base
 
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -8,10 +9,15 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
+import com.appsflyer.AppsFlyerLib
 import com.pvcombank.sdk.ekyc.R
+import com.pvcombank.sdk.ekyc.model.Constants
 import com.pvcombank.sdk.ekyc.util.Utils
+import com.pvcombank.sdk.ekyc.util.Utils.getDeviceSpecificID
 import com.pvcombank.sdk.ekyc.util.Utils.openFragment
+import com.pvcombank.sdk.ekyc.util.Utils.timeToString
 import com.pvcombank.sdk.ekyc.view.popup.AlertPopup
+import java.util.*
 
 abstract class PVFragment<VB : ViewBinding> : Fragment() {
 	lateinit var viewBinding: VB
@@ -85,5 +91,18 @@ abstract class PVFragment<VB : ViewBinding> : Fragment() {
 	
 	fun goBack() = (requireActivity() as? com.pvcombank.sdk.ekyc.base.PVActivity<*>)?.goBack()
 	fun goBack(fragmentId: Int) = (requireActivity() as? com.pvcombank.sdk.ekyc.base.PVActivity<*>)?.goBack(fragmentId)
-	
+
+	fun logEvent(className: String, event: String, data: MutableMap<String, Any>){
+		data["af_time"] = Date().time.timeToString(Constants.MARCOM_DATE_TIME)
+		data["af_device_id"] = getDeviceSpecificID()
+		data["af_device_os"] = Build.VERSION.BASE_OS
+		data["af_ekyc_step"] = className
+		data["af_channel"] = Constants.APP_CODE ?: ""
+
+		AppsFlyerLib.getInstance().logEvent(
+			requireContext(),
+			event,
+			data
+		)
+	}
 }

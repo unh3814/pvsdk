@@ -1,8 +1,10 @@
 package com.pvcombank.sdk.ekyc.util
 
+import android.app.admin.DevicePolicyManager
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.method.LinkMovementMethod
@@ -69,6 +71,12 @@ object Utils {
 	fun Date.toSVDate(): String{
 		val format = SimpleDateFormat("yyyy-MM-dd")
 		return format.format(this)
+	}
+
+	fun Long.timeToString(format: String): String {
+		val formatTime = SimpleDateFormat(format)
+		val date = java.sql.Date(this)
+		return formatTime.format(date)
 	}
 	
 	fun onDrawableClick(rawView: TextView, position: Int, callback: () -> Unit) {
@@ -178,4 +186,7 @@ object Utils {
 			.cryptoBuild(type = SecurityHelper.AES)
 			?.encrypt(obj) ?: ""
 	}
+
+	//Device policy
+	fun Fragment.getDeviceSpecificID(): String = Settings.Secure.getString(requireContext().contentResolver,Settings.Secure.ANDROID_ID)
 }

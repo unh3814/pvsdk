@@ -72,4 +72,6 @@
     <string name="error_0">Quý khách đã có Tài khoản và dịch vụ NHĐT tại PVcomBank, vui lòng đăng nhập PV-Mobile banking để trải nghiệm dịch vụ. Chi tiết liên hệ <a href="phone_hotline">1900555592</a></string>
     <string name="error_5">Quý khách đã có Tài khoản và dịch vụ NHĐT tại PVcomBank, vui lòng đăng nhập PV-Mobile banking để trải nghiệm dịch vụ. Chi tiết liên hệ <a href="phone_hotline">1900555592</a></string>
     <string name="txt_close">Đóng</string>
+
+    <string name="key_appflyer">eN8yfKS6eeE4CgtFjCxGwJ</string>
 </resources>

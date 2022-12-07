@@ -102,6 +102,11 @@
       <version>2.1.0.4</version>
     </dependency>
     <dependency>
+      <groupId>com.appsflyer</groupId>
+      <artifactId>af-android-sdk</artifactId>
+      <version>6.9.0</version>
+    </dependency>
+    <dependency>
       <groupId>androidx.databinding</groupId>
       <artifactId>viewbinding</artifactId>
       <version>4.2.2</version>

@@ -9,7 +9,9 @@ import androidx.fragment.app.FragmentManager
 import com.pvcombank.sdk.ekyc.databinding.FragmentCardCaptureResultBinding
 import com.pvcombank.sdk.ekyc.base.PVFragment
 import com.pvcombank.sdk.ekyc.model.Constants
+import com.pvcombank.sdk.ekyc.model.MarcomEvent
 import com.pvcombank.sdk.ekyc.model.MasterModel
+import com.pvcombank.sdk.ekyc.util.Utils.timeToString
 import com.pvcombank.sdk.ekyc.util.Utils.toPVDate
 import com.pvcombank.sdk.ekyc.util.Utils.toSVDate
 import com.pvcombank.sdk.ekyc.view.popup.AlertPopup
@@ -19,6 +21,9 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class InformationConfirmFragment : PVFragment<FragmentCardCaptureResultBinding>() {
+	private val phoneNumber: String get() {
+		return (MasterModel.getInstance().cache["phone_number"] as? String) ?: ""
+	}
 	override fun onCreateView(
 		inflater: LayoutInflater,
 		container: ViewGroup?,
@@ -111,6 +116,14 @@ class InformationConfirmFragment : PVFragment<FragmentCardCaptureResultBinding>(
 				)
 			}
 			validate()
+			logEvent(
+				this@InformationConfirmFragment::class.java.simpleName,
+				MarcomEvent.RECONFIRM_SCREEN,
+				mutableMapOf(
+					Pair("af_phone", phoneNumber),
+				)
+			)
+
 		}
 	}
 	

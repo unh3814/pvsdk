@@ -7,6 +7,9 @@ import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentManager
+import com.appsflyer.AppsFlyerConversionListener
+import com.appsflyer.AppsFlyerLib
+import com.appsflyer.attribution.AppsFlyerRequestListener
 import com.pvcombank.sdk.ekyc.R
 import com.pvcombank.sdk.ekyc.base.PVActivity
 import com.pvcombank.sdk.ekyc.base.PVFragment
@@ -15,11 +18,9 @@ import com.pvcombank.sdk.ekyc.base.model.TopBar
 import com.pvcombank.sdk.ekyc.base.model.TopBarListener
 import com.pvcombank.sdk.ekyc.databinding.ActivityRegisterBinding
 import com.pvcombank.sdk.ekyc.model.Constants
-import com.pvcombank.sdk.ekyc.model.MasterModel
 import com.pvcombank.sdk.ekyc.util.Utils.openFragment
 import com.pvcombank.sdk.ekyc.view.register.after_create.AfterCreateFragment
 import com.trustingsocial.tvsdk.TrustVisionSDK
-import io.reactivex.rxjava3.subjects.PublishSubject
 
 class RegisterActivity : PVActivity<ActivityRegisterBinding>() {
 	private val currentFragment get() = supportFragmentManager.findFragmentById(fragmentHostID)
@@ -32,6 +33,7 @@ class RegisterActivity : PVActivity<ActivityRegisterBinding>() {
 		initAlertInline()
 		initTopBar()
 		initTrustVision()
+		initAppsflyer()
 		viewBinding.apply {
 			supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
 			openFragment(
@@ -40,7 +42,42 @@ class RegisterActivity : PVActivity<ActivityRegisterBinding>() {
 			)
 		}
 	}
-	
+
+	private fun initAppsflyer() {
+		val appsflyerInitListener = object : AppsFlyerConversionListener {
+			override fun onConversionDataSuccess(p0: MutableMap<String, Any>?) {
+				Log.d("AppsFlyer", "onConversionDataSuccess $p0")
+			}
+
+			override fun onConversionDataFail(p0: String?) {
+				Log.d("AppsFlyer", "$p0")
+			}
+
+			override fun onAppOpenAttribution(p0: MutableMap<String, String>?) {
+				Log.d("AppsFlyer", "onConversionDataFail $p0")
+			}
+
+			override fun onAttributionFailure(p0: String?) {
+				Log.d("AppsFlyer", "onAppOpenAttribution $p0")
+			}
+		}
+		val appsFlyerStartListener = object : AppsFlyerRequestListener{
+			override fun onSuccess() {
+				Log.d("AppsFlyer", "Start success")
+			}
+
+			override fun onError(p0: Int, p1: String) {
+				Log.d("AppsFlyer", "Error: [$p0] - $p1")
+			}
+		}
+		AppsFlyerLib.getInstance().init(
+			getString(R.string.key_appflyer),
+			appsflyerInitListener,
+			this
+		)
+		AppsFlyerLib.getInstance().start(this, getString(R.string.key_appflyer), appsFlyerStartListener)
+	}
+
 	private fun initTopBar() {
 		topBar = TopBar.build()
 		topBar.setContentView(viewBinding.topBar)

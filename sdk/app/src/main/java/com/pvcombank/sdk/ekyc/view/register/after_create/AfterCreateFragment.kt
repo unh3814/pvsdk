@@ -9,11 +9,14 @@ import com.pvcombank.sdk.ekyc.R
 import com.pvcombank.sdk.ekyc.base.PVFragment
 import com.pvcombank.sdk.ekyc.databinding.FragmentCreateAccoutBinding
 import com.pvcombank.sdk.ekyc.model.Constants
+import com.pvcombank.sdk.ekyc.model.MarcomEvent
 import com.pvcombank.sdk.ekyc.model.MasterModel
 import com.pvcombank.sdk.ekyc.repository.AuthRepository
 import com.pvcombank.sdk.ekyc.repository.OnBoardingRepository
+import com.pvcombank.sdk.ekyc.util.Utils.timeToString
 import com.pvcombank.sdk.ekyc.view.otp.confirm_otp.AuthOTPFragment
 import com.pvcombank.sdk.ekyc.view.popup.AlertPopup
+import java.util.Date
 
 class AfterCreateFragment : PVFragment<FragmentCreateAccoutBinding>() {
     private var repository: AuthRepository? = null
@@ -102,6 +105,14 @@ class AfterCreateFragment : PVFragment<FragmentCreateAccoutBinding>() {
                         phoneNumber = (cache["phone_number"] as? String) ?: "",
                         email = (cache["email"] as? String) ?: ""
                     )
+                    logEvent(
+                        this@AfterCreateFragment::class.java.simpleName,
+                        MarcomEvent.REGISTRATION_NEXT_FORM,
+                        mutableMapOf(
+                            Pair("af_email", (cache["email"] as? String) ?: ""),
+                            Pair("af_phone", (cache["phone_number"] as? String) ?: "")
+                        )
+                    )
                 }
             }
             repository?.observerSendOTPResponse?.observe(
@@ -114,6 +125,14 @@ class AfterCreateFragment : PVFragment<FragmentCreateAccoutBinding>() {
                             AuthOTPFragment::class.java,
                             requireArguments()
                         )
+                        logEvent(
+                            this@AfterCreateFragment::class.java.simpleName,
+                            MarcomEvent.OPEN_OTP_FORM,
+                            mutableMapOf(
+                                Pair("af_sent_otp_status", true),
+                                Pair("af_sent_otp_time", Date().time.timeToString(Constants.MARCOM_DATE_TIME))
+                            )
+                        )
                     }
                 }
             )
@@ -121,6 +140,14 @@ class AfterCreateFragment : PVFragment<FragmentCreateAccoutBinding>() {
                 viewLifecycleOwner,
                 Observer {
                     it?.let {
+                        logEvent(
+                            this@AfterCreateFragment::class.java.simpleName,
+                            MarcomEvent.OPEN_OTP_FORM,
+                            mutableMapOf(
+                                Pair("af_sent_otp_status", false),
+                                Pair("af_sent_otp_time", Date().time.timeToString(Constants.MARCOM_DATE_TIME))
+                            )
+                        )
                         hideLoading()
                         AlertPopup.show(
                             fragmentManager = childFragmentManager,
@@ -134,6 +161,11 @@ class AfterCreateFragment : PVFragment<FragmentCreateAccoutBinding>() {
                         )
                     }
                 }
+            )
+            logEvent(
+                this@AfterCreateFragment::class.java.simpleName,
+                MarcomEvent.OPEN_REGISTRATION_FORM,
+                mutableMapOf()
             )
         }
     }

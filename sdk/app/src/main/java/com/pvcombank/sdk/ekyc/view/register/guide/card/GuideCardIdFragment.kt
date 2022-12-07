@@ -13,11 +13,13 @@ import com.pvcombank.sdk.ekyc.base.PVFragment
 import com.pvcombank.sdk.ekyc.databinding.FragmentGuideCardCaptureBinding
 import com.pvcombank.sdk.ekyc.model.Constants
 import com.pvcombank.sdk.ekyc.model.Constants.EKYC_DONE
+import com.pvcombank.sdk.ekyc.model.MarcomEvent
 import com.pvcombank.sdk.ekyc.model.MasterModel
 import com.pvcombank.sdk.ekyc.model.request.CheckAccountRequest
 import com.pvcombank.sdk.ekyc.model.response.ResponseOCR
 import com.pvcombank.sdk.ekyc.repository.OnBoardingRepository
 import com.pvcombank.sdk.ekyc.util.FileUtils.toFile
+import com.pvcombank.sdk.ekyc.util.Utils.timeToString
 import com.pvcombank.sdk.ekyc.util.Utils.toTypeId
 import com.pvcombank.sdk.ekyc.util.execute.MyExecutor
 import com.pvcombank.sdk.ekyc.view.popup.AlertPopup
@@ -30,6 +32,7 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
+import java.sql.Date
 
 class GuideCardIdFragment : PVFragment<FragmentGuideCardCaptureBinding>() {
 	override fun onBack(): Boolean {
@@ -65,6 +68,13 @@ class GuideCardIdFragment : PVFragment<FragmentGuideCardCaptureBinding>() {
 			btnConfirm.setOnClickListener {
 				//Start Scan cardID
 				startCaptureCard(currentStep)
+				logEvent(
+					this@GuideCardIdFragment::class.java.simpleName,
+					MarcomEvent.INTRODUCTION_CAPTURE_CARD_SCREEN,
+					mutableMapOf(
+						Pair("af_phone", phoneNumber)
+					)
+				)
 			}
 			repository.error.observe(
 				viewLifecycleOwner,
@@ -154,6 +164,29 @@ class GuideCardIdFragment : PVFragment<FragmentGuideCardCaptureBinding>() {
 		startVerify(file!!, type) { response ->
 			val responseSuccess = response["success"]
 			if (responseSuccess is ResponseOCR) {
+				if (type == "font"){
+					logEvent(
+						this@GuideCardIdFragment::class.java.simpleName,
+						MarcomEvent.CAPTURE_FRONT_CARD,
+						mutableMapOf(
+							Pair("af_phone", phoneNumber),
+							Pair("af_capture_front_status", if (responseSuccess.error.isNullOrEmpty()) "success" else "fail"),
+							Pair("af_capture_info", responseSuccess)
+						)
+					)
+				}
+				if (type == "back"){
+					logEvent(
+						this@GuideCardIdFragment::class.java.simpleName,
+						MarcomEvent.CAPTURE_BACK_CARD,
+						mutableMapOf(
+							Pair("af_phone", phoneNumber),
+							Pair("af_capture_back_status", if (responseSuccess.error.isNullOrEmpty()) "success" else "fail"),
+							Pair("af_capture_info", responseSuccess)
+						)
+					)
+				}
+
 				val label = responseSuccess.cardLabel
 				if (label?.isNotEmpty() == true) {
 					requireArguments().putString("type_card", label)

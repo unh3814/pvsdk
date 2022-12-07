@@ -3,9 +3,11 @@ package com.pvcombank.sdk.ekyc.model
 object Constants {
 	var ID_PARTNER: String? = null
 	var APP_CODE: String? = null
+	//region time
 	const val TIME_FORMAT = "yyyy-MM-DD"
 	const val DATE_FORMAT = "DD/MM/yyyy"
-	
+	const val MARCOM_DATE_TIME = "YYYY-MM-DD hh:mm:ss"
+	//endregion time
 	//region Auth
 	const val GRANT_TYPE_REFRESH = "refresh_token"
 	const val GRANT_TYPE_CODE = "authorization_code"

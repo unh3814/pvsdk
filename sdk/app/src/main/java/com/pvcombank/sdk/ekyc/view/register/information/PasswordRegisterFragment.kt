@@ -10,6 +10,7 @@ import com.pvcombank.sdk.ekyc.R
 import com.pvcombank.sdk.ekyc.base.PVFragment
 import com.pvcombank.sdk.ekyc.databinding.FragmentPasswordRegisterBinding
 import com.pvcombank.sdk.ekyc.model.Constants
+import com.pvcombank.sdk.ekyc.model.MarcomEvent
 import com.pvcombank.sdk.ekyc.model.MasterModel
 import com.pvcombank.sdk.ekyc.model.request.RequestFinish
 import com.pvcombank.sdk.ekyc.repository.OnBoardingRepository
@@ -20,6 +21,9 @@ import com.pvcombank.sdk.ekyc.view.register.after_create.AfterCreateFragment
 class PasswordRegisterFragment : PVFragment<FragmentPasswordRegisterBinding>() {
 	private val repository = OnBoardingRepository()
 	private val cache get() = MasterModel.getInstance().cache
+	private val phoneNumber: String get() {
+		return (cache["phone_number"] as? String) ?: ""
+	}
 	override fun onCreateView(
 		inflater: LayoutInflater,
 		container: ViewGroup?,
@@ -70,6 +74,13 @@ class PasswordRegisterFragment : PVFragment<FragmentPasswordRegisterBinding>() {
 			btnRegister.setOnClickListener {
 				showLoading()
 				repository.updatePassword(confirmPassword.getText())
+				logEvent(
+					this@PasswordRegisterFragment::class.java.simpleName,
+					MarcomEvent.PASSWORD_SCREEN_NEXT,
+					mutableMapOf(
+						Pair("af_phone", phoneNumber),
+					)
+				)
 			}
 			repository.observerUpdatePassword
 				.observe(
@@ -85,6 +96,13 @@ class PasswordRegisterFragment : PVFragment<FragmentPasswordRegisterBinding>() {
 				Observer {
 					it?.let {
 						//Cập nhập xong
+						logEvent(
+							this@PasswordRegisterFragment::class.java.simpleName,
+							MarcomEvent.SUCCESS,
+							mutableMapOf(
+								Pair("af_ekyc_status", "success"),
+							)
+						)
 					}
 				}
 			)
@@ -92,6 +110,13 @@ class PasswordRegisterFragment : PVFragment<FragmentPasswordRegisterBinding>() {
 				viewLifecycleOwner,
 				Observer {
 					it?.let {
+						logEvent(
+							this@PasswordRegisterFragment::class.java.simpleName,
+							MarcomEvent.SUCCESS,
+							mutableMapOf(
+								Pair("af_ekyc_status", "fail"),
+							)
+						)
 						hideLoading()
 						MasterModel.getInstance().errorString.onNext("Error")
 						if (it.first == 0) {
@@ -116,6 +141,14 @@ class PasswordRegisterFragment : PVFragment<FragmentPasswordRegisterBinding>() {
 					}
 				}
 			)
+			logEvent(
+				this@PasswordRegisterFragment::class.java.simpleName,
+				MarcomEvent.PASSWORD_SCREEN,
+				mutableMapOf(
+					Pair("af_phone", phoneNumber),
+				)
+			)
+
 		}
 	}
 	

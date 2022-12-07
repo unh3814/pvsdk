@@ -18,6 +18,7 @@ import com.pvcombank.sdk.ekyc.databinding.FragmentRegisterBinding
 import com.pvcombank.sdk.ekyc.databinding.TooltipsCustomBinding
 import com.pvcombank.sdk.ekyc.model.BranchModel
 import com.pvcombank.sdk.ekyc.model.Constants
+import com.pvcombank.sdk.ekyc.model.MarcomEvent
 import com.pvcombank.sdk.ekyc.model.MasterModel
 import com.pvcombank.sdk.ekyc.model.request.RequestFinish
 import com.pvcombank.sdk.ekyc.util.SearchUtil
@@ -35,6 +36,9 @@ class InformationRegisterFragment : PVFragment<FragmentRegisterBinding>() {
 	private val requestFinish = RequestFinish()
 	private val cache get() = MasterModel.getInstance().cache
 	private var branchCurrent: BranchModel? = null
+	private val phoneNumber: String get() {
+		return (MasterModel.getInstance().cache["phone_number"] as? String) ?: ""
+	}
 	override fun onCreateView(
 		inflater: LayoutInflater,
 		container: ViewGroup?,
@@ -175,9 +179,14 @@ class InformationRegisterFragment : PVFragment<FragmentRegisterBinding>() {
 					PasswordRegisterFragment::class.java,
 					requireArguments()
 				)
-
-//				repository.finish(requestFinish) {
-//				}
+				logEvent(
+					this@InformationRegisterFragment::class.java.simpleName,
+					MarcomEvent.RECONFIRM_NEXT,
+					mutableMapOf(
+						Pair("af_phone", this@InformationRegisterFragment.phoneNumber),
+						Pair("af_product_info", requestFinish)
+					)
+				)
 			}
 			root.setOnClickListener {
 				hideKeyboard()
@@ -192,6 +201,14 @@ class InformationRegisterFragment : PVFragment<FragmentRegisterBinding>() {
 			requestFinish.fatca = aYes.isChecked == true
 			requestFinish.signature = data.signature ?: ""
 			requestFinish.expiredDate = data.expDate ?: ""
+
+			logEvent(
+				this@InformationRegisterFragment::class.java.simpleName,
+				MarcomEvent.RECONFIRM_SCREEN,
+				mutableMapOf(
+					Pair("af_phone", this@InformationRegisterFragment.phoneNumber),
+				)
+			)
 		}
 	}
 	

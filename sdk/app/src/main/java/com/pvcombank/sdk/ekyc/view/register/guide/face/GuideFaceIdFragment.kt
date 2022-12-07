@@ -11,6 +11,7 @@ import com.pvcombank.sdk.ekyc.R
 import com.pvcombank.sdk.ekyc.base.PVFragment
 import com.pvcombank.sdk.ekyc.databinding.FragmentGuideFaceCaptureBinding
 import com.pvcombank.sdk.ekyc.model.Constants
+import com.pvcombank.sdk.ekyc.model.MarcomEvent
 import com.pvcombank.sdk.ekyc.model.MasterModel
 import com.pvcombank.sdk.ekyc.model.request.Gesture
 import com.pvcombank.sdk.ekyc.model.request.RequestVerifySelfies
@@ -29,6 +30,9 @@ class GuideFaceIdFragment : PVFragment<FragmentGuideFaceCaptureBinding>() {
 	override fun onBack(): Boolean = false
 	private val repository = OnBoardingRepository()
 	private var count = 0
+	private val phoneNumber: String get() {
+		return (MasterModel.getInstance().cache["phone_number"] as? String) ?: ""
+	}
 	override fun onCreateView(
 		inflater: LayoutInflater,
 		container: ViewGroup?,
@@ -143,14 +147,32 @@ class GuideFaceIdFragment : PVFragment<FragmentGuideFaceCaptureBinding>() {
 							hideLoading()
 							val responseSuccess = it["success"]
 							if (responseSuccess is ResponseOCR) {
-								if (responseSuccess.error == null) {
+								if (responseSuccess.error.isNullOrEmpty()) {
 									requireArguments().putBoolean("hide_back", false)
 									openFragment(
 										InformationConfirmFragment::class.java,
 										requireArguments()
 									)
+									logEvent(
+										this@GuideFaceIdFragment::class.java.simpleName,
+										MarcomEvent.SELFIE,
+										mutableMapOf(
+											Pair("af_phone", phoneNumber),
+											Pair("af_selfie_status", "success"),
+											Pair("af_capture_info", responseSuccess)
+										)
+									)
 								} else {
 									handlerError(responseSuccess)
+									logEvent(
+										this@GuideFaceIdFragment::class.java.simpleName,
+										MarcomEvent.SELFIE,
+										mutableMapOf(
+											Pair("af_phone", phoneNumber),
+											Pair("af_selfie_status", "fail"),
+											Pair("af_capture_info", responseSuccess)
+										)
+									)
 								}
 							}
 							val responseError = it["fail"]
