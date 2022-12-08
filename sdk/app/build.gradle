@@ -18,7 +18,7 @@ android {
     }
 
     buildTypes {
-        release {
+        debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -28,26 +28,10 @@ android {
         def SERVER_URL = "SERVER_URL"
         def ONBOARDING_URL = "ONBOARDING_URL"
         def STRING = "String"
-        vietsens {
+        payment {
             dimension ''
             buildConfigField(STRING, ONBOARDING_URL, '"https://onboarding-udnb-staging.pvcombank.com.vn/api/"')
             buildConfigField(STRING, SERVER_URL, '"https://iuhfhsds3h.execute-api.ap-southeast-1.amazonaws.com/"')
-            aarMetadata {
-                minSdk = 23
-            }
-        }
-        onboading{
-            dimension ''
-            buildConfigField(STRING, ONBOARDING_URL, '"https://onboarding-udnb-staging.pvcombank.com.vn/api/"')
-            buildConfigField(STRING, SERVER_URL, '"https://sandbox-connect.pvcombank.com.vn/"')
-            aarMetadata {
-                minSdk = 23
-            }
-        }
-        dev {
-            dimension ''
-            buildConfigField(STRING, ONBOARDING_URL, '"https://onboarding-udnb-staging.pvcombank.com.vn/api/"')
-            buildConfigField(STRING, SERVER_URL, '"https://connect.apps.ocp4-dev03.pvcomtestocp.com/"')
             aarMetadata {
                 minSdk = 23
             }

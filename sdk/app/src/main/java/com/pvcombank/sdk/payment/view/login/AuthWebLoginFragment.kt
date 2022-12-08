@@ -14,7 +14,7 @@ import com.pvcombank.sdk.payment.base.PVFragment
 import com.pvcombank.sdk.databinding.FragmentWebLoginBinding
 import com.pvcombank.sdk.payment.model.Constants
 import com.pvcombank.sdk.payment.model.MasterModel
-import com.pvcombank.sdk.payment.repository.AuthRepository
+import com.pvcombank.sdk.payment.repository.PVRepository
 import com.pvcombank.sdk.payment.view.otp.select_card.PaymentInformationFragment
 import com.pvcombank.sdk.payment.view.popup.AlertPopup
 import java.util.*
@@ -60,11 +60,12 @@ class AuthWebLoginFragment : PVFragment<FragmentWebLoginBinding>() {
 	private val chromeClient = object : WebChromeClient() {
 		override fun onProgressChanged(view: WebView?, newProgress: Int) {
 			super.onProgressChanged(view, newProgress)
-			if (newProgress < 100){
-				showLoading()
+			if (newProgress >= 100){
+				hideLoading()
 				hideKeyboard()
 			} else {
-				hideLoading()
+				showLoading()
+				hideKeyboard()
 			}
 			if (view?.url?.startsWith(Constants.REDIRECT_URL) == true && view?.url != Constants.url){
 				viewBinding.layoutLoaddingWeb.visibility = View.VISIBLE
@@ -115,13 +116,14 @@ class AuthWebLoginFragment : PVFragment<FragmentWebLoginBinding>() {
 				this.getQueryParameter("code")?.let {
 					val code = it
 					MasterModel.getInstance().timeLogin = Date().time
-					AuthRepository().apply {
+					PVRepository().apply {
 						Handler(Looper.getMainLooper()).post {
 							getTokenByCode(
 								code = code,
 								clientId = masterData.clientId ?: "",
 								clientSecret = masterData.clientSecret ?: ""
 							) {
+								hideLoading()
 								Constants.TOKEN = "${it?.tokenType ?: ""} ${it?.accessToken ?: ""}"
 								openFragment(
 									PaymentInformationFragment::class.java,

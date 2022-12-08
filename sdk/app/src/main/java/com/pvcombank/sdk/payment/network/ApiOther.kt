@@ -1,30 +1,35 @@
 package com.pvcombank.sdk.payment.network
 
+import com.pvcombank.sdk.payment.model.CardModel
+import com.pvcombank.sdk.payment.model.Constants
+import com.pvcombank.sdk.payment.model.ResponseData
 import com.pvcombank.sdk.payment.model.request.*
+import com.pvcombank.sdk.payment.model.response.ResponsePurchase
+import com.pvcombank.sdk.payment.model.response.ResponseVerifyOTP
 import io.reactivex.rxjava3.core.Observable
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface ApiOther {
-	@POST("staging/v1/prepaid-cards/purchase")
+	@POST(Constants.API_PURCHASE)
 	fun purchase(
-		@Body request: RequestModel
-	): Observable<RequestModel>
+		@Body request: RequestPurchase
+	): Observable<ResponseData<ResponsePurchase>>
 	
-	@POST("staging/v1/user/verify-otp")
-	fun verifyOTP(@Body request: RequestModel): Observable<RequestModel>
+	@POST(Constants.API_VERIFY_OTP)
+	fun verifyOTP(@Body request: RequestVerifyOTP): Observable<ResponseData<ResponseVerifyOTP>>
+
+	@GET(Constants.API_CARD_DETAIL)
+	fun getCardDetail(@Path("id") id: String): Observable<ResponseData<CardModel>>
 	
-	@POST("staging/v1/onboarding/verify-otp")
-	fun verifyOnboardOTP(@Body request: RequestModel): Observable<RequestModel>
-	
-	@POST("staging/v1/onboarding/send-otp")
-	fun sendOTP(@Body request: RequestModel): Observable<RequestModel>
-	
-	@GET("staging/v1/prepaid-cards/{id}")
-	fun getCardDetail(@Path("id") id: String): Observable<RequestModel>
-	
-	@GET("staging/v1/prepaid-cards/list-card")
-	fun getListCardDetail(): Observable<RequestModel>
+	@GET(Constants.API_LIST_CARD)
+	fun getListCardDetail(): Observable<ResponseData<List<CardModel>>>
+
+	@GET(Constants.API_METHODS)
+	fun getMethods(): Observable<ResponseData<List<CardModel>>>
+
+	@GET(Constants.API_METHODS_DETAIL)
+	fun getMethodsDetail(
+		@Query("type") type: String,
+		@Query("source") source: String
+	): Observable<ResponseData<CardModel>>
 }

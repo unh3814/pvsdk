@@ -1,12 +1,18 @@
 package com.pvcombank.sdk.payment.model
 
 object Constants {
+	const val API_METHODS = "staging/payment/v1/methods"
+	const val API_METHODS_DETAIL = "staging/payment/v1/method-detail"
+	const val API_LIST_CARD = "staging/v1/prepaid-cards/list-card"
+	const val API_CARD_DETAIL = "staging/v1/prepaid-cards/{id}"
+	const val API_PURCHASE = "staging/payment/v1/purchase"
+	const val API_VERIFY_OTP = "staging/payment/v1/verify-otp"
 	const val GRANT_TYPE_CODE = "authorization_code"
 	const val BASE_URL = "https://connect.apps-ext.ocp4-dev03.pvcomtestocp.com/"
 	const val BASE_URL_OTHER = "https://iuhfhsds3h.execute-api.ap-southeast-1.amazonaws.com/"
 	const val REDIRECT_URL = "https://10.0.15.60/connect"
 	const val url = "https://connect.apps-ext.ocp4-dev03.pvcomtestocp.com/auth/realms/pvcombank/protocol/openid-connect/auth?client_id=vietsens-sdk&state=589i2mgvijs&redirect_uri=$REDIRECT_URL&scope=openid&response_type=code"
-	//https://connect.apps.ocp4-dev03.pvcomtestocp.com/auth/realms/pvcombank/protocol/openid-connect/auth?client_id=vietsens-sdk&state=589i2mgvijs&redirect_uri=https://10.0.15.60/connect&scope=openid&response_type=code
+	//https://connect.apps-ext.ocp4-dev03.pvcomtestocp.com/auth/realms/pvcombank/protocol/openid-connect/auth?client_id=vietsens-sdk&state=589i2mgvijs&redirect_uri=https://10.0.15.60/connect&scope=openid&response_type=code
 	var TOKEN: String = ""
 	
 	//region http code

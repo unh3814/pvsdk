@@ -10,10 +10,8 @@ import com.pvcombank.sdk.R
 import com.pvcombank.sdk.payment.base.PVFragment
 import com.pvcombank.sdk.databinding.FragmentConfirmPaymentBinding
 import com.pvcombank.sdk.payment.model.CardModel
-import com.pvcombank.sdk.payment.model.Constants
 import com.pvcombank.sdk.payment.model.MasterModel
-import com.pvcombank.sdk.payment.model.response.ResponsePurchase
-import com.pvcombank.sdk.payment.repository.AuthRepository
+import com.pvcombank.sdk.payment.repository.PVRepository
 import com.pvcombank.sdk.payment.util.Utils.formatStringCurrency
 import com.pvcombank.sdk.payment.view.login.AuthWebLoginFragment
 import com.pvcombank.sdk.payment.view.otp.confirm_otp.AuthOTPFragment
@@ -21,7 +19,7 @@ import com.pvcombank.sdk.payment.view.popup.AlertPopup
 
 class PaymentConfirmInformationFragment : PVFragment<FragmentConfirmPaymentBinding>() {
 	private var cardSelected: CardModel? = null
-	private val repository = AuthRepository()
+	private val repository = PVRepository()
 	override fun onCreateView(
 		inflater: LayoutInflater,
 		container: ViewGroup?,
@@ -38,12 +36,12 @@ class PaymentConfirmInformationFragment : PVFragment<FragmentConfirmPaymentBindi
 			hideInlineMessage()
 			topBar.setTitle(getString(R.string.confirm_information_payment))
 			topBar.show()
-			cardSelected = arguments?.getParcelable<CardModel>("card")?.apply {
-				tvLabelCard.text = cardType
+			cardSelected = requireArguments().getParcelable<CardModel>("card")?.apply {
+				tvLabelCard.text = cardType ?: type
 				tvNumberCard.text = numberCard
 				tvCardBalance.text = getString(
 					R.string.current_balance,
-					availableBalance.toString().formatStringCurrency()
+					availableBalance.formatStringCurrency()
 				)
 			}
 			MasterModel.getInstance().apply {
@@ -51,7 +49,7 @@ class PaymentConfirmInformationFragment : PVFragment<FragmentConfirmPaymentBindi
 				tvCurrentBalance.text = "${orderCurrency?.formatStringCurrency()}đ"
 				tvContentOrder.text = getString(R.string.content_order_desc, idOrder, clientId)
 				//show alert if error card not enough money
-				val cardSelectedCurrency = cardSelected?.availableBalance?.toString() ?: "0"
+				val cardSelectedCurrency = cardSelected?.availableBalance ?: "0"
 				val currencyOrder = orderCurrency ?: "0"
 				if (cardSelectedCurrency.toBigDecimal()
 						.minus(currencyOrder.toBigDecimal()) < "0".toBigDecimal()
@@ -61,7 +59,7 @@ class PaymentConfirmInformationFragment : PVFragment<FragmentConfirmPaymentBindi
 				}
 			}
 			btnConfirm.setOnClickListener {
-				cardSelected?.cardToken?.let {
+				cardSelected?.let {
 					checkStatusCard(it)
 				}
 			}
@@ -83,94 +81,97 @@ class PaymentConfirmInformationFragment : PVFragment<FragmentConfirmPaymentBindi
 					}
 				)
 			}
-			repository.onNeedLogin.observe(
+			repository.observableMethodsDetail.observe(
 				viewLifecycleOwner,
 				Observer {
-					AlertPopup.show(
-						title = "Thông báo",
-						message = "Hết thời gian đăng nhập, mời bạn đăng nhập lại",
-						primaryTitle = "OK",
-						primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
-							override fun onClickListener(v: View) {
-								openFragment(
-									AuthWebLoginFragment::class.java,
-									Bundle(),
-									false
-								)
-							}
-						},
-						fragmentManager = childFragmentManager
-					)
-				}
-			)
-			
-		}
-	}
-	
-	private fun checkStatusCard(it: String) {
-		showLoading()
-		repository.getCard(it) {
-			when (it) {
-				is CardModel -> {
-					Constants.INLINE_ALERT_CODE[it.cardStatus.toInt()]?.let { message ->
-						hideLoading()
-						showInlineMessage(message = message)
-					}
-					Constants.TOAST_ALERT_CODE[it.cardStatus.toInt()]?.let { message ->
-						hideLoading()
-						showToastMessage(message)
-					}
-					if(it.cardStatus.toInt() == 0){
+					hideLoading()
+					it?.let {
 						startPurchase()
 					}
 				}
-				else -> {
-					hideLoading()
-					showAlertError()
+			)
+			repository.observableCard.observe(
+				viewLifecycleOwner,
+				Observer {
+					it?.let {
+						hideLoading()
+						if (it.cardStatus.toInt() == 0) {
+							startPurchase()
+						}
+					}
 				}
-			}
+			)
+			repository.observablePurchase.observe(
+				viewLifecycleOwner,
+				Observer {
+					it?.let {
+						hideLoading()
+						MasterModel.getInstance().uuidOfOTP = it.uuid
+						requireArguments().apply {
+							putParcelable("data", it)
+						}
+						openFragment(
+							AuthOTPFragment::class.java,
+							requireArguments(),
+							true
+						)
+					}
+				}
+			)
+			repository.error.observe(
+				viewLifecycleOwner,
+				Observer {
+					it?.let {
+						hideLoading()
+						showAlertError(it)
+					}
+				}
+			)
 		}
 	}
 	
-	private fun showAlertError(message: String? = null) {
+	private fun checkStatusCard(cardModel: CardModel) {
+		showLoading()
+		if (cardModel.type == "account"){
+			repository.getMethodsDetail(cardModel.type ?: "", cardModel.source ?: "")
+		} else {
+			repository.getCard(cardModel.source ?: "")
+		}
+	}
+	
+	private fun showAlertError(error: Pair<Int, String>) {
 		AlertPopup.show(
 			fragmentManager = childFragmentManager,
 			title = "Thông báo",
 			primaryTitle = "ok",
-			message = message ?: getString(R.string.error_system)
+			primaryButtonListener = object : AlertPopup.PrimaryButtonListener{
+				override fun onClickListener(v: View) {
+					if (error.first in 400..499){
+						openFragment(
+							AuthWebLoginFragment::class.java,
+							Bundle(),
+							false
+						)
+					}
+				}
+			},
+			message = error.second
 		)
 	}
 	
 	private fun startPurchase() {
 		showLoading()
-		repository.purchase(cardSelected?.cardToken ?: "") {
-			hideLoading()
-			when (it) {
-				is ResponsePurchase -> {
-					MasterModel.getInstance().uuidOfOTP = it.uuid
-					requireArguments().apply {
-						putParcelable("data", it)
-					}
-					openFragment(
-						AuthOTPFragment::class.java,
-						requireArguments(),
-						true
-					)
-				}
-				else -> {
-					MasterModel.getInstance().errorString.onNext("Lỗi hệ thống")
-					AlertPopup.show(
-						fragmentManager = childFragmentManager,
-						title = "Thông báo",
-						message = "Đã có lỗi xảy ra",
-						primaryTitle = "OK"
-					)
-				}
-			}
+		cardSelected?.let {
+			repository.purchase(it)
 		}
 	}
 	
 	override fun onBack(): Boolean {
 		return false
+	}
+
+	override fun onStop() {
+		super.onStop()
+		repository.clear()
 	}
 }

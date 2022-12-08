@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +14,7 @@ import com.pvcombank.sdk.payment.base.PVFragment
 import com.pvcombank.sdk.databinding.FragmentPaymentInformationBinding
 import com.pvcombank.sdk.payment.model.CardModel
 import com.pvcombank.sdk.payment.model.MasterModel
-import com.pvcombank.sdk.payment.repository.AuthRepository
+import com.pvcombank.sdk.payment.repository.PVRepository
 import com.pvcombank.sdk.payment.util.Utils.formatStringCurrency
 import com.pvcombank.sdk.payment.view.login.AuthWebLoginFragment
 import com.pvcombank.sdk.payment.view.otp.confirm_card.PaymentConfirmInformationFragment
@@ -22,7 +23,7 @@ import com.pvcombank.sdk.payment.view.popup.AlertPopup
 class PaymentInformationFragment : PVFragment<FragmentPaymentInformationBinding>(),
                                    ListCardAdapter.CardListener {
 	private val listCard = mutableListOf<CardModel>()
-	private val repository = AuthRepository()
+	private val repository = PVRepository()
 	
 	override fun onCreateView(
 		inflater: LayoutInflater,
@@ -35,7 +36,6 @@ class PaymentInformationFragment : PVFragment<FragmentPaymentInformationBinding>
 	
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
-		MasterModel.getInstance().isCreateAccount = false
 		viewBinding.apply {
 			topBar.setTitle(getString(R.string.information_payment))
 			topBar.show()
@@ -58,26 +58,9 @@ class PaymentInformationFragment : PVFragment<FragmentPaymentInformationBinding>
 				)
 			}
 			btnConfirm.setOnClickListener {
-//				val cardSelectedCurrency = listCard.find { it.isSelected }?.availableBalance?.toString() ?: "0"
-//				val currencyOrder = MasterModel.getInstance().orderCurrency ?: "0"
-//				if (cardSelectedCurrency.toBigDecimal().minus(currencyOrder.toBigDecimal()) < "50000".toBigDecimal()){
-//
-//				} else {
-//					val arg = Bundle().apply {
-//						putParcelable("card", listCard.find { it.isSelected })
-//					}
-//					openFragment(
-//						PaymentConfirmInformationFragment::class.java,
-//						arg,
-//						true
-//					)
-//				}
-				val arg = Bundle().apply {
-					putParcelable("card", listCard.find { it.isSelected })
-				}
 				openFragment(
 					PaymentConfirmInformationFragment::class.java,
-					arg,
+					requireArguments(),
 					true
 				)
 			}
@@ -88,28 +71,56 @@ class PaymentInformationFragment : PVFragment<FragmentPaymentInformationBinding>
 			MasterModel.getInstance().apply {
 				tvNumberOrder.text = idOrder
 				tvCurrentBalance.text = "${orderCurrency?.formatStringCurrency()}đ"
-				tvContentOrder.text = getString(R.string.content_order_desc, idOrder, clientId)
+				tvContentOrder.text = getString(R.string.content_order_desc, idOrder, "vietsens")
 				orderDesc = tvContentOrder.text.toString()
 			}
 			getListCard()
-			repository.onNeedLogin.observe(
+			repository.observableMethods.observe(
 				viewLifecycleOwner,
 				Observer {
-					AlertPopup.show(
-						title = "Thông báo",
-						message = "Hết thời gian đăng nhập, mời bạn đăng nhập lại",
-						primaryTitle = "OK",
-						primaryButtonListener = object : AlertPopup.PrimaryButtonListener{
-							override fun onClickListener(v: View) {
-								openFragment(
-									AuthWebLoginFragment::class.java,
-									Bundle(),
-									false
-								)
+					it?.let {
+						hideLoading()
+						listCard.clear()
+						listCard.addAll(it)
+						requireArguments().getParcelable<CardModel>("card")?.let {item ->
+							tvLabelCard.text = "${item.cardType ?: ""} ${item.numberCard}"
+							tvCardBalance.text = "Số dư: ${item.availableBalance.formatStringCurrency()}đ"
+						} ?: kotlin.run {
+							listCard.first().isSelected = true
+							onCardClick(listCard.first())
+						}
+						Log.d("Methods", "$it")
+					}
+				}
+			)
+			repository.observableListCard.observe(
+				viewLifecycleOwner,
+				Observer {
+					it?.let {
+						hideLoading()
+						listCard.addAll(it)
+						Log.d("ListCard", "$it")
+					}
+				}
+			)
+			repository.error.observe(
+				viewLifecycleOwner,
+				Observer {
+					it?.let {
+						hideLoading()
+						AlertPopup.show(
+							fragmentManager = childFragmentManager,
+							title = "Thông báo",
+							message = it.second,
+							primaryTitle = "ok",
+							primaryButtonListener = object : AlertPopup.PrimaryButtonListener{
+								override fun onClickListener(v: View) {
+									MasterModel.getInstance().errorString.onNext(it.second)
+									requireActivity().finish()
+								}
 							}
-						},
-						fragmentManager = childFragmentManager
-					)
+						)
+					}
 				}
 			)
 		}
@@ -117,48 +128,16 @@ class PaymentInformationFragment : PVFragment<FragmentPaymentInformationBinding>
 	
 	private fun getListCard() {
 		showLoading()
-		repository.getListCard {
-			it?.let {
-				this.listCard.clear()
-				this.listCard.addAll(it)
-				if (viewBinding.tvCardBalance.text.isNullOrEmpty()){
-					this.listCard.first().isSelected = true
-					onCardClick(this.listCard.first())
-				}
-			} ?: kotlin.run {
-				Handler(Looper.getMainLooper())
-					.post {
-						AlertPopup.show(
-							fragmentManager = childFragmentManager,
-							title = "Thông báo",
-							message = "Lỗi hệ thống, thử lại sau",
-							primaryTitle = "ok",
-							primaryButtonListener = object : AlertPopup.PrimaryButtonListener{
-								override fun onClickListener(v: View) {
-									MasterModel.getInstance().errorString.onNext("Lỗi hệ thống")
-									requireActivity().finish()
-								}
-							}
-						)
-					}
-			}
-			hideLoading()
-		}
+		repository.getMethods()
 	}
 	
 	@SuppressLint("SetTextI18n")
 	override fun onCardClick(item: CardModel) {
 		listCard.find { item.numberCard == it.numberCard }?.isSelected = true
 		viewBinding.apply {
-			tvLabelCard.text = "${item.cardType} ${item.numberCard}"
-			tvCardBalance.text = "Số dư: ${item.availableBalance.toString().formatStringCurrency()}đ"
-//			MasterModel.getInstance().orderCurrency?.let {
-//				if (item.availableBalance.toBigDecimal().minus(it.toBigDecimal()) < "50000".toBigDecimal()){
-//					showInlineMessage("Thẻ không đủ số dư")
-//				}else {
-//					hideInlineMessage()
-//				}
-//			}
+			tvLabelCard.text = "${item.cardType ?: ""} ${item.numberCard}"
+			tvCardBalance.text = "Số dư: ${item.availableBalance.formatStringCurrency()}đ"
+			requireArguments().putParcelable("card", item)
 		}
 	}
 	
@@ -179,5 +158,10 @@ class PaymentInformationFragment : PVFragment<FragmentPaymentInformationBinding>
 			}
 		)
 		return true
+	}
+
+	override fun onStop() {
+		super.onStop()
+		repository.clear()
 	}
 }

@@ -2,14 +2,14 @@ package com.pvcombank.demoapp
 
 import android.content.Context
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import com.pvcombank.sdk.PVCBAuthListener
-import com.pvcombank.sdk.view.PVCBAuth
+import androidx.appcompat.app.AppCompatActivity
+import com.pvcombank.sdk.payment.PVCBAuthListener
+import com.pvcombank.sdk.payment.view.PVCBAuth
 
 class MainActivity : AppCompatActivity() {
 	private var textThanhToan: TextView? = null
@@ -23,9 +23,8 @@ class MainActivity : AppCompatActivity() {
 		edtCurrency = findViewById(R.id.edt_currency)
 		textThanhToan?.text = "Mã đơn hàng: #005002\nNội dung: Thanh toan vien phi tai BV"
 		btnThanhToan?.setOnClickListener {
-			if (edtCurrency?.text?.isNotEmpty() == true) {
-				startPayment()
-			}
+			startPayment()
+
 		}
 	}
 	
@@ -35,7 +34,7 @@ class MainActivity : AppCompatActivity() {
 			setClient(
 				clientId = "vietsens-sdk",
 				clientSecret = "97392180-9aeb-4fe4-9c24-0676d35b4505",
-				currency = edtCurrency?.text.toString(),
+				currency = edtCurrency?.text?.toString() ?: "123456789",
 				idOrder = "005002",
 				appUnitId = "ONELINK"
 			)

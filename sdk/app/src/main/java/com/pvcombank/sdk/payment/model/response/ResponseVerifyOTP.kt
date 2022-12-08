@@ -6,8 +6,10 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class ResponseVerifyOTP(
-	@SerializedName("refNumber")
-	var refNumber: String,
-	@SerializedName("traceNumber")
-	var traceNumber: String
+    @SerializedName("refNumber")
+    var refNumber: String? = null,
+    @SerializedName("traceNumber")
+    var traceNumber: String? = null,
+    @SerializedName("dateTimePurchase")
+    var dateTimePurchase: String? = null
 ) : Parcelable

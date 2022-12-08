@@ -30,9 +30,8 @@ class ListCardAdapter(private var listener: CardListener) : RecyclerView.Adapter
 					listener.onCardClick(item)
 					notifyDataSetChanged()
 				}
-				tvLabel.text = "${item.cardType} ${item.numberCard}"
-				tvNumberCard.text =
-					"Hạn mức: ${item.availableBalance.toString().formatStringCurrency()}đ"
+				tvLabel.text = "${item.cardType ?: ""} ${item.numberCard}"
+				tvNumberCard.text = "Số dư: ${item.availableBalance.formatStringCurrency()}đ"
 				if (item.isSelected){
 					viewBinding.imgChecked.visibility = View.VISIBLE
 				} else {

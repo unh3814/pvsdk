@@ -6,24 +6,24 @@ import com.google.gson.reflect.TypeToken
 import retrofit2.HttpException
 
 object NetworkUtil {
-	private val gson = Gson()
-	fun Throwable.getErrorBody(): RequestModel? {
-		return (this as? HttpException)?.response()?.let { resonse ->
-			val typeResponse = object : TypeToken<RequestModel>() {}.type
-			val result = RequestModel()
-			result.code = resonse.code().toString()
-			resonse.errorBody()?.let {
-				try {
-					val model = gson.fromJson<RequestModel>(it.string(), typeResponse)
-					result.data = model.data
-					result.code = model.code
-					result.message = model.message
-					return result
-				} catch (e: Exception) {
-					return result
-				}
-			}
-			return result
-		}
-	}
+    private val gson = Gson()
+    fun Throwable.getErrorBody(): RequestModel<Any>? {
+        return (this as? HttpException)?.response()?.let { resonse ->
+            val typeResponse = object : TypeToken<RequestModel<Any>>() {}.type
+            val result = RequestModel<Any>()
+            result.code = resonse.code().toString()
+            resonse.errorBody()?.let {
+                try {
+                    val model = gson.fromJson<RequestModel<Any>>(it.string(), typeResponse)
+                    result.data = model.data
+                    result.code = model.code
+                    result.message = model.message
+                    return result
+                } catch (e: Exception) {
+                    return result
+                }
+            }
+            return result
+        }
+    }
 }

@@ -17,7 +17,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.Toast
 import androidx.core.view.forEach
 import androidx.core.view.forEachIndexed
 import androidx.lifecycle.Observer
@@ -27,20 +26,16 @@ import com.pvcombank.sdk.payment.base.PVFragment
 import com.pvcombank.sdk.payment.base.model.TopBarListener
 import com.pvcombank.sdk.databinding.OtpViewBinding
 import com.pvcombank.sdk.payment.model.CardModel
-import com.pvcombank.sdk.payment.model.ErrorBody
 import com.pvcombank.sdk.payment.model.MasterModel
-import com.pvcombank.sdk.payment.model.request.RequestModel
 import com.pvcombank.sdk.payment.model.request.RequestVerifyOTP
 import com.pvcombank.sdk.payment.model.response.ResponsePurchase
-import com.pvcombank.sdk.payment.model.response.ResponseVerifyOTP
-import com.pvcombank.sdk.payment.model.response.ResponseVerifyOnboardOTP
-import com.pvcombank.sdk.payment.repository.AuthRepository
+import com.pvcombank.sdk.payment.repository.PVRepository
 import com.pvcombank.sdk.payment.util.security.SecurityHelper
 import com.pvcombank.sdk.payment.view.otp.select_card.PaymentInformationFragment
 import com.pvcombank.sdk.payment.view.popup.AlertPopup
 
 class AuthOTPFragment : PVFragment<OtpViewBinding>() {
-	private var repository: AuthRepository? = null
+	private var repository: PVRepository? = null
 	override fun onCreateView(
 		inflater: LayoutInflater,
 		container: ViewGroup?,
@@ -52,7 +47,7 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 	
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
-		repository = AuthRepository()
+		repository = PVRepository()
 		viewBinding.apply {
 			topBar.setTitle(getString(R.string.confirm_otp))
 			topBar.show()
@@ -120,20 +115,46 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 			)
 			tvShowNumberPhone.text = spanText
 			startCountDownTimer()
-			repository!!.onNeedLogin.observe(
+			repository!!.observablePurchase.observe(
 				viewLifecycleOwner,
 				Observer {
-					AlertPopup.show(
-						title = "Thông báo",
-						message = "Hết thời gian đăng nhập, mời bạn đăng nhập lại",
-						primaryTitle = "OK",
-						primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
-							override fun onClickListener(v: View) {
-								requireActivity().recreate()
+					it?.let {
+						hideLoading()
+						startCountDownTimer()
+						MasterModel.getInstance().uuidOfOTP = it.uuid
+					}
+				}
+			)
+			repository!!.observableVerify.observe(
+				viewLifecycleOwner,
+				Observer {
+					it?.let {
+						hideLoading()
+						MasterModel.getInstance().successString.onNext("Thanh toán thành công")
+						viewBinding.errorMessage.text = ""
+						AlertPopup.show(
+							icon = R.drawable.ic_success,
+							fragmentManager = childFragmentManager,
+							title = "Thanh toán thành công",
+							message = "Bạn sẽ được đưa về ${MasterModel.getInstance().clientId} để tiếp tục đơn hàng sau 5 giây.\n",
+							primaryTitle = "Quay về ${MasterModel.getInstance().clientId}",
+							autoFinish = 6000L,
+							primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
+								override fun onClickListener(v: View) {
+									requireActivity().finish()
+								}
 							}
-						},
-						fragmentManager = childFragmentManager
-					)
+						)
+					}
+				}
+			)
+			repository!!.error.observe(
+				viewLifecycleOwner,
+				Observer {
+					it?.let {
+						hideLoading()
+						showAlertErrorPayment(it.second)
+					}
 				}
 			)
 			otpFirst.requestFocus()
@@ -143,6 +164,7 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 	
 	override fun onStop() {
 		super.onStop()
+		repository?.clear()
 		handler.removeCallbacksAndMessages(null)
 	}
 	
@@ -151,34 +173,7 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 		viewBinding.tvGetOtp.setTextColor(Color.parseColor("#82869E"))
 		val card = requireArguments().getParcelable<CardModel>("card")
 		showLoading()
-		if (MasterModel.getInstance().isCreateAccount){
-			val mail = MasterModel.getInstance().cacheCreateAccountMail
-			val phone = MasterModel.getInstance().cacheCreateAccountPhone
-			
-			repository?.sendOTP(phone, mail){
-				if (it !is String){
-				
-				}
-				hideLoading()
-				startCountDownTimer()
-			}
-		} else{
-			repository?.purchase(card?.cardToken ?: "") {
-				when (it) {
-					is ResponsePurchase -> {
-						MasterModel.getInstance().uuidOfOTP = it.uuid
-					}
-					is ErrorBody -> {
-						Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
-					}
-					is String -> {
-						Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
-					}
-				}
-				hideLoading()
-				startCountDownTimer()
-			}
-		}
+		repository?.purchase(card!!)
 	}
 	
 	private fun EditText.validateOtpView() {
@@ -207,72 +202,12 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 	private fun startVerifyOTP() {
 		showLoading()
 		hideKeyboard()
-		val request = RequestVerifyOTP(
-			uuid = MasterModel.getInstance().uuidOfOTP,
-			otp = getOTP()
+		repository?.verifyOTP(
+			RequestVerifyOTP(
+				uuid = MasterModel.getInstance().uuidOfOTP,
+				otp = getOTP()
+			)
 		)
-		
-		val stringEncrypt = SecurityHelper.instance()
-			.cryptoBuild(type = SecurityHelper.AES)
-			?.encrypt(Gson().toJson(request))
-		if (MasterModel.getInstance().isCreateAccount){
-			repository?.verifyOnboardOTP(RequestModel(data = stringEncrypt)){
-				if (it is ResponseVerifyOnboardOTP){
-					if (it.pvconnect.detected()){
-						when(it.ekyc.ekycStatus){
-							//Nhiều case quá chịu
-							else -> {
-								//Đăng ký ekyc
-							}
-						}
-					} else {
-						//Đăng ký pvconnect
-					}
-				}
-			}
-		}else{
-			repository?.verifyOTP(RequestModel(data = stringEncrypt)) {
-				when (it) {
-					is ResponseVerifyOTP -> {
-						MasterModel.getInstance().successString.onNext("Thanh toán thành công")
-						viewBinding.errorMessage.text = ""
-						AlertPopup.show(
-							icon = R.drawable.ic_success,
-							fragmentManager = childFragmentManager,
-							title = "Thanh toán thành công",
-							message = "Bạn sẽ được đưa về ${MasterModel.getInstance().clientId} để tiếp tục đơn hàng sau 5 giây.\n",
-							primaryTitle = "Quay về ${MasterModel.getInstance().clientId}",
-							autoFinish = 6000L,
-							primaryButtonListener = object : AlertPopup.PrimaryButtonListener {
-								override fun onClickListener(v: View) {
-									requireActivity().finish()
-								}
-							}
-						)
-					}
-					else -> {
-						(it as? RequestModel)?.let { errorModel ->
-							errorModel.code?.let {
-								when (errorModel.code) {
-									"117" -> {
-										viewBinding.errorMessage.text = errorModel.message
-									}
-									else -> {
-										showAlertErrorPayment(errorModel.message)
-									}
-								}
-							} ?: kotlin.run {
-								showAlertErrorPayment(getString(R.string.error_system))
-							}
-							MasterModel.getInstance().errorString.onNext(errorModel.message ?: getString(R.string.error_system))
-						} ?: run {
-							showAlertErrorPayment(getString(R.string.error_system))
-						}
-					}
-				}
-				hideLoading()
-			}
-		}
 	}
 	
 	private fun showAlertErrorPayment(message: String? = null) {

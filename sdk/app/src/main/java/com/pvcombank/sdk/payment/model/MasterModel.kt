@@ -30,10 +30,7 @@ class MasterModel {
 	val ocrApiKey = "KFxtLjFTavCDmNFE7dqZiCowhyM02ZWO"
 	val errorString: PublishSubject<String> = PublishSubject.create()
 	val successString: PublishSubject<String> = PublishSubject.create()
-	var isCreateAccount = false
-	var cacheCreateAccountMail = ""
-	var cacheCreateAccountPhone = ""
-	
+
 	companion object {
 		@JvmStatic
 		private var INSTANCE: MasterModel? = null
