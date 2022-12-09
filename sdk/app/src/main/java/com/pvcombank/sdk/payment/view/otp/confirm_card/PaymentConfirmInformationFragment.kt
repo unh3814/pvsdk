@@ -139,7 +139,7 @@ class PaymentConfirmInformationFragment : PVFragment<FragmentConfirmPaymentBindi
 		}
 	}
 	
-	private fun showAlertError(error: Pair<Int, String>) {
+	private fun showAlertError(error: Pair<Int, String?>) {
 		AlertPopup.show(
 			fragmentManager = childFragmentManager,
 			title = "Thông báo",
@@ -155,7 +155,7 @@ class PaymentConfirmInformationFragment : PVFragment<FragmentConfirmPaymentBindi
 					}
 				}
 			},
-			message = error.second
+			message = error.second ?: getString(R.string.error_system)
 		)
 	}
 	

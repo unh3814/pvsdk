@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.pvcombank.sdk.payment.model.ResponseData
+import com.pvcombank.sdk.payment.model.request.RequestModel
 import com.pvcombank.sdk.payment.util.NetworkUtil.getErrorBody
 import com.pvcombank.sdk.payment.util.Utils.toObjectData
 import com.pvcombank.sdk.payment.util.security.SecurityHelper
@@ -11,12 +12,12 @@ import java.io.IOException
 
 abstract class RepositoryBase {
     private val securityHelper = SecurityHelper.instance().cryptoBuild(type = SecurityHelper.AES)
-    val error = MutableLiveData<Pair<Int, String>>()
+    val error = MutableLiveData<Pair<Int, String?>>()
     val gson: Gson get() = GsonBuilder().create()
 
     private fun <T> handlerCryptoData(value: String?, callBack: MutableLiveData<T>) {
         if (value?.isEmpty() == true) {
-            error.postValue(Pair(2, "Đã có lỗi sảy ra, vui lòng thử lại sau."))
+            error.postValue(Pair(2, null))
             return
         }
         securityHelper?.decrypt(value)?.apply {
@@ -29,17 +30,12 @@ abstract class RepositoryBase {
                 }
             } ?: kotlin.run {
                 //Lỗi trình biên dịch
-                error.postValue(
-                    Pair(
-                        1,
-                        "Quá trình biên dịch dữ liệu xảy ra lỗi, vui lòng thử lại sau."
-                    )
-                )
+                error.postValue(Pair(1, null))
             }
         } ?: kotlin.run {
             //Lỗi trình biên dịch dữ liệu
             error.postValue(
-                Pair(1, "Quá trình biên dịch dữ liệu xảy ra lỗi, vui lòng thử lại sau.")
+                Pair(1, null)
             )
         }
     }
@@ -61,27 +57,34 @@ abstract class RepositoryBase {
         when (throwable) {
             is IOException -> {
                 error.postValue(
-                    Pair(
-                        2,
-                        "Kết nối tới Internet đã xảy ra lỗi, vui lòng thử lại sau."
-                    )
+                    Pair(2, "Kết nối tới Internet đã xảy ra lỗi, vui lòng thử lại sau.")
                 )
             }
             else -> {
                 throwable.getErrorBody()?.let { requestErrorBody ->
-                    error.postValue(
-                        Pair(
-                            requestErrorBody.code?.toInt() ?: 1,
-                            requestErrorBody.message ?: "Đã có lỗi xảy ra vui lòng thử lại sau."
+                    if (requestErrorBody.data is String) {
+                        securityHelper?.decrypt(requestErrorBody.data as String)
+                            ?.toObjectData<RequestModel<Any>>()
+                            ?.apply {
+                                error.postValue(
+                                    Pair(
+                                        code?.toInt() ?: 1,
+                                        message
+                                    )
+                                )
+                            } ?: kotlin.run {
+                            error.postValue(Pair(1, null))
+                        }
+                    } else {
+                        error.postValue(
+                            Pair(
+                                requestErrorBody.code?.toInt() ?: 1,
+                                requestErrorBody.message
+                            )
                         )
-                    )
+                    }
                 } ?: kotlin.run {
-                    error.postValue(
-                        Pair(
-                            1,
-                            "Quá kết nối tới Internet xảy ra lỗi, vui lòng thử lại sau."
-                        )
-                    )
+                    error.postValue(Pair(1, null))
                 }
             }
         }

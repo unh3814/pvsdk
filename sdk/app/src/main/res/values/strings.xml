@@ -58,7 +58,7 @@
     <string name="txt_register_rule_1">Tôi cam đoan là chủ sở hữu hưởng lợi của các tài khoản mở tại Ngân hàng, các dịch vụ và các giao dịch liên quan đến các tài khoản này.</string>
     <string name="txt_register_rule_2">Tôi đã đọc, hiểu và đồng ý với <a href=""><font color="blue">Các điều khoản &amp; điều kiện</font></a> mở tài khoản thanh toán.</string>
     <string name="error_default">Có lỗi xảy ra khi thực hiện giao dịch, bạn vui lòng thử lại hoặc liên hệ <font color="#3A9EFC">1900 5555 92</font> để được hỗ trợ</string>
-    <string name="error_system">Lỗi hệ thống, thử lại sau.</string>
+    <string name="error_system">Đã có lỗi sảy ra, thử lại sau.</string>
     <string name="txt_email_address">Địa chỉ email</string>
     <string name="txt_create_account">Đăng ký</string>
 </resources>

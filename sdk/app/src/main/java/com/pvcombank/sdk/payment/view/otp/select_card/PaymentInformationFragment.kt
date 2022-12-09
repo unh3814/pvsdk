@@ -111,7 +111,7 @@ class PaymentInformationFragment : PVFragment<FragmentPaymentInformationBinding>
 						AlertPopup.show(
 							fragmentManager = childFragmentManager,
 							title = "Thông báo",
-							message = it.second,
+							message = it.second ?: getString(R.string.error_system),
 							primaryTitle = "ok",
 							primaryButtonListener = object : AlertPopup.PrimaryButtonListener{
 								override fun onClickListener(v: View) {

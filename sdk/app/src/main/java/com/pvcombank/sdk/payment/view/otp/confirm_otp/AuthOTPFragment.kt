@@ -153,7 +153,7 @@ class AuthOTPFragment : PVFragment<OtpViewBinding>() {
 				Observer {
 					it?.let {
 						hideLoading()
-						showAlertErrorPayment(it.second)
+						showAlertErrorPayment(it.second ?: getString(R.string.error_system))
 					}
 				}
 			)
