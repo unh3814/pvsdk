@@ -20,18 +20,23 @@ android {
             minSdk = 23
         }
     }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
     flavorDimensions ''
     productFlavors {
         def SERVER_URL = "SERVER_URL"
         def STRING = "String"
-        sdk_debug {
-            dimension ''
-            buildConfigField(STRING, SERVER_URL, '"https://connect.apps.ocp4-dev03.pvcomtestocp.com/"')
-            aarMetadata {
-                minSdk = 23
-            }
-        }
-        sdk_release {
+        dev {
             dimension ''
             buildConfigField(STRING, SERVER_URL, '"https://connect.apps.ocp4-dev03.pvcomtestocp.com/"')
             aarMetadata {
@@ -39,6 +44,7 @@ android {
             }
         }
     }
+
     publishing {
         publications {
             debug(MavenPublication) {
@@ -65,65 +71,7 @@ android {
             }
         }
     }
-    buildTypes {
-        debug {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-        release {
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
-    flavorDimensions ''
-    productFlavors {
-        def SERVER_URL = "SERVER_URL"
-        def ONBOARDING_URL = "ONBOARDING_URL"
-        def STRING = "String"
-        sdk {
-            dimension ''
-            buildConfigField(STRING, ONBOARDING_URL, '"https://onboarding-udnb-staging.pvcombank.com.vn/api/"')
-            buildConfigField(STRING, SERVER_URL, '"https://connect.apps.ocp4-dev03.pvcomtestocp.com/"')
-            aarMetadata {
-                name
-                minSdk = 23
-            }
-        }
-        onboading {
-            dimension ''
-            buildConfigField(STRING, ONBOARDING_URL, '"https://onboarding-udnb-staging.pvcombank.com.vn/api/"')
-            buildConfigField(STRING, SERVER_URL, '"https://sandbox-connect.pvcombank.com.vn/"')
-            aarMetadata {
-                minSdk = 23
-            }
-        }
-    }
-    publishing {
-        publications {
-            release(MavenPublication) {
-                groupId = 'com.pvcombank.sdk'
-                artifactId = 'ekyc'
-                version = '0.1.1'
-                pom.withXml {
-                    def dependenciesNode = asNode().appendNode('dependencies')
-                    configurations.implementation.allDependencies.each { dependency ->
-                        if (dependency.name != 'unspecified') {
-                            def dependencyNode = dependenciesNode.appendNode('dependency')
-                            dependencyNode.appendNode('groupId', dependency.group)
-                            dependencyNode.appendNode('artifactId', dependency.name)
-                            dependencyNode.appendNode('version', dependency.version)
-                        }
-                    }
-                }
-            }
-        }
-        repositories {
-            maven {
-                name = 'myrepo'
-                url = "${project.buildDir}/repo"
-            }
-        }
-    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -168,13 +116,5 @@ dependencies {
     implementation deps.circle_img
     implementation deps.rx.java
     implementation deps.rx.android
-    implementation deps.data_store.core
-    implementation deps.data_store.rxjava
-    implementation("com.trustvision:tv_sdk:2.1.0.4@aar") {
-        transitive = true
-    }
-//    implementation deps.appflyer
-    implementation "com.appsflyer:af-android-sdk:6.9.0"
-
     testImplementation 'junit:junit:4.12'
 }
