@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.Observer
 import com.pvcombank.sdk.R
 import com.pvcombank.sdk.payment.base.PVFragment
@@ -37,7 +38,6 @@ class PaymentConfirmInformationFragment : PVFragment<FragmentConfirmPaymentBindi
 			topBar.setTitle(getString(R.string.confirm_information_payment))
 			topBar.show()
 			cardSelected = requireArguments().getParcelable<CardModel>("card")?.apply {
-				tvLabelCard.text = cardType ?: type
 				tvNumberCard.text = numberCard
 				tvCardBalance.text = getString(
 					R.string.current_balance,
@@ -55,6 +55,9 @@ class PaymentConfirmInformationFragment : PVFragment<FragmentConfirmPaymentBindi
 						.minus(currencyOrder.toBigDecimal()) < "0".toBigDecimal()
 				) {
 					tvAlertCard.visibility = View.VISIBLE
+					if(cardSelected?.type == "account"){
+						tvAlertCard.text = "Tài khoản không đủ số dư để thực hiện giao dịch"
+					}
 					btnConfirm.isEnabled = false
 				}
 			}
@@ -139,14 +142,14 @@ class PaymentConfirmInformationFragment : PVFragment<FragmentConfirmPaymentBindi
 		}
 	}
 	
-	private fun showAlertError(error: Pair<Int, String?>) {
+	private fun showAlertError(error: Pair<String, String?>) {
 		AlertPopup.show(
 			fragmentManager = childFragmentManager,
 			title = "Thông báo",
 			primaryTitle = "ok",
 			primaryButtonListener = object : AlertPopup.PrimaryButtonListener{
 				override fun onClickListener(v: View) {
-					if (error.first in 400..499){
+					if (error.first.isDigitsOnly() && error.first.toInt() in 400..499){
 						openFragment(
 							AuthWebLoginFragment::class.java,
 							Bundle(),
